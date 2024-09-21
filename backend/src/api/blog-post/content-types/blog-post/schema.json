@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "blog_posts",
+  "info": {
+    "singularName": "blog-post",
+    "pluralName": "blog-posts",
+    "displayName": "Blog Posts",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "summary": {
+      "type": "customField",
+      "options": {
+        "preset": "default"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    },
+    "Category": {
+      "type": "enumeration",
+      "enum": [
+        "Network Security",
+        "AI",
+        "Machine Learning",
+        "IoT Security",
+        "Blockchain",
+        "Security",
+        "Cybersecurity",
+        "Programming",
+        "Cyber Awareness",
+        "Cloud Security",
+        "Ethical Hacking",
+        "Authentication"
+      ]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "certifications",
+  "info": {
+    "singularName": "certification",
+    "pluralName": "certifications",
+    "displayName": "Certification",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Organization": {
+      "type": "string"
+    },
+    "Issued": {
+      "type": "date"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "Show_Credential": {
+      "type": "string"
+    }
+  }
+}
