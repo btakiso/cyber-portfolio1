@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2024-09-22T18:54:36.314Z"
+    "x-generation-date": "2024-09-22T19:20:25.367Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -25,7 +25,7 @@
   },
   "servers": [
     {
-      "url": "https://cyber-portfolio.herokuapp.com/api",
+      "url": "https://cyber-portfolio-72310aa69f55.herokuapp.com/api",
       "description": "Development server"
     }
   ],
