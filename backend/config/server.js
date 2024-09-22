@@ -7,6 +7,6 @@ module.exports = ({ env }) => ({
   url: env('PUBLIC_URL', 'https://cyber-portfolio-72310aa69f55.herokuapp.com'),
   // Make sure CORS is properly configured
   cors: {
-    origin: ['http://localhost:3000'], // Add your frontend URL here
+    origin: ['https://cyber-portfolio1.vercel.app', 'http://localhost:3000'],
   },
 });

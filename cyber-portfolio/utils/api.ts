@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337',
+  baseURL: process.env.NEXT_PUBLIC_STRAPI_URL || 'https://cyber-portfolio-72310aa69f55.herokuapp.com',
 });
 
 api.interceptors.response.use(
@@ -27,7 +27,7 @@ export const apiCall = async <T>(config: import('axios').AxiosRequestConfig): Pr
 export default api;
 
 export async function fetchAPI(endpoint: string) {
-  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337';
+  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'https://cyber-portfolio-72310aa69f55.herokuapp.com';
   const res = await fetch(`${baseUrl}/api${endpoint}`);
   const json = await res.json();
   if (json.errors) {
