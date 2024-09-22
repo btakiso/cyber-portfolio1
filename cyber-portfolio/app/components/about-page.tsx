@@ -109,6 +109,7 @@ export default function AboutPage() {
                   style={{ objectFit: "cover" }}
                   className="rounded-full border-4 border-blue-500 shadow-lg"
                   onError={() => setImageError(true)}
+                  priority
                 />
               </div>
               <div className="text-center md:text-left flex-grow">
@@ -147,7 +148,9 @@ export default function AboutPage() {
                 <div className="bg-gray-900 p-6 rounded-2xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-2xl hover:bg-gray-800">
                   <h3 className="text-xl font-semibold text-blue-400">{job.attributes.title}</h3>
                   <p className="text-gray-400 mb-2">{job.attributes.company} | {job.attributes.duration}</p>
-                  <p className="text-gray-300">{job.attributes.description[0].children[0].children[0].text}</p>
+                  <p className="text-gray-300">
+                    {job.attributes.description?.[0]?.children?.[0]?.children?.[0]?.text || "No description available"}
+                  </p>
                 </div>
               </div>
             ))}
@@ -193,6 +196,7 @@ export default function AboutPage() {
                       width={80}
                       height={80}
                       style={{ width: "80px", height: "80px", objectFit: "contain" }}
+                      priority
                     />
                   </div>
                   <div>
