@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_STRAPI_URL || 'https://cyber-portfolio-72310aa69f55.herokuapp.com',
+  withCredentials: true,
 });
 
 api.interceptors.response.use(

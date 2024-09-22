@@ -8,5 +8,8 @@ module.exports = ({ env }) => ({
   // Make sure CORS is properly configured
   cors: {
     origin: ['https://cyber-portfolio1.vercel.app', 'http://localhost:3000'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+    headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
+    credentials: true,
   },
 });
