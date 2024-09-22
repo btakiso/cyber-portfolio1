@@ -7,8 +7,8 @@ module.exports = [
         useDefaults: true,
         directives: {
           'connect-src': ["'self'", 'http:', 'https:'],
-          'img-src': ["'self'", 'data:', 'blob:', 'http://localhost:1337', 'http://localhost:3000'],
-          'media-src': ["'self'", 'data:', 'blob:', 'http://localhost:1337', 'http://localhost:3000'],
+          'img-src': ["'self'", 'data:', 'blob:', 'https://cyber-portfolio-72310aa69f55.herokuapp.com/', 'https://cyber-portfolio1.vercel.app'],
+          'media-src': ["'self'", 'data:', 'blob:', 'https://cyber-portfolio-72310aa69f55.herokuapp.com/  ', 'https://cyber-portfolio1.vercel.app'],
           upgradeInsecureRequests: null,
         },
       },
@@ -17,7 +17,7 @@ module.exports = [
   {
     name: 'strapi::cors',
     config: {
-      origin: ['http://localhost:3000'],
+      origin: ['https://cyber-portfolio1.vercel.app'],
       headers: ['*'],
     }
   },
