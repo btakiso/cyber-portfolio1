@@ -1,7 +1,7 @@
 module.exports = ({ env }) => ({
   cors: {
     enabled: true,
-    origin: ['http://localhost:1337', 'http://localhost:3000'],
+    origin: ['https://cyber-portfolio-72310aa69f55.herokuapp.com/', 'https://cyber-portfolio1.vercel.app'],
   },
   csrf: {
     enabled: true,
