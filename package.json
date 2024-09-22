@@ -1,0 +1,21 @@
+{
+  "name": "cyber-portfolio-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "cyber-portfolio",
+    "backend"
+  ],
+  "scripts": {
+    "start": "npm run start:backend",
+    "start:backend": "cd backend && npm start",
+    "build": "npm run build:backend",
+    "build:backend": "cd backend && npm run build",
+    "heroku-postbuild": "npm run build:backend"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=20.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
