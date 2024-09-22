@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-      domains: ['localhost'],
+      domains: ['localhost', 'cyber-portfolio-72310aa69f55.herokuapp.com'],
       remotePatterns: [
         {
-          protocol: 'http',
-          hostname: 'localhost',
-          port: '1337',
+          protocol: 'https',
+          hostname: 'cyber-portfolio-72310aa69f55.herokuapp.com',
+          port: '',
           pathname: '/uploads/**',
         },
       ],
