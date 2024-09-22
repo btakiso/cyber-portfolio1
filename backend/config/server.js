@@ -4,7 +4,7 @@ module.exports = ({ env }) => ({
   app: {
     keys: env.array('APP_KEYS'),
   },
-  url: env('PUBLIC_URL', 'http://localhost:1337'),
+  url: env('PUBLIC_URL', 'https://cyber-portfolio.herokuapp.com'),
   // Make sure CORS is properly configured
   cors: {
     origin: ['http://localhost:3000'], // Add your frontend URL here
