@@ -59,7 +59,7 @@ export function HeroSection() {
           {showCursor && <span className="animate-blink">|</span>}
         </h1>
         <p className="text-xl md:text-2xl mb-8 text-gray-300">
-          Cybersecurity enthusiast and ethical hacker
+          Cybersecurity enthusiast
         </p>
         <Link
           href="/projects"

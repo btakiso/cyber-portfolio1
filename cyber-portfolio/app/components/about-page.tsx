@@ -114,7 +114,7 @@ export default function AboutPage() {
               </div>
               <div className="text-center md:text-left flex-grow">
                 <h2 className="text-3xl md:text-4xl font-bold mb-2 text-white">{aboutData.attributes.name}</h2>
-                <p className="text-blue-400 text-lg mb-4">Cybersecurity Professional</p>
+                <p className="text-blue-400 text-lg mb-4">Cybersecurity enthusiast</p>
               </div>
             </div>
             <div className="mt-6 bg-gray-800 rounded-xl p-6 shadow-inner">
