@@ -10,11 +10,11 @@ export default ({ env }: { env: Strapi['config']['functions']['env'] }) => ({
       config: {
         provider: 'aws-s3',
         providerOptions: {
-          accessKeyId: env('AKIAR72PHCYUK6NQKGN5'),
-          secretAccessKey: env('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'),
-          region: env('us-east-1'),
+          accessKeyId: env('AWS_ACCESS_KEY_ID'),
+          secretAccessKey: env('AWS_ACCESS_SECRET'),
+          region: env('AWS_REGION'),
           params: {
-            Bucket: env('strapi-s3-bucket1'),
+            Bucket: env('AWS_BUCKET_NAME'),
             ACL: env('AWS_ACL', 'public-read'),
           },
         },
