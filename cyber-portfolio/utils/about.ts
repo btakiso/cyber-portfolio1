@@ -1,7 +1,7 @@
 import { apiCall } from './api';
 import { AboutData, Skill, Certification, Experience } from '../types/about';
 
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'https://cyber-portfolio-72310aa69f55.herokuapp.com';
+const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'https://api.bereketakiso.com';
 
 export const fetchAboutData = async (): Promise<AboutData> => {
   try {

@@ -14,11 +14,11 @@ const nextConfig = {
         ];
     },
     images: {
-        domains: ['localhost', 'cyber-portfolio-72310aa69f55.herokuapp.com', 'strapi-s3-bucket1.s3.us-east-1.amazonaws.com'],
+        domains: ['localhost', 'api.bereketakiso.com', 'strapi-s3-bucket1.s3.us-east-1.amazonaws.com'],
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'cyber-portfolio-72310aa69f55.herokuapp.com',
+                hostname: 'api.bereketakiso.com',
                 port: '',
                 pathname: '/uploads/**',
             },

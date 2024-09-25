@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_STRAPI_URL || 'https://cyber-portfolio-72310aa69f55.herokuapp.com',
+  baseURL: process.env.NEXT_PUBLIC_STRAPI_URL || 'https://api.bereketakiso.com',
   withCredentials: true,
 });
 
@@ -28,7 +28,7 @@ export const apiCall = async <T>(config: import('axios').AxiosRequestConfig): Pr
 export default api;
 
 export async function fetchAPI(endpoint: string) {
-  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'https://cyber-portfolio-72310aa69f55.herokuapp.com';
+  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'https://api.bereketakiso.com';
   const res = await fetch(`${baseUrl}/api${endpoint}`);
   const json = await res.json();
   if (json.errors) {

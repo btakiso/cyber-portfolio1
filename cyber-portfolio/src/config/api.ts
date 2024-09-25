@@ -1,5 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://cyber-portfolio-72310aa69f55.herokuapp.com';
-
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.bereketakiso.com';
 export const getStrapiURL = (path = '') => {
   return `${API_URL}${path}`;
 };

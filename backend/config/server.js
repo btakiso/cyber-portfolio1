@@ -4,10 +4,10 @@ module.exports = ({ env }) => ({
   app: {
     keys: env.array('APP_KEYS'),
   },
-  url: env('PUBLIC_URL', 'https://cyber-portfolio-72310aa69f55.herokuapp.com'),
+  url: env('PUBLIC_URL', 'https://api.bereketakiso.com'),
   // Make sure CORS is properly configured
   cors: {
-    origin: ['https://cyber-portfolio1.vercel.app', 'http://localhost:3000'],
+    origin: ['https://bereketakiso.com', 'http://localhost:3000'],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
     headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
     credentials: true,
