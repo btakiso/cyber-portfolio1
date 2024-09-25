@@ -88,7 +88,7 @@ export default function AboutPage() {
         <section className="mb-16 bg-gray-900 rounded-3xl overflow-hidden shadow-2xl">
           <div className="relative h-64 md:h-80">
             <Image
-              src={imageError ? placeholderImage : imageUrl}
+              src={imageError ? placeholderImage : prependApiUrl(imageUrl)}
               alt={`Profile picture of ${aboutData.attributes.name}`}
               fill
               style={{ objectFit: "cover" }}
@@ -102,7 +102,7 @@ export default function AboutPage() {
             <div className="flex flex-col md:flex-row items-center md:items-end gap-8">
               <div className="relative w-40 h-40 md:w-48 md:h-48 -mt-20 md:-mt-32">
                 <Image
-                  src={imageError ? placeholderImage : imageUrl}
+                  src={imageError ? placeholderImage : prependApiUrl(imageUrl)}
                   alt={`Profile picture of ${aboutData.attributes.name}`}
                   width={192}
                   height={192}
