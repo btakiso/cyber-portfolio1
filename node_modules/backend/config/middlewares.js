@@ -13,7 +13,7 @@ module.exports = [
             'blob:', 
             'https://cyber-portfolio-72310aa69f55.herokuapp.com/', 
             'https://cyber-portfolio1.vercel.app',
-            'https://*.amazonaws.com' 
+            'https://strapi-s3-bucket1.s3.amazonaws.com' 
           ],
           'media-src': [
             "'self'", 
@@ -21,7 +21,7 @@ module.exports = [
             'blob:', 
             'https://cyber-portfolio-72310aa69f55.herokuapp.com/',
             'https://cyber-portfolio1.vercel.app',
-            'https://*.amazonaws.com' 
+            'https://strapi-s3-bucket1.s3.amazonaws.com' 
           ],
           upgradeInsecureRequests: null,
         },
@@ -31,7 +31,8 @@ module.exports = [
   {
     name: 'strapi::cors',
     config: {
-      origin: ['https://cyber-portfolio1.vercel.app'],
+      enabled: true,
+      origin: ['https://cyber-portfolio1.vercel.app', 'http://localhost:3000'],
       headers: ['*'],
     }
   },
