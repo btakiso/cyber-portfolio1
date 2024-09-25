@@ -13,7 +13,7 @@ module.exports = [
             'blob:', 
             'https://cyber-portfolio-72310aa69f55.herokuapp.com/', 
             'https://cyber-portfolio1.vercel.app',
-            'https://strapi-s3-bucket1.s3.amazonaws.com' 
+            'https://*.amazonaws.com' 
           ],
           'media-src': [
             "'self'", 
@@ -21,7 +21,7 @@ module.exports = [
             'blob:', 
             'https://cyber-portfolio-72310aa69f55.herokuapp.com/',
             'https://cyber-portfolio1.vercel.app',
-            'https://strapi-s3-bucket1.s3.amazonaws.com' 
+            'https://*.amazonaws.com' 
           ],
           upgradeInsecureRequests: null,
         },
