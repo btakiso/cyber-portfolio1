@@ -5,11 +5,10 @@ module.exports = ({ env }) => ({
     keys: env.array('APP_KEYS'),
   },
   url: env('PUBLIC_URL', 'https://api.bereketakiso.com'),
-  // Make sure CORS is properly configured
-  cors: {
-    origin: ['https://bereketakiso.com', 'http://localhost:3000'],
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
-    headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
-    credentials: true,
+  admin: {
+    auth: {
+      secret: env('ADMIN_JWT_SECRET'),
+    },
+    url: env('PUBLIC_ADMIN_URL', '/admin'),
   },
 });
