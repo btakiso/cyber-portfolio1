@@ -165,10 +165,16 @@ export default function AboutPage() {
                         <ul className="list-disc list-inside text-gray-300">
                           {Array.isArray(job.attributes.description) ? (
                             job.attributes.description.map((item, i) => (
-                              <li key={i}>{item.children?.[0]?.children?.[0]?.text || 'No description available'}</li>
+                              <li key={i} className="flex items-center">
+                                <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                                {item.children?.[0]?.children?.[0]?.text || 'No description available'}
+                              </li>
                             ))
                           ) : (
-                            <li>No description available</li>
+                            <li className="flex items-center">
+                              <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                              No description available
+                            </li>
                           )}
                         </ul>
                       </div>
