@@ -1,4 +1,9 @@
 export function parseDate(duration: string): Date {
+  if (!duration || typeof duration !== 'string') {
+    console.error('Invalid duration:', duration);
+    return new Date();
+  }
+
   // Handle "YYYY-YYYY" format
   if (/^\d{4}-\d{4}$/.test(duration)) {
     return new Date(parseInt(duration.split('-')[1], 10), 11, 31);
@@ -13,5 +18,6 @@ export function parseDate(duration: string): Date {
     return new Date(parseInt(duration, 10), 11, 31);
   }
   // Default to current date if format is unrecognized
+  console.warn(`Unrecognized date format: ${duration}`);
   return new Date();
 }
