@@ -142,24 +142,44 @@ export default function AboutPage() {
         <section className="mb-12">
           <h2 className="text-2xl font-semibold mb-6">Professional Experience</h2>
           <div className="space-y-8">
-            {experience.map((job, index) => (
-              <div key={index} className="relative pl-8 pb-8 border-l-2 border-gray-700 transition-all duration-300 ease-in-out hover:border-blue-500">
-                <div className="absolute left-0 top-0 w-4 h-4 bg-blue-500 rounded-full -translate-x-1/2 transition-all duration-300 ease-in-out hover:scale-125 hover:bg-blue-400"></div>
-                <div className="bg-gray-900 p-6 rounded-2xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-2xl hover:bg-gray-800">
-                  <h3 className="text-xl font-semibold text-blue-400">{job.attributes.title}</h3>
-                  <p className="text-gray-400 mb-2">{job.attributes.company} | {job.attributes.duration}</p>
-                  <ul className="list-disc list-inside text-gray-300">
-                    {Array.isArray(job.attributes.description) ? (
-                      job.attributes.description.map((item, i) => (
-                        <li key={i}>{item?.children?.[0]?.children?.[0]?.text || 'No description available'}</li>
-                      ))
-                    ) : (
-                      <li>{job.attributes.description || 'No description available'}</li>
-                    )}
-                  </ul>
+            {experience
+              .sort((a, b) => {
+                // Function to extract the end date
+                const getEndDate = (duration: string) => {
+                  const match = duration.match(/(\d{4})-(\d{2})(?:\s+to\s+(\d{4})-(\d{2}))?$/);
+                  if (match) {
+                    // If there's an end date, use it; otherwise, use the start date
+                    const year = match[3] || match[1];
+                    const month = match[4] || match[2];
+                    return new Date(parseInt(year), parseInt(month) - 1);
+                  }
+                  return new Date(0); // Default to epoch if no match
+                };
+                
+                const dateA = getEndDate(a.attributes.duration);
+                const dateB = getEndDate(b.attributes.duration);
+                
+                // Sort in descending order (newest first)
+                return dateB.getTime() - dateA.getTime();
+              })
+              .map((job, index) => (
+                <div key={index} className="relative pl-8 pb-8 border-l-2 border-gray-700 transition-all duration-300 ease-in-out hover:border-blue-500">
+                  <div className="absolute left-0 top-0 w-4 h-4 bg-blue-500 rounded-full -translate-x-1/2 transition-all duration-300 ease-in-out hover:scale-125 hover:bg-blue-400"></div>
+                  <div className="bg-gray-900 p-6 rounded-2xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-2xl hover:bg-gray-800">
+                    <h3 className="text-xl font-semibold text-blue-400">{job.attributes.title}</h3>
+                    <p className="text-gray-400 mb-2">{job.attributes.company} | {job.attributes.duration}</p>
+                    <ul className="list-disc list-inside text-gray-300">
+                      {Array.isArray(job.attributes.description) ? (
+                        job.attributes.description.map((item, i) => (
+                          <li key={i}>{item?.children?.[0]?.children?.[0]?.text || 'No description available'}</li>
+                        ))
+                      ) : (
+                        <li>{job.attributes.description || 'No description available'}</li>
+                      )}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </section>
 
