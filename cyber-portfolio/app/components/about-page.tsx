@@ -148,9 +148,11 @@ export default function AboutPage() {
                 <div className="bg-gray-900 p-6 rounded-2xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-2xl hover:bg-gray-800">
                   <h3 className="text-xl font-semibold text-blue-400">{job.attributes.title}</h3>
                   <p className="text-gray-400 mb-2">{job.attributes.company} | {job.attributes.duration}</p>
-                  <p className="text-gray-300">
-                    {job.attributes.description?.[0]?.children?.[0]?.children?.[0]?.text || "No description available"}
-                  </p>
+                  <ul className="list-disc list-inside text-gray-300">
+                    {job.attributes.description?.map((item, i) => (
+                      <li key={i}>{item.children[0].children[0].text}</li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             ))}
