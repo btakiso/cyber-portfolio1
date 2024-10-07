@@ -11,7 +11,6 @@ export const fetchAboutData = async (): Promise<AboutData> => {
       params: { populate: '*' },
     });
 
-    console.log('About API response:', response);
 
     if (!Array.isArray(response) || response.length === 0) {
       throw new Error('No about data found');
