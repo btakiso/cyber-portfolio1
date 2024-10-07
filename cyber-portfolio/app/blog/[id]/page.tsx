@@ -180,15 +180,15 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
   };
 
   return (
-    <div className="bg-gray-800 text-gray-100">
+    <div className="bg-gray-800 text-gray-100 min-h-screen">
       <Header />
-      <div className="container mx-auto px-4 py-8 pt-20">
-        <div className="max-w-6xl mx-auto bg-gray-900 rounded-xl shadow-lg overflow-hidden">
-          <main className="p-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-20">
+        <div className="max-w-4xl mx-auto bg-gray-900 rounded-xl shadow-lg overflow-hidden">
+          <main className="p-4 sm:p-6 lg:p-8">
             {/* Header and Introduction */}
             <header className="mb-8">
-              <div className="mb-8 flex justify-center">
-                <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden">
+              <div className="mb-8">
+                <div className="relative w-full h-48 sm:h-64 md:h-96 rounded-lg overflow-hidden">
                   <Image
                     src={image?.data 
                       ? prependApiUrl(image.data.attributes.url)
@@ -198,12 +198,12 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
                     priority
                     quality={100}
                     style={{ objectFit: 'cover' }}
-                    className="rounded-3xl"
+                    className="rounded-xl"
                   />
                 </div>
               </div>
-              <h1 className="text-4xl font-bold mb-4 text-blue-500">{title}</h1>
-              <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-1 mb-2">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-blue-500">{title}</h1>
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
                 <div>
                   <div className="flex items-center text-gray-200 text-sm mb-2">
                     <Calendar className="w-4 h-4 mr-1" />
@@ -211,18 +211,18 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
                     <Clock className="w-4 h-4 mr-1" />
                     <span>{readTime} min read</span>
                   </div>
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2">
                     <span className="text-gray-200">Category:</span>
                     <span className="bg-gray-700 text-blue-300 px-3 py-1 rounded-full text-sm">
                       {Category}
                     </span>
                   </div>
                 </div>
-                <div className="md:ml-4">
+                <div className="mt-2 sm:mt-0">
                   <AuthorBadge />
                 </div>
               </div>
-              <div className="flex items-center space-x-2 mt-2">
+              <div className="flex items-center space-x-2 mt-4">
                 <span className="text-gray-200">Share:</span>
                 <button 
                   onClick={shareOnX}
@@ -250,21 +250,21 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
 
             {/* Summary Section */}
             {summary && (
-              <div className="mb-8 bg-gray-800 p-6 rounded-xl">
+              <div className="mb-8 bg-gray-800 p-4 sm:p-6 rounded-xl">
                 {formatContent(summary)}
               </div>
             )}
 
             {/* Content Section */}
-            <article className="prose prose-invert prose-blue max-w-none mb-12 text-lg">
+            <article className="prose prose-invert prose-blue max-w-none mb-12 text-base sm:text-lg">
               {formatContent(content)}
             </article>
 
             {/* Related Posts */}
             {relatedPosts.length > 0 && (
               <section className="mb-12">
-                <h3 className="text-2xl font-semibold mb-6">Related Posts</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <h3 className="text-xl sm:text-2xl font-semibold mb-6">Related Posts</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {relatedPosts.map((post) => (
                     <Link key={post.id} href={`/blog/${post.id}`} className="block group">
                       <div className="bg-gray-700 rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:-translate-y-1">
@@ -275,12 +275,11 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
                           alt={post.attributes.title}
                           width={300}
                           height={200}
-                          className="w-full h-48 object-cover"
+                          className="w-full h-40 sm:h-48 object-cover"
                           quality={100}
-                          priority
                         />
                         <div className="p-4">
-                          <h4 className="text-lg font-semibold mb-2 group-hover:text-blue-400 transition-colors">
+                          <h4 className="text-base sm:text-lg font-semibold mb-2 group-hover:text-blue-400 transition-colors line-clamp-2">
                             {post.attributes.title}
                           </h4>
                         </div>
