@@ -11,7 +11,7 @@ const nextConfig = {
                             default-src 'self';
                             script-src 'self' 'unsafe-eval' 'unsafe-inline';
                             style-src 'self' 'unsafe-inline';
-                            img-src 'self' data: blob:;
+                            img-src 'self' data: blob: https://strapi-s3-bucket1.s3.us-east-1.amazonaws.com;
                             font-src 'self';
                             object-src 'none';
                             base-uri 'self';
