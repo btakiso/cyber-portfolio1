@@ -1,0 +1,54 @@
+# Root level .gitignore
+
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+.next/
+
+# Environment variables
+.env
+.env.local
+.env*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
+
+# Backend specific
+backend/.tmp/
+backend/.cache/
+backend/public/uploads/*
+!backend/public/uploads/.gitkeep
+
+# Frontend specific
+cyber-portfolio/.pnp
+cyber-portfolio/.pnp.js
+cyber-portfolio/coverage/
+cyber-portfolio/out/
+
+# Strapi specific
+.strapi-updater.json
+.strapi-cloud.json
+
+# Keep subdirectory .gitignore files
+!backend/.gitignore
+!cyber-portfolio/.gitignore
