@@ -59,6 +59,8 @@ const AuthorBadge: React.FC = () => {
           width={70}
           height={70}
           className="rounded-full border-2 border-blue-400 shadow-md"
+          quality={100}
+          priority
         />
         <div className="absolute -bottom-1 -right-1 bg-blue-500 rounded-full p-1">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">

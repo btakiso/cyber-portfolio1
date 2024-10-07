@@ -196,6 +196,7 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
                     alt={title}
                     fill
                     priority
+                    quality={100}
                     style={{ objectFit: 'cover' }}
                     className="rounded-3xl"
                   />
@@ -275,6 +276,8 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
                           width={300}
                           height={200}
                           className="w-full h-48 object-cover"
+                          quality={100}
+                          priority
                         />
                         <div className="p-4">
                           <h4 className="text-lg font-semibold mb-2 group-hover:text-blue-400 transition-colors">

@@ -95,6 +95,7 @@ export default function AboutPage() {
               className="filter brightness-50"
               onError={() => setImageError(true)}
               priority
+              quality={100}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900"></div>
           </div>
@@ -110,6 +111,7 @@ export default function AboutPage() {
                   className="rounded-full border-4 border-blue-500 shadow-lg"
                   onError={() => setImageError(true)}
                   priority
+                  quality={100}
                 />
               </div>
               <div className="text-center md:text-left flex-grow">
@@ -227,6 +229,7 @@ export default function AboutPage() {
                       height={80}
                       style={{ width: "80px", height: "80px", objectFit: "contain" }}
                       priority
+                      quality={100}
                     />
                   </div>
                   <div>

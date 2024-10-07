@@ -136,6 +136,7 @@ export function BlogPage() {
                         style={{ objectFit: 'cover' }}
                         className="h-48 w-full md:h-full md:w-48 rounded-t-xl"
                         priority
+                        quality={100}  // Set quality to 100 to preserve original image quality
                       />
                     ) : (
                       <Image
@@ -187,6 +188,7 @@ export function BlogPage() {
                       height={200}
                       style={{ objectFit: 'cover' }}
                       className="w-full h-48 rounded-t-xl"
+                      quality={100}  // Set quality to 100 to preserve original image quality
                     />
                   ) : (
                     <Image

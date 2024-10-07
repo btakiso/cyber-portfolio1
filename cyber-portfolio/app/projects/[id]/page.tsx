@@ -189,6 +189,7 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
                     alt={title}
                     fill
                     priority
+                    quality={100}
                     style={{ objectFit: 'cover' }}
                     className="rounded-3xl"
                   />

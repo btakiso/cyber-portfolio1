@@ -157,6 +157,7 @@ export default function ProjectPage() {
                     height={200}
                     className="w-full h-48 object-cover rounded-t-xl"
                     priority
+                    quality={100}
                   />
                   <div className="p-6 bg-gray-900">
                     <div className="flex items-center justify-between mb-2">

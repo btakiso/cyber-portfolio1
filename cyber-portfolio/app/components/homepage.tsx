@@ -154,6 +154,7 @@ export function Homepage() {
                         height={200}
                         className="w-full h-48 object-cover rounded-t-xl"
                         priority={true}
+                        quality={100}
                       />
                     )}
                     <div className="p-6">
@@ -207,6 +208,7 @@ export function Homepage() {
                     alt={post.attributes.title}
                     className="w-full h-40 object-cover rounded-t-xl"
                     priority={true}
+                    quality={100}
                   />
                   <div className="p-4">
                     <h3 className="text-lg font-semibold text-white mb-2">{post.attributes.title}</h3>
