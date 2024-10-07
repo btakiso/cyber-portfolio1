@@ -32,6 +32,9 @@ module.exports = [
             'https://*.amazonaws.com' 
           ],
           'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'https:', 'http:'],
+          'frame-src': ["'self'", 'https://www.youtube.com'],
+          'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+          'font-src': ["'self'", 'https://fonts.gstatic.com'],
           upgradeInsecureRequests: null,
         },
       },
