@@ -131,6 +131,7 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
     links.forEach((link) => {
       link.setAttribute('target', '_blank');
       link.setAttribute('rel', 'noopener noreferrer');
+      link.classList.add('text-blue-400', 'hover:text-blue-300', 'underline');
     });
 
     // Return the modified content
