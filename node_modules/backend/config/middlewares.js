@@ -6,6 +6,10 @@ module.exports = [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
+          'default-src': ["'self'", 'https:'],
+          'frame-src': ["'self'", 'https://www.youtube.com'],
+          'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+          'font-src': ["'self'", 'https://fonts.gstatic.com'],
           'connect-src': ["'self'", 'https:', 'http:', 'ws:', 'wss:', 'https://api.bereketakiso.com', 'https://bereketakiso.com', 'https://www.bereketakiso.com', 'https://cyber-portfolio-72310aa69f55.herokuapp.com'],
           'img-src': [
             "'self'", 
