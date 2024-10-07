@@ -90,8 +90,8 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
 
     // Sanitize the HTML content
     const sanitizedContent = DOMPurify.sanitize(contentWithPlaceholders, {
-      ADD_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'strong', 'em', 'pre', 'code'],
-      ADD_ATTR: ['class', 'language'],
+      ADD_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'strong', 'em', 'pre', 'code', 'a'],
+      ADD_ATTR: ['class', 'language', 'href', 'target', 'rel'],
     });
 
     // Parse the sanitized content
@@ -124,6 +124,13 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
         embed.innerHTML = `<iframe width="100%" height="400" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`; // Increased height to 400px
         p.parentNode?.replaceChild(embed, p);
       }
+    });
+
+    // Process hyperlinks
+    const links = doc.querySelectorAll('a');
+    links.forEach((link) => {
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
     });
 
     // Return the modified content
