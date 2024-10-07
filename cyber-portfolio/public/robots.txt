@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.bereketakiso.com
+
+# Sitemaps
+Sitemap: https://www.bereketakiso.com/sitemap.xml
