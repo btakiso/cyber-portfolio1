@@ -155,6 +155,7 @@ export default function ProjectPage() {
                     alt={project.attributes.title || `Project ${project.id} thumbnail`}
                     width={400}
                     height={200}
+                    style={{ objectFit: 'cover', objectPosition: 'center' }}
                     className="w-full h-48 object-cover rounded-t-xl"
                     priority
                     quality={100}

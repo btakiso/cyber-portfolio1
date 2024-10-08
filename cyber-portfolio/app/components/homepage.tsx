@@ -152,6 +152,7 @@ export function Homepage() {
                         alt={project.attributes.title}
                         width={400}
                         height={200}
+                        style={{ objectFit: 'cover', objectPosition: 'center' }}
                         className="w-full h-48 object-cover rounded-t-xl"
                         priority={true}
                         quality={100}
@@ -206,6 +207,7 @@ export function Homepage() {
                     width={400}
                     height={200}
                     alt={post.attributes.title}
+                    style={{ objectFit: 'cover', objectPosition: 'center' }}
                     className="w-full h-40 object-cover rounded-t-xl"
                     priority={true}
                     quality={100}

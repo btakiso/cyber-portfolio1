@@ -133,7 +133,7 @@ export function BlogPage() {
                         alt={filteredPosts[0].attributes.title}
                         width={400}
                         height={300}
-                        style={{ objectFit: 'cover' }}
+                        style={{ objectFit: 'cover', objectPosition: 'center' }}
                         className="h-48 w-full md:h-full md:w-48 rounded-t-xl"
                         priority
                         quality={100}  // Set quality to 100 to preserve original image quality
@@ -186,7 +186,7 @@ export function BlogPage() {
                       alt={post.attributes.title}
                       width={400}
                       height={200}
-                      style={{ objectFit: 'cover' }}
+                      style={{ objectFit: 'cover', objectPosition: 'center' }}
                       className="w-full h-48 rounded-t-xl"
                       quality={100}  // Set quality to 100 to preserve original image quality
                     />
