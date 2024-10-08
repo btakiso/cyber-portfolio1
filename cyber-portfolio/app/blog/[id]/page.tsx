@@ -137,11 +137,17 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
     // Process lists
     const lists = doc.querySelectorAll('ul, ol');
     lists.forEach((list) => {
-      list.classList.add('list-disc', 'list-inside', 'my-4');
+      list.classList.add('my-4', 'pl-5', 'space-y-2');
       if (list.tagName === 'OL') {
-        list.classList.remove('list-disc');
         list.classList.add('list-decimal');
+      } else {
+        list.classList.add('list-disc');
       }
+    });
+
+    const listItems = doc.querySelectorAll('li');
+    listItems.forEach((item) => {
+      item.classList.add('pl-2');
     });
 
     // Process headings

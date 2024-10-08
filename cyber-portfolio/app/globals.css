@@ -33,3 +33,31 @@ body {
   width: 100%;
   height: 100%;
 }
+
+/* Add these styles to your global CSS file */
+.prose ol, .prose ul {
+  margin-left: 1.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.prose li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose ol > li {
+  padding-left: 0.5em;
+}
+
+.prose ul > li {
+  padding-left: 0.5em;
+}
+
+.prose ol > li::marker {
+  color: #6b7280; /* Adjust color as needed */
+}
+
+.prose ul > li::marker {
+  color: #6b7280; /* Adjust color as needed */
+}
