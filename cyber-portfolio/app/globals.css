@@ -55,9 +55,9 @@ body {
 }
 
 .prose ol > li::marker {
-  color: #6b7280; /* Adjust color as needed */
+  color: #ffffff; /* Changed to white */
 }
 
 .prose ul > li::marker {
-  color: #6b7280; /* Adjust color as needed */
+  color: #ffffff; /* Adjust color as needed */
 }
