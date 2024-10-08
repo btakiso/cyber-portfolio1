@@ -23,6 +23,7 @@ const iconMap: { [key: string]: React.ComponentType<any> } = {
   // Add more icons as needed
 };
 
+
 interface ContentBlock {
   type: string;
   children: Array<{
@@ -119,8 +120,8 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
     }
 
     const sanitizedContent = DOMPurify.sanitize(htmlContent, {
-      ADD_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'strong', 'em', 'pre', 'code'],
-      ADD_ATTR: ['class', 'language'],
+      ADD_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'strong', 'em', 'pre', 'code', 'a'],
+      ADD_ATTR: ['class', 'language', 'href', 'target', 'rel'],
     });
 
     const parser = new DOMParser();
@@ -136,6 +137,14 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
       mountPoint.dataset.code = code;
       mountPoint.dataset.language = language;
       block.parentNode?.parentNode?.replaceChild(mountPoint, block.parentNode);
+    });
+
+    // Process hyperlinks
+    const links = doc.querySelectorAll('a');
+    links.forEach((link) => {
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+      link.classList.add('text-blue-400', 'hover:text-blue-300', 'underline');
     });
 
     return (
