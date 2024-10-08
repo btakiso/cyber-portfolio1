@@ -90,7 +90,7 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
 
     // Sanitize the HTML content
     const sanitizedContent = DOMPurify.sanitize(contentWithPlaceholders, {
-      ADD_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'strong', 'em', 'pre', 'code', 'a'],
+      ADD_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'strong', 'em', 'pre', 'code', 'a', 'ul', 'ol', 'li'],
       ADD_ATTR: ['class', 'language', 'href', 'target', 'rel'],
     });
 
@@ -132,6 +132,35 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
       link.setAttribute('target', '_blank');
       link.setAttribute('rel', 'noopener noreferrer');
       link.classList.add('text-blue-400', 'hover:text-blue-300', 'underline');
+    });
+
+    // Process lists
+    const lists = doc.querySelectorAll('ul, ol');
+    lists.forEach((list) => {
+      list.classList.add('list-disc', 'list-inside', 'my-4');
+      if (list.tagName === 'OL') {
+        list.classList.remove('list-disc');
+        list.classList.add('list-decimal');
+      }
+    });
+
+    // Process headings
+    const headings = doc.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    headings.forEach((heading) => {
+      heading.classList.add('font-bold', 'mt-6', 'mb-4');
+      switch (heading.tagName) {
+        case 'H1':
+          heading.classList.add('text-3xl');
+          break;
+        case 'H2':
+          heading.classList.add('text-2xl');
+          break;
+        case 'H3':
+          heading.classList.add('text-xl');
+          break;
+        default:
+          heading.classList.add('text-lg');
+      }
     });
 
     // Return the modified content
