@@ -63,7 +63,7 @@ export function Footer() {
               {[ 
                 { href: "https://github.com/btakiso", icon: Github, label: "GitHub" },
                 { href: "https://www.linkedin.com/in/bereket-takiso/", icon: Linkedin, label: "LinkedIn" },
-                { href: "mailto:btakiso2@gmail.com", icon: Mail, label: "Email" }
+                { href: "mailto:berekettakiso@gmail.com", icon: Mail, label: "Email" }
               ].map(({ href, icon: Icon, label }) => (
                 <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors">
                   <Icon className="w-6 h-6" />
