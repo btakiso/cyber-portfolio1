@@ -190,24 +190,21 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
     // Process tables
     const tables = doc.querySelectorAll('table');
     tables.forEach((table) => {
-      table.classList.add('w-full', 'overflow-x-auto', 'my-4');
+      table.classList.add('min-w-full', 'divide-y', 'divide-gray-700', 'text-sm');
       const wrapper = document.createElement('div');
-      wrapper.classList.add('overflow-x-auto', '-mx-4', 'sm:-mx-6', 'lg:-mx-8');
-      const innerWrapper = document.createElement('div');
-      innerWrapper.classList.add('inline-block', 'min-w-full', 'py-2', 'align-middle', 'sm:px-6', 'lg:px-8');
-      wrapper.appendChild(innerWrapper);
+      wrapper.classList.add('overflow-x-auto', 'w-full', 'max-w-full', 'my-4');
       table.parentNode?.insertBefore(wrapper, table);
-      innerWrapper.appendChild(table);
+      wrapper.appendChild(table);
     });
 
     const tableHeaders = doc.querySelectorAll('th');
     tableHeaders.forEach((header) => {
-      header.classList.add('px-3', 'py-2', 'text-left', 'text-xs', 'font-medium', 'text-gray-300', 'uppercase', 'tracking-wider');
+      header.classList.add('px-2', 'py-2', 'text-left', 'font-medium', 'text-gray-300', 'uppercase', 'tracking-wider', 'bg-gray-800');
     });
 
     const tableCells = doc.querySelectorAll('td');
     tableCells.forEach((cell) => {
-      cell.classList.add('px-3', 'py-2', 'whitespace-nowrap', 'text-sm', 'text-gray-200');
+      cell.classList.add('px-2', 'py-2', 'whitespace-nowrap', 'text-gray-200', 'border-t', 'border-gray-700');
     });
 
     return (
@@ -250,7 +247,7 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
       <Header />
       <div className="container mx-auto px-4 py-8 pt-20">
         <div className="max-w-6xl mx-auto bg-gray-900 rounded-xl shadow-lg overflow-hidden">
-          <main className="p-8">
+          <main className="p-4 sm:p-8">
             <header className="mb-8">
               <div className="mb-8 flex justify-center">
                 <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden">
@@ -287,7 +284,7 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
               )}
             </header>
 
-            <article className="mb-12 text-lg">
+            <article className="mb-12 text-lg overflow-x-hidden">
               {formatContent(description)}
             </article>
 
