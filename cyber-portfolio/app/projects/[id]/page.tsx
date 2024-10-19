@@ -190,7 +190,7 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
     // Process tables
     const tables = doc.querySelectorAll('table');
     tables.forEach((table) => {
-      table.classList.add('min-w-full', 'text-sm', 'border-collapse');
+      table.classList.add('w-full', 'text-sm', 'border-collapse');
       const wrapper = document.createElement('div');
       wrapper.classList.add('overflow-x-auto', 'my-4', 'relative', 'max-w-full', '-mx-4', 'sm:-mx-6', 'lg:-mx-8');
       const innerWrapper = document.createElement('div');
@@ -199,6 +199,16 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
       table.parentNode?.insertBefore(wrapper, table);
       wrapper.appendChild(innerWrapper);
       innerWrapper.appendChild(table);
+
+      // Force table layout to be fixed width
+      table.style.tableLayout = 'fixed';
+      table.style.width = '100%';
+
+      // Set a minimum width for each cell to prevent text wrapping
+      const cells = table.querySelectorAll('th, td');
+      cells.forEach((cell) => {
+        (cell as HTMLElement).style.minWidth = '150px'; // Adjust this value as needed
+      });
 
       // Add fade indicators for horizontal scrolling
       const fadeLeft = document.createElement('div');
@@ -218,16 +228,21 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
 
       // Trigger initial fade check
       wrapper.dispatchEvent(new Event('scroll'));
+
+      // Debug logging
+      console.log('Table width:', table.offsetWidth);
+      console.log('Wrapper width:', wrapper.offsetWidth);
+      console.log('Inner wrapper width:', innerWrapper.offsetWidth);
     });
 
     const tableHeaders = doc.querySelectorAll('th');
     tableHeaders.forEach((header) => {
-      header.classList.add('px-3', 'py-3', 'text-left', 'text-xs', 'font-medium', 'text-gray-300', 'uppercase', 'tracking-wider', 'bg-gray-800', 'sticky', 'top-0');
+      header.classList.add('px-3', 'py-3', 'text-left', 'text-xs', 'font-medium', 'text-gray-300', 'uppercase', 'tracking-wider', 'bg-gray-800', 'sticky', 'top-0', 'whitespace-nowrap');
     });
 
     const tableCells = doc.querySelectorAll('td');
     tableCells.forEach((cell) => {
-      cell.classList.add('px-3', 'py-2', 'whitespace-nowrap', 'text-sm', 'text-gray-200', 'border-t', 'border-gray-700');
+      cell.classList.add('px-3', 'py-2', 'whitespace-nowrap', 'text-sm', 'text-gray-200', 'border-t', 'border-gray-700', 'overflow-hidden', 'text-ellipsis');
     });
 
     return (
@@ -308,7 +323,9 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
             </header>
 
             <article className="mb-12 text-lg overflow-x-hidden">
-              {formatContent(description)}
+              <div className="min-w-full">
+                {formatContent(description)}
+              </div>
             </article>
 
             <nav className="flex justify-between items-center">
