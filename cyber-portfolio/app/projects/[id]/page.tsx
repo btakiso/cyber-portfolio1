@@ -187,6 +187,29 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
       }
     });
 
+    // Process tables
+    const tables = doc.querySelectorAll('table');
+    tables.forEach((table) => {
+      table.classList.add('w-full', 'overflow-x-auto', 'my-4');
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('overflow-x-auto', '-mx-4', 'sm:-mx-6', 'lg:-mx-8');
+      const innerWrapper = document.createElement('div');
+      innerWrapper.classList.add('inline-block', 'min-w-full', 'py-2', 'align-middle', 'sm:px-6', 'lg:px-8');
+      wrapper.appendChild(innerWrapper);
+      table.parentNode?.insertBefore(wrapper, table);
+      innerWrapper.appendChild(table);
+    });
+
+    const tableHeaders = doc.querySelectorAll('th');
+    tableHeaders.forEach((header) => {
+      header.classList.add('px-3', 'py-2', 'text-left', 'text-xs', 'font-medium', 'text-gray-300', 'uppercase', 'tracking-wider');
+    });
+
+    const tableCells = doc.querySelectorAll('td');
+    tableCells.forEach((cell) => {
+      cell.classList.add('px-3', 'py-2', 'whitespace-nowrap', 'text-sm', 'text-gray-200');
+    });
+
     return (
       <div
         className="prose prose-invert prose-blue max-w-none"
