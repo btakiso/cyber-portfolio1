@@ -212,14 +212,15 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
       wrapper.appendChild(scrollBar);
 
       // Add scroll event listener
-      wrapper.addEventListener('scroll', () => {
-        const scrollPercentage = (wrapper.scrollLeft / (wrapper.scrollWidth - wrapper.clientWidth)) * 100;
-        scrollThumb.style.width = `${scrollPercentage}%`;
+      scrollWrapper.addEventListener('scroll', () => {
+        const scrollPercentage = (scrollWrapper.scrollLeft / (scrollWrapper.scrollWidth - scrollWrapper.clientWidth)) * 100;
+        scrollThumb.style.width = `${Math.max(10, scrollPercentage)}%`;
+        scrollThumb.style.marginLeft = `${scrollPercentage}%`;
       });
 
       // Initial setup of scroll thumb width
-      const scrollPercentage = (wrapper.clientWidth / wrapper.scrollWidth) * 100;
-      scrollThumb.style.width = `${scrollPercentage}%`;
+      const scrollPercentage = (scrollWrapper.clientWidth / scrollWrapper.scrollWidth) * 100;
+      scrollThumb.style.width = `${Math.max(10, scrollPercentage)}%`;
     });
 
     const tableHeaders = doc.querySelectorAll('th');
