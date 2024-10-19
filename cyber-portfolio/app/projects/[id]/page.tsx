@@ -190,21 +190,28 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
     // Process tables
     const tables = doc.querySelectorAll('table');
     tables.forEach((table) => {
-      table.classList.add('min-w-full', 'divide-y', 'divide-gray-700', 'text-sm');
+      table.classList.add('min-w-full', 'text-sm', 'border-collapse');
       const wrapper = document.createElement('div');
-      wrapper.classList.add('overflow-x-auto', 'w-full', 'max-w-full', 'my-4');
+      wrapper.classList.add('overflow-x-auto', '-mx-4', 'sm:-mx-6', 'lg:-mx-8', 'my-4');
+      const innerWrapper = document.createElement('div');
+      innerWrapper.classList.add('inline-block', 'min-w-full', 'align-middle');
+      const scrollWrapper = document.createElement('div');
+      scrollWrapper.classList.add('overflow-hidden', 'shadow', 'ring-1', 'ring-black', 'ring-opacity-5', 'sm:rounded-lg');
+      
       table.parentNode?.insertBefore(wrapper, table);
-      wrapper.appendChild(table);
+      wrapper.appendChild(innerWrapper);
+      innerWrapper.appendChild(scrollWrapper);
+      scrollWrapper.appendChild(table);
     });
 
     const tableHeaders = doc.querySelectorAll('th');
     tableHeaders.forEach((header) => {
-      header.classList.add('px-2', 'py-2', 'text-left', 'font-medium', 'text-gray-300', 'uppercase', 'tracking-wider', 'bg-gray-800');
+      header.classList.add('px-3', 'py-3', 'text-left', 'text-xs', 'font-medium', 'text-gray-300', 'uppercase', 'tracking-wider', 'bg-gray-800');
     });
 
     const tableCells = doc.querySelectorAll('td');
     tableCells.forEach((cell) => {
-      cell.classList.add('px-2', 'py-2', 'whitespace-nowrap', 'text-gray-200', 'border-t', 'border-gray-700');
+      cell.classList.add('px-3', 'py-2', 'whitespace-nowrap', 'text-sm', 'text-gray-200', 'border-t', 'border-gray-700');
     });
 
     return (
@@ -284,7 +291,7 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
               )}
             </header>
 
-            <article className="mb-12 text-lg overflow-x-hidden">
+            <article className="mb-12 text-lg">
               {formatContent(description)}
             </article>
 
