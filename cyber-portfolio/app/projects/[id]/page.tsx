@@ -192,7 +192,7 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
     tables.forEach((table) => {
       table.classList.add('min-w-full', 'text-sm', 'border-collapse');
       const wrapper = document.createElement('div');
-      wrapper.classList.add('overflow-x-auto', '-mx-4', 'sm:-mx-6', 'lg:-mx-8', 'my-4');
+      wrapper.classList.add('overflow-x-auto', 'my-4', 'relative');
       const innerWrapper = document.createElement('div');
       innerWrapper.classList.add('inline-block', 'min-w-full', 'align-middle');
       const scrollWrapper = document.createElement('div');
@@ -202,11 +202,29 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
       wrapper.appendChild(innerWrapper);
       innerWrapper.appendChild(scrollWrapper);
       scrollWrapper.appendChild(table);
+
+      // Add horizontal scroll bar
+      const scrollBar = document.createElement('div');
+      scrollBar.classList.add('h-2', 'bg-gray-700', 'rounded-full', 'mt-2');
+      const scrollThumb = document.createElement('div');
+      scrollThumb.classList.add('h-full', 'bg-blue-500', 'rounded-full', 'transition-all', 'duration-300', 'ease-in-out');
+      scrollBar.appendChild(scrollThumb);
+      wrapper.appendChild(scrollBar);
+
+      // Add scroll event listener
+      wrapper.addEventListener('scroll', () => {
+        const scrollPercentage = (wrapper.scrollLeft / (wrapper.scrollWidth - wrapper.clientWidth)) * 100;
+        scrollThumb.style.width = `${scrollPercentage}%`;
+      });
+
+      // Initial setup of scroll thumb width
+      const scrollPercentage = (wrapper.clientWidth / wrapper.scrollWidth) * 100;
+      scrollThumb.style.width = `${scrollPercentage}%`;
     });
 
     const tableHeaders = doc.querySelectorAll('th');
     tableHeaders.forEach((header) => {
-      header.classList.add('px-3', 'py-3', 'text-left', 'text-xs', 'font-medium', 'text-gray-300', 'uppercase', 'tracking-wider', 'bg-gray-800');
+      header.classList.add('px-3', 'py-3', 'text-left', 'text-xs', 'font-medium', 'text-gray-300', 'uppercase', 'tracking-wider', 'bg-gray-800', 'sticky', 'top-0');
     });
 
     const tableCells = doc.querySelectorAll('td');
