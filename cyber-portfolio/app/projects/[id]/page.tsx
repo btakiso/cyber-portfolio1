@@ -192,21 +192,19 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
     tables.forEach((table) => {
       table.classList.add('w-full', 'text-sm', 'border-collapse');
       const wrapper = document.createElement('div');
-      wrapper.classList.add('overflow-x-auto', 'my-4', 'relative', 'max-w-full', '-mx-4', 'sm:-mx-6', 'lg:-mx-8');
+      wrapper.classList.add('overflow-x-auto', 'my-4', 'relative', 'w-full', '-mx-2', 'sm:-mx-4');
       
       table.parentNode?.insertBefore(wrapper, table);
       wrapper.appendChild(table);
 
-      // Remove fixed layout and width
-      (table as HTMLTableElement).style.tableLayout = 'auto';
-      (table as HTMLTableElement).style.width = 'auto';
+      // Set table to full width
+      (table as HTMLTableElement).style.width = '100%';
 
       // Adjust cell styling
       const cells = table.querySelectorAll('th, td');
       cells.forEach((cell) => {
         (cell as HTMLTableCellElement).style.minWidth = '100px';
-        (cell as HTMLTableCellElement).style.maxWidth = '200px';
-        cell.classList.add('px-3', 'py-2', 'border', 'border-gray-700', 'truncate');
+        cell.classList.add('px-2', 'py-2', 'border', 'border-gray-700', 'break-words');
       });
 
       // Add horizontal scroll indicator
@@ -277,9 +275,9 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
   return (
     <div className="min-h-screen bg-gray-800 text-gray-100">
       <Header />
-      <div className="container mx-auto px-4 py-8 pt-20">
-        <div className="max-w-6xl mx-auto bg-gray-900 rounded-xl shadow-lg overflow-hidden">
-          <main className="p-4 sm:p-8">
+      <div className="container mx-auto px-2 sm:px-4 py-8 pt-20 max-w-full sm:max-w-6xl">
+        <div className="bg-gray-900 rounded-xl shadow-lg overflow-hidden">
+          <main className="p-2 sm:p-4 md:p-8">
             <header className="mb-8">
               <div className="mb-8 flex justify-center">
                 <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden">
