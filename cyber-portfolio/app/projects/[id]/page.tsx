@@ -201,13 +201,13 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
       innerWrapper.appendChild(table);
 
       // Force table layout to be fixed width
-      table.style.tableLayout = 'fixed';
-      table.style.width = '100%';
+      (table as HTMLTableElement).style.tableLayout = 'fixed';
+      (table as HTMLTableElement).style.width = '100%';
 
       // Set a minimum width for each cell to prevent text wrapping
       const cells = table.querySelectorAll('th, td');
       cells.forEach((cell) => {
-        (cell as HTMLElement).style.minWidth = '150px'; // Adjust this value as needed
+        (cell as HTMLTableCellElement).style.minWidth = '150px'; // Adjust this value as needed
       });
 
       // Add fade indicators for horizontal scrolling
