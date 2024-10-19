@@ -188,73 +188,47 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
     });
 
     // Process tables
-const tables = doc.querySelectorAll('table');
-tables.forEach((table) => {
-  table.classList.add('min-w-full', 'text-sm', 'border-collapse');
-  const wrapper = document.createElement('div');
-  wrapper.classList.add('overflow-x-auto', 'my-4', 'relative', 'max-w-full');
-  const innerWrapper = document.createElement('div');
-  innerWrapper.classList.add('inline-block', 'min-w-full', 'align-middle');
-  const scrollWrapper = document.createElement('div');
-  scrollWrapper.classList.add('overflow-x-scroll', 'shadow', 'ring-1', 'ring-black', 'ring-opacity-5', 'sm:rounded-lg');
-  
-  table.parentNode?.insertBefore(wrapper, table);
-  wrapper.appendChild(innerWrapper);
-  innerWrapper.appendChild(scrollWrapper);
-  scrollWrapper.appendChild(table);
+    const tables = doc.querySelectorAll('table');
+    tables.forEach((table) => {
+      table.classList.add('min-w-full', 'text-sm', 'border-collapse');
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('overflow-x-auto', 'my-4', 'relative', 'max-w-full', '-mx-4', 'sm:-mx-6', 'lg:-mx-8');
+      const innerWrapper = document.createElement('div');
+      innerWrapper.classList.add('inline-block', 'min-w-full', 'py-2', 'align-middle', 'sm:px-6', 'lg:px-8');
+      
+      table.parentNode?.insertBefore(wrapper, table);
+      wrapper.appendChild(innerWrapper);
+      innerWrapper.appendChild(table);
 
-  // Add horizontal scroll indicator
-  const scrollIndicator = document.createElement('div');
-  scrollIndicator.classList.add('h-1', 'bg-gray-700', 'rounded-full', 'mt-2', 'relative');
-  const scrollThumb = document.createElement('div');
-  scrollThumb.classList.add('h-full', 'bg-blue-500', 'rounded-full', 'transition-all', 'duration-300', 'ease-in-out', 'absolute');
-  scrollIndicator.appendChild(scrollThumb);
-  wrapper.appendChild(scrollIndicator);
+      // Add fade indicators for horizontal scrolling
+      const fadeLeft = document.createElement('div');
+      fadeLeft.classList.add('absolute', 'left-0', 'top-0', 'bottom-0', 'w-4', 'bg-gradient-to-r', 'from-gray-900', 'to-transparent', 'pointer-events-none', 'opacity-0', 'transition-opacity');
+      const fadeRight = document.createElement('div');
+      fadeRight.classList.add('absolute', 'right-0', 'top-0', 'bottom-0', 'w-4', 'bg-gradient-to-l', 'from-gray-900', 'to-transparent', 'pointer-events-none', 'opacity-0', 'transition-opacity');
+      wrapper.appendChild(fadeLeft);
+      wrapper.appendChild(fadeRight);
 
-  // Add scroll event listener
-  scrollWrapper.addEventListener('scroll', () => {
-    const scrollPercentage = (scrollWrapper.scrollLeft / (scrollWrapper.scrollWidth - scrollWrapper.clientWidth)) * 100;
-    scrollThumb.style.width = `${Math.max(10, 100 - scrollPercentage)}%`;
-    scrollThumb.style.left = `${scrollPercentage}%`;
-  });
+      // Add scroll event listener
+      wrapper.addEventListener('scroll', () => {
+        const scrollLeft = wrapper.scrollLeft;
+        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+        fadeLeft.style.opacity = scrollLeft > 0 ? '1' : '0';
+        fadeRight.style.opacity = scrollLeft < maxScroll ? '1' : '0';
+      });
 
-  // Initial setup of scroll thumb
-  const scrollPercentage = (scrollWrapper.clientWidth / scrollWrapper.scrollWidth) * 100;
-  scrollThumb.style.width = `${Math.max(10, scrollPercentage)}%`;
+      // Trigger initial fade check
+      wrapper.dispatchEvent(new Event('scroll'));
+    });
 
-  // Add touch-based scrolling for mobile
-  let isScrolling = false;
-  let startX: number;
-  let scrollLeft: number;
+    const tableHeaders = doc.querySelectorAll('th');
+    tableHeaders.forEach((header) => {
+      header.classList.add('px-3', 'py-3', 'text-left', 'text-xs', 'font-medium', 'text-gray-300', 'uppercase', 'tracking-wider', 'bg-gray-800', 'sticky', 'top-0');
+    });
 
-  scrollWrapper.addEventListener('touchstart', (e) => {
-    isScrolling = true;
-    startX = e.touches[0].pageX - scrollWrapper.offsetLeft;
-    scrollLeft = scrollWrapper.scrollLeft;
-  });
-
-  scrollWrapper.addEventListener('touchmove', (e) => {
-    if (!isScrolling) return;
-    e.preventDefault();
-    const x = e.touches[0].pageX - scrollWrapper.offsetLeft;
-    const walk = (x - startX) * 2;
-    scrollWrapper.scrollLeft = scrollLeft - walk;
-  });
-
-  scrollWrapper.addEventListener('touchend', () => {
-    isScrolling = false;
-  });
-});
-
-const tableHeaders = doc.querySelectorAll('th');
-tableHeaders.forEach((header) => {
-  header.classList.add('px-3', 'py-3', 'text-left', 'text-xs', 'font-medium', 'text-gray-300', 'uppercase', 'tracking-wider', 'bg-gray-800', 'sticky', 'top-0');
-});
-
-const tableCells = doc.querySelectorAll('td');
-tableCells.forEach((cell) => {
-  cell.classList.add('px-3', 'py-2', 'whitespace-nowrap', 'text-sm', 'text-gray-200', 'border-t', 'border-gray-700');
-});
+    const tableCells = doc.querySelectorAll('td');
+    tableCells.forEach((cell) => {
+      cell.classList.add('px-3', 'py-2', 'whitespace-nowrap', 'text-sm', 'text-gray-200', 'border-t', 'border-gray-700');
+    });
 
     return (
       <div
@@ -333,7 +307,7 @@ tableCells.forEach((cell) => {
               )}
             </header>
 
-            <article className="mb-12 text-lg">
+            <article className="mb-12 text-lg overflow-x-hidden">
               {formatContent(description)}
             </article>
 
