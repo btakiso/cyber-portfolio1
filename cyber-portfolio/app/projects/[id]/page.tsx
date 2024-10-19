@@ -193,56 +193,50 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
       table.classList.add('w-full', 'text-sm', 'border-collapse');
       const wrapper = document.createElement('div');
       wrapper.classList.add('overflow-x-auto', 'my-4', 'relative', 'max-w-full', '-mx-4', 'sm:-mx-6', 'lg:-mx-8');
-      const innerWrapper = document.createElement('div');
-      innerWrapper.classList.add('inline-block', 'min-w-full', 'py-2', 'align-middle', 'sm:px-6', 'lg:px-8');
       
       table.parentNode?.insertBefore(wrapper, table);
-      wrapper.appendChild(innerWrapper);
-      innerWrapper.appendChild(table);
+      wrapper.appendChild(table);
 
-      // Force table layout to be fixed width
-      (table as HTMLTableElement).style.tableLayout = 'fixed';
-      (table as HTMLTableElement).style.width = '100%';
+      // Remove fixed layout and width
+      (table as HTMLTableElement).style.tableLayout = 'auto';
+      (table as HTMLTableElement).style.width = 'auto';
 
-      // Set a minimum width for each cell to prevent text wrapping
+      // Adjust cell styling
       const cells = table.querySelectorAll('th, td');
       cells.forEach((cell) => {
-        (cell as HTMLTableCellElement).style.minWidth = '150px'; // Adjust this value as needed
+        (cell as HTMLTableCellElement).style.minWidth = '100px';
+        (cell as HTMLTableCellElement).style.maxWidth = '200px';
+        cell.classList.add('px-3', 'py-2', 'border', 'border-gray-700', 'truncate');
       });
 
-      // Add fade indicators for horizontal scrolling
-      const fadeLeft = document.createElement('div');
-      fadeLeft.classList.add('absolute', 'left-0', 'top-0', 'bottom-0', 'w-4', 'bg-gradient-to-r', 'from-gray-900', 'to-transparent', 'pointer-events-none', 'opacity-0', 'transition-opacity');
-      const fadeRight = document.createElement('div');
-      fadeRight.classList.add('absolute', 'right-0', 'top-0', 'bottom-0', 'w-4', 'bg-gradient-to-l', 'from-gray-900', 'to-transparent', 'pointer-events-none', 'opacity-0', 'transition-opacity');
-      wrapper.appendChild(fadeLeft);
-      wrapper.appendChild(fadeRight);
+      // Add horizontal scroll indicator
+      const scrollIndicator = document.createElement('div');
+      scrollIndicator.classList.add('h-1', 'bg-gray-700', 'mt-2', 'rounded-full');
+      const scrollThumb = document.createElement('div');
+      scrollThumb.classList.add('h-full', 'bg-blue-500', 'rounded-full', 'transition-all', 'duration-300', 'ease-in-out');
+      scrollIndicator.appendChild(scrollThumb);
+      wrapper.appendChild(scrollIndicator);
 
       // Add scroll event listener
       wrapper.addEventListener('scroll', () => {
-        const scrollLeft = wrapper.scrollLeft;
-        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
-        fadeLeft.style.opacity = scrollLeft > 0 ? '1' : '0';
-        fadeRight.style.opacity = scrollLeft < maxScroll ? '1' : '0';
+        const scrollPercentage = (wrapper.scrollLeft / (wrapper.scrollWidth - wrapper.clientWidth)) * 100;
+        scrollThumb.style.width = `${Math.max(10, scrollPercentage)}%`;
+        scrollThumb.style.marginLeft = `${scrollPercentage}%`;
       });
 
-      // Trigger initial fade check
-      wrapper.dispatchEvent(new Event('scroll'));
-
-      // Debug logging
-      console.log('Table width:', table.offsetWidth);
-      console.log('Wrapper width:', wrapper.offsetWidth);
-      console.log('Inner wrapper width:', innerWrapper.offsetWidth);
+      // Initial setup of scroll thumb
+      const scrollPercentage = (wrapper.clientWidth / wrapper.scrollWidth) * 100;
+      scrollThumb.style.width = `${Math.max(10, scrollPercentage)}%`;
     });
 
     const tableHeaders = doc.querySelectorAll('th');
     tableHeaders.forEach((header) => {
-      header.classList.add('px-3', 'py-3', 'text-left', 'text-xs', 'font-medium', 'text-gray-300', 'uppercase', 'tracking-wider', 'bg-gray-800', 'sticky', 'top-0', 'whitespace-nowrap');
+      header.classList.add('bg-gray-800', 'text-left', 'text-xs', 'font-medium', 'text-gray-300', 'uppercase', 'tracking-wider', 'sticky', 'top-0');
     });
 
     const tableCells = doc.querySelectorAll('td');
     tableCells.forEach((cell) => {
-      cell.classList.add('px-3', 'py-2', 'whitespace-nowrap', 'text-sm', 'text-gray-200', 'border-t', 'border-gray-700', 'overflow-hidden', 'text-ellipsis');
+      cell.classList.add('text-sm', 'text-gray-200');
     });
 
     return (
@@ -322,8 +316,8 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
               )}
             </header>
 
-            <article className="mb-12 text-lg overflow-x-hidden">
-              <div className="min-w-full">
+            <article className="mb-12 text-lg">
+              <div className="min-w-full overflow-hidden">
                 {formatContent(description)}
               </div>
             </article>
