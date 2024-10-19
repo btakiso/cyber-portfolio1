@@ -225,7 +225,7 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
   return (
     <div className="bg-gray-800 text-gray-100 min-h-screen">
       <Header />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-20">
+      <div className="container mx-auto px-0 sm:px-6 lg:px-8 py-8 pt-20 w-full">
         <div className="max-w-4xl mx-auto bg-gray-900 rounded-xl shadow-lg overflow-hidden">
           <main className="p-4 sm:p-6 lg:p-8">
             {/* Header and Introduction */}
