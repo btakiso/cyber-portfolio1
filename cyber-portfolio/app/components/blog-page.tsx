@@ -131,12 +131,12 @@ export function BlogPage() {
                       <Image
                         src={prependApiUrl(filteredPosts[0].attributes.image.data.attributes.url)}
                         alt={filteredPosts[0].attributes.title}
-                        width={400}
-                        height={300}
+                        width={600}
+                        height={400}
                         style={{ objectFit: 'cover', objectPosition: 'center' }}
-                        className="h-48 w-full md:h-full md:w-48 rounded-t-xl"
+                        className="h-64 w-full md:h-full md:w-96 rounded-t-xl"
                         priority
-                        quality={100}  // Set quality to 100 to preserve original image quality
+                        quality={100}
                       />
                     ) : (
                       <Image
@@ -185,10 +185,10 @@ export function BlogPage() {
                       src={prependApiUrl(post.attributes.image.data.attributes.url)}
                       alt={post.attributes.title}
                       width={400}
-                      height={200}
+                      height={300}
                       style={{ objectFit: 'cover', objectPosition: 'center' }}
-                      className="w-full h-48 rounded-t-xl"
-                      quality={100}  // Set quality to 100 to preserve original image quality
+                      className="w-full h-56 sm:h-64 rounded-t-xl"
+                      quality={100}
                     />
                   ) : (
                     <Image

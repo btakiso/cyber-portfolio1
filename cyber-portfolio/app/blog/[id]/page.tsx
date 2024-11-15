@@ -318,7 +318,7 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
                           alt={post.attributes.title}
                           width={300}
                           height={200}
-                          className="w-full h-40 sm:h-48 object-cover"
+                          className="w-full h-48 sm:h-56 object-cover"
                           quality={100}
                         />
                         <div className="p-4">

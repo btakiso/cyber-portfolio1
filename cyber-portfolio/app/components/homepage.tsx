@@ -205,10 +205,10 @@ export function Homepage() {
                       ? prependApiUrl(post.attributes.image.data.attributes.url)
                       : "/placeholder.svg?height=200&width=400"}
                     width={400}
-                    height={200}
+                    height={250}
                     alt={post.attributes.title}
                     style={{ objectFit: 'cover', objectPosition: 'center' }}
-                    className="w-full h-40 object-cover rounded-t-xl"
+                    className="w-full h-48 sm:h-56 object-cover rounded-t-xl"
                     priority={true}
                     quality={100}
                   />
