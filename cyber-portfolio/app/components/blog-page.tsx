@@ -180,7 +180,13 @@ export function BlogPage() {
             {/* Blog Post Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentPosts
-                .filter((post, index) => !(currentPage === 1 && index === 0))
+                .filter((post, index) => {
+                  if (typeof window !== 'undefined') {
+                    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+                    return isMobile || !(currentPage === 1 && index === 0);
+                  }
+                  return true;
+                })
                 .map((post) => (
                 <div key={post.id} className="bg-gray-900 rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1">
                   <div className="relative h-[220px]">
