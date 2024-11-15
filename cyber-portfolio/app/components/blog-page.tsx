@@ -85,7 +85,7 @@ export function BlogPage() {
   return (
     <div className="min-h-screen bg-gray-800 text-gray-100">
       <Header />
-      <main className="container mx-auto px-4 py-8 pt-20">
+      <main className="container mx-auto px-0 sm:px-4 py-8 pt-20">
         <h1 className="text-4xl font-bold mb-8 text-center text-blue-500">Cybersecurity Insights</h1>
 
         {/* Search and Sort */}
@@ -124,7 +124,7 @@ export function BlogPage() {
           <>
             {/* Featured Blog Post */}
             {currentPage === 1 && filteredPosts.length > 0 && (
-              <div className="md:block hidden mb-12 bg-gray-900 rounded-xl overflow-hidden shadow-lg">
+              <div className="block mb-12 bg-gray-900 rounded-xl overflow-hidden shadow-lg sm:block hidden">
                 <div className="flex flex-col md:flex-row">
                   <div className="w-full md:w-[400px] relative h-[220px] md:h-[280px]">
                     {filteredPosts[0].attributes.image && filteredPosts[0].attributes.image.data ? (
