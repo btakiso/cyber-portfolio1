@@ -85,7 +85,7 @@ export function BlogPage() {
   return (
     <div className="min-h-screen bg-gray-800 text-gray-100">
       <Header />
-      <main className="container mx-auto px-0 sm:px-4 py-8 pt-20">
+      <main className="container mx-auto px-4 py-8 pt-20">
         <h1 className="text-4xl font-bold mb-8 text-center text-blue-500">Cybersecurity Insights</h1>
 
         {/* Search and Sort */}
@@ -124,71 +124,62 @@ export function BlogPage() {
           <>
             {/* Featured Blog Post */}
             {currentPage === 1 && filteredPosts.length > 0 && (
-              <>
-                {/* Desktop/Tablet Featured Post */}
-                <div className="hidden sm:flex mb-12">
-                  <div className="w-full bg-gray-900 rounded-xl overflow-hidden shadow-lg">
-                    <div className="flex flex-col md:flex-row">
-                      <div className="w-full md:w-[400px] relative h-[220px] md:h-[280px]">
-                        {filteredPosts[0].attributes.image && filteredPosts[0].attributes.image.data ? (
-                          <Image
-                            src={prependApiUrl(filteredPosts[0].attributes.image.data.attributes.url)}
-                            alt={filteredPosts[0].attributes.title}
-                            fill
-                            style={{ 
-                              objectFit: 'cover',
-                              objectPosition: 'center',
-                            }}
-                            className="rounded-t-xl md:rounded-l-xl md:rounded-tr-none"
-                            priority
-                            quality={100}
-                          />
-                        ) : (
-                          <Image
-                            src={placeholderImage}
-                            alt="Placeholder"
-                            fill
-                            style={{ objectFit: 'cover' }}
-                            className="rounded-t-xl md:rounded-l-xl md:rounded-tr-none"
-                          />
-                        )}
-                      </div>
-                      <div className="flex-1 p-4 md:p-6 bg-gray-900">
-                        <div className="uppercase tracking-wide text-sm text-blue-500 font-semibold">
-                          {filteredPosts[0].attributes.Category}
-                        </div>
-                        <Link href={`/blog/${filteredPosts[0].id}`} className="block mt-1 text-lg leading-tight font-medium text-white hover:underline">
-                          {filteredPosts[0].attributes.title}
-                        </Link>
-                        <p className="mt-2 text-gray-300 line-clamp-3">
-                          {truncateText(filteredPosts[0].attributes.summary, 150)}
-                        </p>
-                        <div className="mt-4 flex items-center justify-between">
-                          <Link
-                            href={`/blog/${filteredPosts[0].id}`}
-                            className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors duration-200"
-                          >
-                            Read More <ArrowRight className="ml-2 h-4 w-4" />
-                          </Link>
-                          <span className="text-sm text-gray-400 flex items-center">
-                            <Clock className="w-4 h-4 mr-1" />
-                            {filteredPosts[0].attributes.readTime} min read
-                          </span>
-                        </div>
-                      </div>
+              <div className="mb-12 bg-gray-900 rounded-xl overflow-hidden shadow-lg">
+                <div className="flex flex-col md:flex-row">
+                  <div className="w-full md:w-[600px] relative h-[300px] md:h-[400px]">
+                    {filteredPosts[0].attributes.image && filteredPosts[0].attributes.image.data ? (
+                      <Image
+                        src={prependApiUrl(filteredPosts[0].attributes.image.data.attributes.url)}
+                        alt={filteredPosts[0].attributes.title}
+                        fill
+                        style={{ 
+                          objectFit: 'cover',
+                          objectPosition: 'center',
+                        }}
+                        className="rounded-t-xl md:rounded-l-xl md:rounded-tr-none"
+                        priority
+                        quality={100}
+                      />
+                    ) : (
+                      <Image
+                        src={placeholderImage}
+                        alt="Placeholder"
+                        fill
+                        style={{ objectFit: 'cover' }}
+                        className="rounded-t-xl md:rounded-l-xl md:rounded-tr-none"
+                      />
+                    )}
+                  </div>
+                  <div className="flex-1 p-6 md:p-8 bg-gray-900">
+                    <div className="uppercase tracking-wide text-sm text-blue-500 font-semibold">
+                      {filteredPosts[0].attributes.Category}
+                    </div>
+                    <Link href={`/blog/${filteredPosts[0].id}`} className="block mt-1 text-lg leading-tight font-medium text-white hover:underline">
+                      {filteredPosts[0].attributes.title}
+                    </Link>
+                    <p className="mt-2 text-gray-300">
+                      {truncateText(filteredPosts[0].attributes.summary, 150)}
+                    </p>
+                    <div className="mt-4 flex items-center justify-between">
+                      <Link
+                        href={`/blog/${filteredPosts[0].id}`}
+                        className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors duration-200"
+                      >
+                        Read More <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                      <span className="text-sm text-gray-400 flex items-center">
+                        <Clock className="w-4 h-4 mr-1" />
+                        {filteredPosts[0].attributes.readTime} min read
+                      </span>
                     </div>
                   </div>
                 </div>
-              </>
+              </div>
             )}
 
             {/* Blog Post Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {currentPosts
-                .filter((post, index) => {
-                  return !(currentPage === 1 && index === 0 && typeof window !== 'undefined' && window.innerWidth >= 640);
-                })
-                .map((post) => (
+              {currentPosts.map((post) => (
                 <div key={post.id} className="bg-gray-900 rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1">
                   <div className="relative h-[220px]">
                     {post.attributes.image && post.attributes.image.data ? (
