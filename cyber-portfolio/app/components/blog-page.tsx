@@ -124,7 +124,7 @@ export function BlogPage() {
           <>
             {/* Featured Blog Post */}
             {currentPage === 1 && filteredPosts.length > 0 && (
-              <div className="mb-12 bg-gray-900 rounded-xl overflow-hidden shadow-lg">
+              <div className="mb-12 bg-gray-900 rounded-xl overflow-hidden shadow-lg hidden md:block">
                 <div className="flex flex-col md:flex-row">
                   <div className="w-full md:w-[400px] relative h-[220px] md:h-[280px]">
                     {filteredPosts[0].attributes.image && filteredPosts[0].attributes.image.data ? (
@@ -179,7 +179,16 @@ export function BlogPage() {
 
             {/* Blog Post Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {currentPosts.map((post) => (
+              {currentPosts
+                // Only filter out featured post on desktop view
+                .filter((post, index) => {
+                  if (typeof window !== 'undefined') {
+                    const isMobile = window.innerWidth < 768; // md breakpoint
+                    return isMobile || !(currentPage === 1 && index === 0);
+                  }
+                  return true;
+                })
+                .map((post) => (
                 <div key={post.id} className="bg-gray-900 rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1">
                   <div className="relative h-[220px]">
                     {post.attributes.image && post.attributes.image.data ? (
