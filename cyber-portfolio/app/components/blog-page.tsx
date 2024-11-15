@@ -124,7 +124,7 @@ export function BlogPage() {
           <>
             {/* Featured Blog Post */}
             {currentPage === 1 && filteredPosts.length > 0 && (
-              <div className="hidden md:block mb-12 bg-gray-900 rounded-xl overflow-hidden shadow-lg">
+              <div className="md:block hidden mb-12 bg-gray-900 rounded-xl overflow-hidden shadow-lg">
                 <div className="flex flex-col md:flex-row">
                   <div className="w-full md:w-[400px] relative h-[220px] md:h-[280px]">
                     {filteredPosts[0].attributes.image && filteredPosts[0].attributes.image.data ? (
