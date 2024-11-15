@@ -190,41 +190,43 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
     // Process tables
     const tables = doc.querySelectorAll('table');
     tables.forEach((table) => {
-      table.classList.add('w-full', 'text-sm', 'border-collapse');
       const wrapper = document.createElement('div');
-      wrapper.classList.add('overflow-x-auto', 'my-4', 'relative', 'w-full', '-mx-2', 'sm:-mx-4');
-      
+      wrapper.classList.add('overflow-x-auto', 'my-4', 'bg-gray-800', 'rounded-lg', 'shadow-md');
       table.parentNode?.insertBefore(wrapper, table);
-      wrapper.appendChild(table);
-
-      // Set table to full width
-      (table as HTMLTableElement).style.width = '100%';
-
-      // Adjust cell styling
-      const cells = table.querySelectorAll('th, td');
-      cells.forEach((cell) => {
-        (cell as HTMLTableCellElement).style.minWidth = '100px';
-        cell.classList.add('px-2', 'py-2', 'border', 'border-gray-700', 'break-words');
+      
+      const mobileTable = document.createElement('div');
+      mobileTable.classList.add('md:hidden'); // Only show on mobile
+      
+      const desktopTable = table.cloneNode(true) as HTMLTableElement;
+      desktopTable.classList.add('hidden', 'md:table', 'w-full', 'text-sm');
+      
+      // Process desktop table
+      desktopTable.querySelectorAll('th, td').forEach(cell => {
+        cell.classList.add('px-4', 'py-2', 'border', 'border-gray-700', 'text-left');
       });
-
-      // Add horizontal scroll indicator
-      const scrollIndicator = document.createElement('div');
-      scrollIndicator.classList.add('h-1', 'bg-gray-700', 'mt-2', 'rounded-full');
-      const scrollThumb = document.createElement('div');
-      scrollThumb.classList.add('h-full', 'bg-blue-500', 'rounded-full', 'transition-all', 'duration-300', 'ease-in-out');
-      scrollIndicator.appendChild(scrollThumb);
-      wrapper.appendChild(scrollIndicator);
-
-      // Add scroll event listener
-      wrapper.addEventListener('scroll', () => {
-        const scrollPercentage = (wrapper.scrollLeft / (wrapper.scrollWidth - wrapper.clientWidth)) * 100;
-        scrollThumb.style.width = `${Math.max(10, scrollPercentage)}%`;
-        scrollThumb.style.marginLeft = `${scrollPercentage}%`;
+      
+      // Create mobile-friendly version
+      const headers = Array.from(table.querySelectorAll('th')).map(th => th.textContent);
+      const rows = Array.from(table.querySelectorAll('tr'));
+      
+      rows.forEach((row, rowIndex) => {
+        if (rowIndex === 0) return; // Skip header row
+        const rowDiv = document.createElement('div');
+        rowDiv.classList.add('mb-4', 'bg-gray-700', 'rounded', 'p-2');
+        
+        const cells = Array.from(row.querySelectorAll('td'));
+        cells.forEach((cell, cellIndex) => {
+          const cellDiv = document.createElement('div');
+          cellDiv.classList.add('mb-2');
+          cellDiv.innerHTML = `<span class="font-bold text-blue-300">${headers[cellIndex]}:</span> ${cell.innerHTML}`;
+          rowDiv.appendChild(cellDiv);
+        });
+        
+        mobileTable.appendChild(rowDiv);
       });
-
-      // Initial setup of scroll thumb
-      const scrollPercentage = (wrapper.clientWidth / wrapper.scrollWidth) * 100;
-      scrollThumb.style.width = `${Math.max(10, scrollPercentage)}%`;
+      
+      wrapper.appendChild(mobileTable);
+      wrapper.appendChild(desktopTable);
     });
 
     const tableHeaders = doc.querySelectorAll('th');

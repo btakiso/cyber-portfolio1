@@ -200,18 +200,22 @@ export function Homepage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {recentBlogPosts.map((post) => (
                 <div key={post.id} className="bg-gray-900 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-1">
-                  <Image
-                    src={post.attributes.image?.data 
-                      ? prependApiUrl(post.attributes.image.data.attributes.url)
-                      : "/placeholder.svg?height=200&width=400"}
-                    width={400}
-                    height={200}
-                    alt={post.attributes.title}
-                    style={{ objectFit: 'cover', objectPosition: 'center' }}
-                    className="w-full h-40 object-cover rounded-t-xl"
-                    priority={true}
-                    quality={100}
-                  />
+                  <div className="relative h-[240px]">
+                    <Image
+                      src={post.attributes.image?.data 
+                        ? prependApiUrl(post.attributes.image.data.attributes.url)
+                        : "/placeholder.svg?height=200&width=400"}
+                      alt={post.attributes.title}
+                      fill
+                      style={{ 
+                        objectFit: 'cover',
+                        objectPosition: 'center'
+                      }}
+                      className="rounded-t-xl"
+                      priority={true}
+                      quality={100}
+                    />
+                  </div>
                   <div className="p-4">
                     <h3 className="text-lg font-semibold text-white mb-2">{post.attributes.title}</h3>
                     <p className="text-gray-300 mb-4 line-clamp-3">
