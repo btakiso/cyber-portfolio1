@@ -126,7 +126,7 @@ export function BlogPage() {
             {currentPage === 1 && filteredPosts.length > 0 && (
               <div className="mb-12 bg-gray-900 rounded-xl overflow-hidden shadow-lg">
                 <div className="flex flex-col md:flex-row">
-                  <div className="w-full md:w-[600px] relative h-[300px] md:h-[400px]">
+                  <div className="w-full md:w-[400px] relative h-[220px] md:h-[280px]">
                     {filteredPosts[0].attributes.image && filteredPosts[0].attributes.image.data ? (
                       <Image
                         src={prependApiUrl(filteredPosts[0].attributes.image.data.attributes.url)}
@@ -150,14 +150,14 @@ export function BlogPage() {
                       />
                     )}
                   </div>
-                  <div className="flex-1 p-6 md:p-8 bg-gray-900">
+                  <div className="flex-1 p-4 md:p-6 bg-gray-900">
                     <div className="uppercase tracking-wide text-sm text-blue-500 font-semibold">
                       {filteredPosts[0].attributes.Category}
                     </div>
                     <Link href={`/blog/${filteredPosts[0].id}`} className="block mt-1 text-lg leading-tight font-medium text-white hover:underline">
                       {filteredPosts[0].attributes.title}
                     </Link>
-                    <p className="mt-2 text-gray-300">
+                    <p className="mt-2 text-gray-300 line-clamp-3">
                       {truncateText(filteredPosts[0].attributes.summary, 150)}
                     </p>
                     <div className="mt-4 flex items-center justify-between">
