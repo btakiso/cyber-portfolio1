@@ -311,16 +311,21 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
                   {relatedPosts.map((post) => (
                     <Link key={post.id} href={`/blog/${post.id}`} className="block group">
                       <div className="bg-gray-700 rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:-translate-y-1">
-                        <Image
-                          src={post.attributes.image?.data 
-                            ? prependApiUrl(post.attributes.image.data.attributes.url)
-                            : placeholderImage}
-                          alt={post.attributes.title}
-                          width={300}
-                          height={200}
-                          className="w-full h-48 sm:h-56 object-cover"
-                          quality={100}
-                        />
+                        <div className="relative h-[240px]">
+                          <Image
+                            src={post.attributes.image?.data 
+                              ? prependApiUrl(post.attributes.image.data.attributes.url)
+                              : placeholderImage}
+                            alt={post.attributes.title}
+                            fill
+                            style={{ 
+                              objectFit: 'cover',
+                              objectPosition: 'center'
+                            }}
+                            className="rounded-t-xl"
+                            quality={100}
+                          />
+                        </div>
                         <div className="p-4">
                           <h4 className="text-base sm:text-lg font-semibold mb-2 group-hover:text-blue-400 transition-colors line-clamp-2">
                             {post.attributes.title}
