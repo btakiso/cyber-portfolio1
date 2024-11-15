@@ -124,7 +124,7 @@ export function BlogPage() {
           <>
             {/* Featured Blog Post */}
             {currentPage === 1 && filteredPosts.length > 0 && (
-              <div className="hidden sm:block mb-12 bg-gray-900 rounded-xl overflow-hidden shadow-lg">
+              <div className="block mb-12 bg-gray-900 rounded-xl overflow-hidden shadow-lg max-sm:hidden">
                 <div className="flex flex-col md:flex-row">
                   <div className="w-full md:w-[400px] relative h-[220px] md:h-[280px]">
                     {filteredPosts[0].attributes.image && filteredPosts[0].attributes.image.data ? (
@@ -181,7 +181,10 @@ export function BlogPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentPosts
                 .filter((post, index) => {
-                  return !(currentPage === 1 && index === 0 && window.innerWidth >= 640);
+                  if (typeof window !== 'undefined') {
+                    return !(currentPage === 1 && index === 0 && window.matchMedia('(min-width: 640px)').matches);
+                  }
+                  return true;
                 })
                 .map((post) => (
                 <div key={post.id} className="bg-gray-900 rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1">
