@@ -147,7 +147,7 @@ export default function ProjectPage() {
               const formattedContent = formatContent(project.attributes.description);
               
               return (
-                <div key={project.id} className="bg-gray-900 rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
+                <Link href={`/projects/${project.id}`} className="block bg-gray-900 rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
                   <Image
                     src={project.attributes.image?.data && project.attributes.image.data.length > 0
                       ? prependApiUrl(project.attributes.image.data[0].attributes.url)
@@ -171,18 +171,15 @@ export default function ProjectPage() {
                         dangerouslySetInnerHTML={{ __html: formattedContent }}
                       />
                     )}
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-2">
                       {project.attributes.tags && typeof project.attributes.tags === 'object' && 'tag' in project.attributes.tags && (
                         <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
                           {project.attributes.tags.tag}
                         </span>
                       )}
                     </div>
-                    <Link href={`/projects/${project.id}`} className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors duration-200">
-                      Learn more <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>

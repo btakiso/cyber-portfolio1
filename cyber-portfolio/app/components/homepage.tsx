@@ -145,7 +145,7 @@ export function Homepage() {
                 const formattedContent = formatContent(project.attributes.description);
               
                 return (
-                  <div key={project.id} className="bg-gray-900/80 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:scale-105">
+                  <Link href={`/projects/${project.id}`} className="block bg-gray-900/80 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:scale-105">
                     {project.attributes.image?.data && project.attributes.image.data.length > 0 && (
                       <Image
                         src={prependApiUrl(project.attributes.image.data[0].attributes.url)}
@@ -169,18 +169,15 @@ export function Homepage() {
                           dangerouslySetInnerHTML={{ __html: formattedContent }}
                         />
                       )}
-                      <div className="flex flex-wrap gap-2 mb-4">
+                      <div className="flex flex-wrap gap-2">
                         {project.attributes.tags && typeof project.attributes.tags === 'object' && 'tag' in project.attributes.tags && (
                           <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
                             {project.attributes.tags.tag}
                           </span>
                         )}
                       </div>
-                      <Link href={`/projects/${project.id}`} className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors duration-200">
-                        Learn more <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
@@ -188,7 +185,7 @@ export function Homepage() {
         </div>
       </section>
 
-      {/* Blog Update Section */}
+      {/* Blog Section */}
       <section className="py-20 bg-gray-800">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-12 text-center text-white">Latest Insights</h2>
@@ -199,7 +196,7 @@ export function Homepage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {recentBlogPosts.map((post) => (
-                <div key={post.id} className="bg-gray-900 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <Link href={`/blog/${post.id}`} className="block bg-gray-900 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-1">
                   <div className="relative h-[240px]">
                     <Image
                       src={post.attributes.image?.data 
@@ -222,16 +219,18 @@ export function Homepage() {
                       {sanitizeAndTruncate(post.attributes.summary, 150)}
                     </p>
                     <div className="flex justify-between items-center">
-                      <Link href={`/blog/${post.id}`} className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors duration-200">
-                        Read more <ArrowRight className="ml-2 h-3 w-3" />
-                      </Link>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
+                          {post.attributes.Category}
+                        </span>
+                      </div>
                       <span className="text-sm text-gray-400 flex items-center">
                         <Clock className="w-4 h-4 mr-1" />
                         {post.attributes.readTime} min read
                       </span>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}

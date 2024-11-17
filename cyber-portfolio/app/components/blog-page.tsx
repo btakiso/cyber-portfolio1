@@ -180,7 +180,7 @@ export function BlogPage() {
             {/* Blog Post Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentPosts.map((post) => (
-                <div key={post.id} className="bg-gray-900 rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1">
+                <Link href={`/blog/${post.id}`} className="block bg-gray-900 rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1">
                   <div className="relative h-[240px]">
                     {post.attributes.image && post.attributes.image.data ? (
                       <Image
@@ -208,23 +208,25 @@ export function BlogPage() {
                     <div className="uppercase tracking-wide text-sm text-blue-500 font-semibold mb-1">
                       {post.attributes.Category}
                     </div>
-                    <Link href={`/blog/${post.id}`} className="block text-xl leading-tight font-medium text-white hover:underline mb-2">
+                    <h3 className="block text-xl leading-tight font-medium text-white mb-2">
                       {post.attributes.title}
-                    </Link>
+                    </h3>
                     <p className="text-gray-300 mb-4 line-clamp-3">
                       {truncateText(post.attributes.summary, 150)}
                     </p>
                     <div className="flex justify-between items-center">
-                      <Link href={`/blog/${post.id}`} className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors duration-200">
-                        Read more <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
+                          {post.attributes.Category}
+                        </span>
+                      </div>
                       <span className="text-sm text-gray-400 flex items-center">
                         <Clock className="w-4 h-4 mr-1" />
                         {post.attributes.readTime} min read
                       </span>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
 
