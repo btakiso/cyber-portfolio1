@@ -28,7 +28,7 @@ export function ContactPage() {
   const email = "takiso2b@gmail.com"
   const linkedinUrl = "https://www.linkedin.com/in/bereket-takiso"
   const githubUrl = "https://github.com/btakiso"
-  const calendlyUrl = "https://calendly.com/btakiso2"
+  const calendlyUrl = "https://calendly.com/btakiso2/30min"
 
   const handleCopyEmail = async () => {
     try {
@@ -210,10 +210,10 @@ export function ContactPage() {
               <Card className="overflow-hidden backdrop-blur-sm bg-black/30 border-cyan-500/30 shadow-2xl shadow-cyan-500/20 rounded-3xl sticky top-24">
                 <CardHeader className="space-y-2 relative">
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500" />
-                  <CardTitle className="text-3xl font-bold tracking-tighter text-white text-center">
+                  <CardTitle className="text-2xl font-bold tracking-tighter text-white text-center">
                     Schedule a Meeting
                   </CardTitle>
-                  <CardDescription className="text-base text-gray-400 text-center">
+                  <CardDescription className="text-sm text-gray-400 text-center">
                     Want to discuss something in detail? Schedule a meeting using my calendar.
                   </CardDescription>
                 </CardHeader>
