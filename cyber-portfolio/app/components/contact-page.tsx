@@ -175,6 +175,24 @@ export function ContactPage() {
                           <p>View GitHub profile</p>
                         </TooltipContent>
                       </Tooltip>
+
+                      {/* Calendly Button */}
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="w-full group relative flex items-center gap-2 transition-all duration-300 ease-in-out hover:bg-[#06b6d4] hover:text-white border-[#06b6d4]/50 text-[#06b6d4] rounded-2xl py-6"
+                            onClick={() => (window as any).Calendly.initPopupWidget({url: calendlyUrl})}
+                          >
+                            <Calendar className="h-6 w-6 transition-transform group-hover:scale-110 duration-300" />
+                            <span className="text-lg">Schedule a Meeting</span>
+                            <ExternalLink className="absolute right-4 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Schedule a meeting</p>
+                        </TooltipContent>
+                      </Tooltip>
                     </div>
                   </TooltipProvider>
                 </CardContent>
@@ -229,6 +247,26 @@ export function ContactPage() {
                       Send Message
                     </Button>
                   </form>
+                </CardContent>
+              </Card>
+
+              {/* Add this after your Message Form Card */}
+              <Card className="overflow-hidden backdrop-blur-sm bg-black/30 border-cyan-500/30 shadow-2xl shadow-cyan-500/20 rounded-3xl">
+                <CardHeader className="space-y-2 relative">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500" />
+                  <CardTitle className="text-3xl font-bold tracking-tighter text-white text-center">
+                    Schedule a Meeting
+                  </CardTitle>
+                  <CardDescription className="text-base text-gray-400 text-center">
+                    Book a time that works best for you.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="relative p-6">
+                  <div 
+                    className="calendly-inline-widget" 
+                    data-url={`${calendlyUrl}/30min`}
+                    style={{ minWidth: '320px', height: '700px' }}
+                  />
                 </CardContent>
               </Card>
             </div>
