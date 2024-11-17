@@ -9,66 +9,52 @@ interface CalendlyWidgetProps {
 }
 
 function Calendar({ className, url }: CalendlyWidgetProps) {
-  const [isClient, setIsClient] = React.useState(false)
-  const calendarRef = React.useRef<HTMLDivElement>(null)
-
   React.useEffect(() => {
-    setIsClient(true)
+    // Add Calendly stylesheet
+    const link = document.createElement('link')
+    link.href = 'https://assets.calendly.com/assets/external/widget.css'
+    link.rel = 'stylesheet'
+    document.head.appendChild(link)
 
-    const loadCalendly = async () => {
-      // Load Calendly widget script
-      const script = document.createElement('script')
-      script.id = 'calendly-script'
-      script.src = "https://assets.calendly.com/assets/external/widget.js"
-      script.async = true
-      
-      // Wait for script to load
-      await new Promise((resolve) => {
-        script.onload = resolve
-        document.head.appendChild(script)
-      })
+    // Add Calendly script
+    const script = document.createElement('script')
+    script.src = 'https://assets.calendly.com/assets/external/widget.js'
+    script.async = true
+    document.body.appendChild(script)
 
-      // Initialize Calendly widget after script loads
-      if (calendarRef.current && (window as any).Calendly) {
+    // Initialize Calendly
+    script.onload = () => {
+      if ((window as any).Calendly) {
         ;(window as any).Calendly.initInlineWidget({
           url: url,
-          parentElement: calendarRef.current,
+          parentElement: document.querySelector('.calendly-inline-widget'),
           prefill: {},
           utm: {}
         })
       }
     }
 
-    loadCalendly()
-
     return () => {
-      const script = document.querySelector('#calendly-script')
-      if (script) {
-        script.remove()
-      }
+      // Cleanup
+      document.head.removeChild(link)
+      document.body.removeChild(script)
     }
   }, [url])
-
-  if (!isClient) {
-    return null
-  }
 
   return (
     <div 
       className={cn(
-        "rounded-lg bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
+        "rounded-lg overflow-hidden",
         className
       )}
     >
       <div 
-        ref={calendarRef}
         className="calendly-inline-widget"
+        data-url={url}
         style={{
           minWidth: '320px',
-          height: '600px',
-          borderRadius: '0.5rem',
+          height: '500px', // Reduced height
         }}
-        data-url={url}
       />
     </div>
   )
