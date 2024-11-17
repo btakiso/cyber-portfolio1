@@ -21,9 +21,12 @@ import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import { Calendar as CalendarComponent } from "@/app/components/ui/calendar"
+import { format } from "date-fns"
 
 export function ContactPage() {
   const [copied, setCopied] = useState(false)
+  const [date, setDate] = useState<Date | undefined>(new Date())
   const email = "takiso2b@gmail.com"
   const linkedinUrl = "https://www.linkedin.com/in/bereket-takiso"
   const githubUrl = "https://github.com/btakiso"
@@ -60,167 +63,194 @@ export function ContactPage() {
     <div className="min-h-screen bg-gray-900">
       <Header />
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900">
-        <div className="container px-4 md:px-6 pt-20 max-w-5xl mx-auto">
-          <div className="space-y-6">
-            {/* Contact Methods Card */}
-            <Card className="overflow-hidden backdrop-blur-sm bg-black/30 border-cyan-500/30 shadow-2xl shadow-cyan-500/20 rounded-3xl">
-              <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:30px_30px]" />
-              <CardHeader className="space-y-2 relative">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500" />
-                <CardTitle className="text-3xl font-bold tracking-tighter text-white text-center">
-                  Contact Me
-                </CardTitle>
-                <CardDescription className="text-base text-gray-400 text-center">
-                  Open to discussing new opportunities in cybersecurity. Reach out via:
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="grid gap-6 relative p-6">
-                <TooltipProvider>
-                  <div className="flex flex-col gap-4 items-stretch">
-                    {/* Email Button */}
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className="w-full group relative flex items-center gap-2 transition-all duration-300 ease-in-out hover:bg-cyan-500 hover:text-black border-cyan-500/50 text-cyan-400 rounded-2xl py-6"
-                          onClick={handleCopyEmail}
-                        >
-                          <Mail className="h-6 w-6 transition-transform group-hover:scale-110 duration-300" />
-                          <span className="text-lg">Email</span>
-                          <Copy className="absolute right-4 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100 duration-300" />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Click to copy email address</p>
-                      </TooltipContent>
-                    </Tooltip>
-
-                    {/* LinkedIn Button */}
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className="w-full group relative flex items-center gap-2 transition-all duration-300 ease-in-out hover:bg-[#0077b5] hover:text-white border-[#0077b5]/50 text-[#0077b5] rounded-2xl py-6"
-                          asChild
-                        >
-                          <a
-                            href={linkedinUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 w-full"
+        <div className="container px-4 md:px-6 pt-20 max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-3 gap-6">
+            {/* Left Column - Contact Methods and Message Form */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Contact Methods Card */}
+              <Card className="overflow-hidden backdrop-blur-sm bg-black/30 border-cyan-500/30 shadow-2xl shadow-cyan-500/20 rounded-3xl">
+                <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:30px_30px]" />
+                <CardHeader className="space-y-2 relative">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500" />
+                  <CardTitle className="text-3xl font-bold tracking-tighter text-white text-center">
+                    Contact Me
+                  </CardTitle>
+                  <CardDescription className="text-base text-gray-400 text-center">
+                    Open to discussing new opportunities in cybersecurity. Reach out via:
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="grid gap-6 relative p-6">
+                  <TooltipProvider>
+                    <div className="flex flex-col gap-4 items-stretch">
+                      {/* Email Button */}
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="w-full group relative flex items-center gap-2 transition-all duration-300 ease-in-out hover:bg-cyan-500 hover:text-black border-cyan-500/50 text-cyan-400 rounded-2xl py-6"
+                            onClick={handleCopyEmail}
                           >
-                            <Linkedin className="h-6 w-6 transition-transform group-hover:scale-110 duration-300" />
-                            <span className="text-lg">LinkedIn</span>
-                            <ExternalLink className="absolute right-4 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          </a>
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>View LinkedIn profile</p>
-                      </TooltipContent>
-                    </Tooltip>
+                            <Mail className="h-6 w-6 transition-transform group-hover:scale-110 duration-300" />
+                            <span className="text-lg">Email</span>
+                            <Copy className="absolute right-4 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100 duration-300" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Click to copy email address</p>
+                        </TooltipContent>
+                      </Tooltip>
 
-                    {/* GitHub Button */}
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className="w-full group relative flex items-center gap-2 transition-all duration-300 ease-in-out hover:bg-[#333] hover:text-white border-[#333]/50 text-gray-300 rounded-2xl py-6"
-                          asChild
-                        >
-                          <a
-                            href={githubUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 w-full"
+                      {/* LinkedIn Button */}
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="w-full group relative flex items-center gap-2 transition-all duration-300 ease-in-out hover:bg-[#0077b5] hover:text-white border-[#0077b5]/50 text-[#0077b5] rounded-2xl py-6"
+                            asChild
                           >
-                            <Github className="h-6 w-6 transition-transform group-hover:scale-110 duration-300" />
-                            <span className="text-lg">GitHub</span>
-                            <ExternalLink className="absolute right-4 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          </a>
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>View GitHub profile</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </div>
-                </TooltipProvider>
-              </CardContent>
-            </Card>
+                            <a
+                              href={linkedinUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 w-full"
+                            >
+                              <Linkedin className="h-6 w-6 transition-transform group-hover:scale-110 duration-300" />
+                              <span className="text-lg">LinkedIn</span>
+                              <ExternalLink className="absolute right-4 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            </a>
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>View LinkedIn profile</p>
+                        </TooltipContent>
+                      </Tooltip>
 
-            {/* Message Form Card */}
-            <Card className="overflow-hidden backdrop-blur-sm bg-black/30 border-cyan-500/30 shadow-2xl shadow-cyan-500/20 rounded-3xl">
-              <CardHeader className="space-y-2 relative">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500" />
-                <CardTitle className="text-3xl font-bold tracking-tighter text-white text-center">
-                  Send a Message
-                </CardTitle>
-                <CardDescription className="text-base text-gray-400 text-center">
-                  Have a question or want to discuss something? Send me a message.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="relative p-6">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid gap-4">
-                    <Label htmlFor="name" className="text-white text-lg">Name</Label>
-                    <Input 
-                      id="name" 
-                      name="name" 
-                      placeholder="Your name" 
-                      required 
-                      className="bg-white/10 border-cyan-500/30 text-white placeholder-gray-400 rounded-xl py-6" 
+                      {/* GitHub Button */}
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="w-full group relative flex items-center gap-2 transition-all duration-300 ease-in-out hover:bg-[#333] hover:text-white border-[#333]/50 text-gray-300 rounded-2xl py-6"
+                            asChild
+                          >
+                            <a
+                              href={githubUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 w-full"
+                            >
+                              <Github className="h-6 w-6 transition-transform group-hover:scale-110 duration-300" />
+                              <span className="text-lg">GitHub</span>
+                              <ExternalLink className="absolute right-4 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            </a>
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>View GitHub profile</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </div>
+                  </TooltipProvider>
+                </CardContent>
+              </Card>
+
+              {/* Message Form Card */}
+              <Card className="overflow-hidden backdrop-blur-sm bg-black/30 border-cyan-500/30 shadow-2xl shadow-cyan-500/20 rounded-3xl">
+                <CardHeader className="space-y-2 relative">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500" />
+                  <CardTitle className="text-3xl font-bold tracking-tighter text-white text-center">
+                    Send a Message
+                  </CardTitle>
+                  <CardDescription className="text-base text-gray-400 text-center">
+                    Have a question or want to discuss something? Send me a message.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="relative p-6">
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid gap-4">
+                      <Label htmlFor="name" className="text-white text-lg">Name</Label>
+                      <Input 
+                        id="name" 
+                        name="name" 
+                        placeholder="Your name" 
+                        required 
+                        className="bg-white/10 border-cyan-500/30 text-white placeholder-gray-400 rounded-xl py-6" 
+                      />
+                    </div>
+                    <div className="grid gap-4">
+                      <Label htmlFor="email" className="text-white text-lg">Email</Label>
+                      <Input 
+                        id="email" 
+                        name="email" 
+                        type="email" 
+                        placeholder="Your email" 
+                        required 
+                        className="bg-white/10 border-cyan-500/30 text-white placeholder-gray-400 rounded-xl py-6" 
+                      />
+                    </div>
+                    <div className="grid gap-4">
+                      <Label htmlFor="message" className="text-white text-lg">Message</Label>
+                      <Textarea 
+                        id="message" 
+                        name="message" 
+                        placeholder="Your message" 
+                        required 
+                        className="bg-white/10 border-cyan-500/30 text-white placeholder-gray-400 min-h-[150px] rounded-xl" 
+                      />
+                    </div>
+                    <Button type="submit" className="w-full bg-cyan-500 text-black hover:bg-cyan-600 transition-colors rounded-xl py-6 text-lg">
+                      <Send className="w-5 h-5 mr-2" />
+                      Send Message
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Right Column - Calendar */}
+            <div className="lg:col-span-1 space-y-6">
+              <Card className="overflow-hidden backdrop-blur-sm bg-black/30 border-cyan-500/30 shadow-2xl shadow-cyan-500/20 rounded-3xl sticky top-24">
+                <CardHeader className="space-y-2 relative">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500" />
+                  <CardTitle className="text-3xl font-bold tracking-tighter text-white text-center">
+                    Schedule a Meeting
+                  </CardTitle>
+                  <CardDescription className="text-base text-gray-400 text-center">
+                    Want to discuss something in detail? Pick a date and schedule a meeting.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="relative p-6 space-y-6">
+                  <div className="flex justify-center">
+                    <CalendarComponent
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      className="rounded-md border border-cyan-500/30 bg-black/30"
+                      classNames={{
+                        day_selected: "bg-cyan-500 text-black hover:bg-cyan-400",
+                        day_today: "bg-cyan-500/20 text-cyan-500",
+                        day: "hover:bg-cyan-500/20",
+                        head_cell: "text-cyan-500",
+                      }}
                     />
                   </div>
-                  <div className="grid gap-4">
-                    <Label htmlFor="email" className="text-white text-lg">Email</Label>
-                    <Input 
-                      id="email" 
-                      name="email" 
-                      type="email" 
-                      placeholder="Your email" 
-                      required 
-                      className="bg-white/10 border-cyan-500/30 text-white placeholder-gray-400 rounded-xl py-6" 
-                    />
-                  </div>
-                  <div className="grid gap-4">
-                    <Label htmlFor="message" className="text-white text-lg">Message</Label>
-                    <Textarea 
-                      id="message" 
-                      name="message" 
-                      placeholder="Your message" 
-                      required 
-                      className="bg-white/10 border-cyan-500/30 text-white placeholder-gray-400 min-h-[150px] rounded-xl" 
-                    />
-                  </div>
-                  <Button type="submit" className="w-full bg-cyan-500 text-black hover:bg-cyan-600 transition-colors rounded-xl py-6 text-lg">
-                    <Send className="w-5 h-5 mr-2" />
-                    Send Message
+                  {date && (
+                    <p className="text-center text-gray-400">
+                      Selected date: {format(date, 'PPP')}
+                    </p>
+                  )}
+                  <Button 
+                    className="w-full bg-purple-600 text-white hover:bg-purple-700 transition-colors rounded-xl py-6 text-lg" 
+                    asChild
+                  >
+                    <a href={calendlyUrl} target="_blank" rel="noopener noreferrer">
+                      <Calendar className="w-5 h-5 mr-2" />
+                      Schedule on Calendly
+                    </a>
                   </Button>
-                </form>
-              </CardContent>
-            </Card>
-
-            {/* Calendar Card */}
-            <Card className="overflow-hidden backdrop-blur-sm bg-black/30 border-cyan-500/30 shadow-2xl shadow-cyan-500/20 rounded-3xl">
-              <CardHeader className="space-y-2 relative">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500" />
-                <CardTitle className="text-3xl font-bold tracking-tighter text-white text-center">
-                  Schedule a Meeting
-                </CardTitle>
-                <CardDescription className="text-base text-gray-400 text-center">
-                  Want to discuss something in detail? Schedule a meeting with me.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="relative p-6">
-                <Button className="w-full bg-purple-600 text-white hover:bg-purple-700 transition-colors rounded-xl py-6 text-lg" asChild>
-                  <a href={calendlyUrl} target="_blank" rel="noopener noreferrer">
-                    <Calendar className="w-5 h-5 mr-2" />
-                    Schedule on Calendly
-                  </a>
-                </Button>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
