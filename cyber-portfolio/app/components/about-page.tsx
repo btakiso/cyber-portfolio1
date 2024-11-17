@@ -85,7 +85,7 @@ export default function AboutPage() {
         <h1 className="text-4xl font-bold mb-8 text-center text-blue-500">About Me</h1>
 
         {/* Profile Introduction */}
-        <section className="mb-16 bg-gray-900 rounded-3xl overflow-hidden shadow-2xl">
+        <section className="mb-16 cyber-card">
           <div className="relative h-64 md:h-80">
             <Image
               src={imageError ? placeholderImage : prependApiUrl(imageUrl)}
@@ -108,18 +108,18 @@ export default function AboutPage() {
                   width={192}
                   height={192}
                   style={{ objectFit: "cover" }}
-                  className="rounded-full border-4 border-blue-500 shadow-lg"
+                  className="rounded-full border-4 border-cyber-primary shadow-lg"
                   onError={() => setImageError(true)}
                   priority
                   quality={100}
                 />
               </div>
               <div className="text-center md:text-left flex-grow">
-                <h2 className="text-3xl md:text-4xl font-bold mb-2 text-white">{aboutData.attributes.name}</h2>
-                <p className="text-blue-400 text-lg mb-4">Cybersecurity enthusiast</p>
+                <h2 className="cyber-heading text-3xl md:text-4xl mb-2">{aboutData.attributes.name}</h2>
+                <p className="text-cyber-primary text-lg mb-4">Cybersecurity enthusiast</p>
               </div>
             </div>
-            <div className="mt-6 bg-gray-800 rounded-xl p-6 shadow-inner">
+            <div className="mt-6 bg-cyber-muted rounded-xl p-6 shadow-inner">
               <div className="text-gray-300 space-y-4 font-light leading-relaxed">
                 {aboutData.attributes.Bio && aboutData.attributes.Bio.map((paragraph, index) => (
                   <p key={index} className="text-lg">{paragraph.children[0].text}</p>
@@ -129,7 +129,7 @@ export default function AboutPage() {
             <div className="mt-8 text-center">
               <Link
                 href="/contact"
-                className="inline-flex items-center px-6 py-3 border-2 border-blue-500 text-blue-500 rounded-full hover:bg-blue-500 hover:text-white transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                className="cyber-button inline-flex items-center px-6 py-3"
               >
                 <span className="mr-2">Contact Me</span>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -142,7 +142,7 @@ export default function AboutPage() {
 
         {/* Experience Timeline */}
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6">Professional Experience</h2>
+          <h2 className="cyber-heading mb-6">Professional Experience</h2>
           <div className="space-y-8">
             {Array.isArray(experience) && experience.length > 0 ? (
               experience
@@ -159,10 +159,10 @@ export default function AboutPage() {
                     return null;
                   }
                   return (
-                    <div key={job.id} className="relative pl-8 pb-8 border-l-2 border-gray-700 transition-all duration-300 ease-in-out hover:border-blue-500">
-                      <div className="absolute left-0 top-0 w-4 h-4 bg-blue-500 rounded-full -translate-x-1/2 transition-all duration-300 ease-in-out hover:scale-125 hover:bg-blue-400"></div>
-                      <div className="bg-gray-900 p-6 rounded-2xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-2xl hover:bg-gray-800">
-                        <h3 className="text-xl font-semibold text-blue-400">{job.attributes.title}</h3>
+                    <div key={job.id} className="relative pl-8 pb-8 border-l-2 border-cyber-muted transition-all duration-300 ease-in-out hover:border-cyber-primary">
+                      <div className="absolute left-0 top-0 w-4 h-4 bg-cyber-primary rounded-full -translate-x-1/2 transition-all duration-300 ease-in-out hover:scale-125 hover:bg-cyber-secondary"></div>
+                      <div className="cyber-card p-6 transition-all duration-300 ease-in-out hover:shadow-2xl hover:bg-cyber-muted">
+                        <h3 className="text-xl font-semibold text-cyber-primary">{job.attributes.title}</h3>
                         <p className="text-gray-400 mb-2">{job.attributes.company} | {job.attributes.duration}</p>
                         <ul className="list-disc list-inside text-gray-300">
                           {Array.isArray(job.attributes.description) ? (
@@ -191,13 +191,13 @@ export default function AboutPage() {
 
         {/* Skills Section */}
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6">Skills</h2>
+          <h2 className="cyber-heading mb-6">Skills</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {skills.length > 0 && Object.entries(skills[0].attributes).map(([category, skillList]) => {
               if (['Technical_Skills', 'Analytical_Skills', 'Communication_Skills'].includes(category) && Array.isArray(skillList)) {
                 return (
-                  <div key={category} className="bg-gray-900 p-6 rounded-2xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-105 hover:bg-gray-800">
-                    <h3 className="text-xl font-semibold mb-4 text-blue-400">{category.replace('_', ' ')}</h3>
+                  <div key={category} className="cyber-card p-6 transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-105">
+                    <h3 className="text-xl font-semibold mb-4 text-cyber-primary">{category.replace('_', ' ')}</h3>
                     <ul className="space-y-2">
                       {skillList.map((item, skillIndex) => (
                         <li key={skillIndex} className="flex items-center">
@@ -216,10 +216,10 @@ export default function AboutPage() {
 
         {/* Certifications */}
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6">Certifications</h2>
+          <h2 className="cyber-heading mb-6">Certifications</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {certifications.map((cert, index) => (
-              <div key={index} className="bg-gray-900 p-6 rounded-2xl shadow-lg flex flex-col transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-105 hover:bg-gray-800">
+              <div key={index} className="cyber-card p-6 flex flex-col transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-105">
                 <div className="flex items-center mb-4">
                   <div className="bg-white p-3 rounded-2xl mr-4 flex-shrink-0">
                     <Image
@@ -244,7 +244,7 @@ export default function AboutPage() {
                   href={cert.attributes.Show_Credential}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-auto text-center px-4 py-2 border-2 border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition-colors duration-300 flex items-center justify-center group w-3/4 mx-auto"
+                  className="cyber-button mt-auto text-center px-4 py-2 flex items-center justify-center group w-3/4 mx-auto"
                 >
                   <span className="group-hover:mr-2 transition-all duration-100">View Credential</span>
                   <ExternalLink className="w-4 h-4 ml-2 opacity-0 group-hover:opacity-100 transition-all duration-100" />

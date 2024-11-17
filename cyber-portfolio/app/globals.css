@@ -2,22 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-@import 'react-day-picker/dist/style.css';
+@layer base {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 17, 24, 39;
+    --background-end-rgb: 3, 7, 18;
+    --accent-color: 6, 182, 212;
+    --accent-foreground: 0, 0, 0;
+  }
 
-:root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
+  body {
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(
+      to bottom,
+      rgb(var(--background-start-rgb)),
+      rgb(var(--background-end-rgb))
+    );
+  }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer components {
+  .cyber-card {
+    @apply overflow-hidden backdrop-blur-sm bg-black/30 border-cyan-500/30 shadow-2xl shadow-cyan-500/20 rounded-3xl;
+  }
+
+  .cyber-gradient-line {
+    @apply absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500;
+  }
+
+  .cyber-button {
+    @apply w-full group relative flex items-center gap-2 transition-all duration-300 ease-in-out 
+    hover:bg-cyan-500 hover:text-black border-cyan-500/50 text-cyan-400 rounded-xl py-4;
+  }
+
+  .cyber-input {
+    @apply bg-white/10 border-cyan-500/30 text-white placeholder-gray-400 rounded-xl py-5;
+  }
+
+  .cyber-heading {
+    @apply text-2xl font-bold tracking-tighter text-white text-center;
+  }
+
+  .cyber-description {
+    @apply text-sm text-gray-400 text-center;
+  }
 }
 
 .youtube-embed {

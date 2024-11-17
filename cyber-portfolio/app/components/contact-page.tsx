@@ -24,7 +24,7 @@ import { Label } from "@/components/ui/label"
 
 export function ContactPage() {
   const [copied, setCopied] = useState(false)
-  const email = "takiso2b@gmail.com"
+  const email = "berekettakiso@gmail.com"
   const linkedinUrl = "https://www.linkedin.com/in/bereket-takiso"
   const githubUrl = "https://github.com/btakiso"
   const calendlyUrl = "https://calendly.com/btakiso2/30min"
@@ -50,22 +50,8 @@ export function ContactPage() {
     }
   }, [])
 
-  const handleCopyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(email)
-      setCopied(true)
-      toast({
-        title: "Email copied!",
-        description: "The email address has been copied to your clipboard.",
-      })
-      setTimeout(() => setCopied(false), 2000)
-    } catch (err) {
-      toast({
-        title: "Failed to copy",
-        description: "Please try copying the email manually.",
-        variant: "destructive",
-      })
-    }
+  const handleEmailClick = () => {
+    window.open(`mailto:${email}`, '_blank')
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -106,15 +92,18 @@ export function ContactPage() {
                           <Button
                             variant="outline"
                             className="w-full group relative flex items-center gap-2 transition-all duration-300 ease-in-out hover:bg-cyan-500 hover:text-black border-cyan-500/50 text-cyan-400 rounded-xl py-4"
-                            onClick={handleCopyEmail}
+                            onClick={handleEmailClick}
+                            asChild
                           >
-                            <Mail className="h-5 w-5 transition-transform group-hover:scale-110 duration-300" />
-                            <span>Email</span>
-                            <Copy className="absolute right-4 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100 duration-300" />
+                            <a className="flex items-center gap-2 w-full">
+                              <Mail className="h-5 w-5 transition-transform group-hover:scale-110 duration-300" />
+                              <span>Email</span>
+                              <ExternalLink className="absolute right-4 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100 duration-300" />
+                            </a>
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>Click to copy email address</p>
+                          <p>Open Gmail</p>
                         </TooltipContent>
                       </Tooltip>
 
