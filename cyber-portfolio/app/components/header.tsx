@@ -10,6 +10,7 @@ const navItems = [
   { href: '/projects', icon: Network, label: 'Projects' },
   { href: '/blog', icon: Book, label: 'Blog' },
   { href: '/about', icon: User, label: 'About' },
+  { href: '/contact', icon: User, label: 'Contact' },
 ]
 
 export function Header() {
