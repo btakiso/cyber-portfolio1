@@ -143,12 +143,13 @@ export function Homepage() {
               
                 return (
                   <Link 
+                    key={project.id}
                     href={`/projects/${project.id}`} 
-                    className="group block bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 
-                      rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 
-                      hover:shadow-3xl hover:shadow-blue-500/30 relative"
+                    className="group relative block bg-black/30 border border-blue-500/30 shadow-2xl 
+                      shadow-blue-500/20 rounded-xl overflow-hidden transition-all duration-300 
+                      hover:-translate-y-1 hover:shadow-3xl hover:shadow-blue-500/30"
                   >
-                    <div className="cyber-gradient-line" />
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 z-10" />
                     <div className="relative">
                       {project.attributes.image?.data && project.attributes.image.data.length > 0 && (
                         <Image
@@ -212,12 +213,13 @@ export function Homepage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {recentBlogPosts.map((post) => (
                 <Link 
+                  key={post.id}
                   href={`/blog/${post.id}`} 
-                  className="group block bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 
-                    rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 
-                    hover:shadow-3xl hover:shadow-blue-500/30 relative"
+                  className="group relative block bg-black/30 border border-blue-500/30 shadow-2xl 
+                    shadow-blue-500/20 rounded-xl overflow-hidden transition-all duration-300 
+                    hover:-translate-y-1 hover:shadow-3xl hover:shadow-blue-500/30"
                 >
-                  <div className="cyber-gradient-line" />
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 z-10" />
                   <div className="relative h-[240px]">
                     <Image
                       src={post.attributes.image?.data 

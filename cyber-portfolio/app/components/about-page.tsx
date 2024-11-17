@@ -166,11 +166,11 @@ export default function AboutPage() {
                     <div className="absolute left-0 top-0 w-4 h-4 bg-blue-500 rounded-full -translate-x-1/2 
                       transition-all duration-300 group-hover:scale-150 group-hover:shadow-lg group-hover:shadow-blue-500/50">
                     </div>
-                    <div className="overflow-hidden backdrop-blur-sm bg-black/30 border-blue-500/30 
+                    <div className="overflow-hidden bg-black/30 border-blue-500/30 
                       shadow-2xl shadow-blue-500/20 rounded-3xl p-6 transform transition-all duration-300 
                       hover:scale-[1.02] hover:shadow-3xl hover:shadow-blue-500/30 hover:-translate-y-1">
                       <div className="cyber-gradient-line" />
-                      <h3 className="text-xl font-semibold text-blue-400 transform transition-all duration-300 group-hover:translate-x-2">
+                      <h3 className="text-xl font-semibold text-blue-400">
                         {job.attributes.title}
                       </h3>
                       <p className="text-gray-400 mb-2">{job.attributes.company} | {job.attributes.duration}</p>
@@ -207,18 +207,17 @@ export default function AboutPage() {
               if (['Technical_Skills', 'Analytical_Skills', 'Communication_Skills'].includes(category) && Array.isArray(skillList)) {
                 return (
                   <div key={category} 
-                    className="overflow-hidden backdrop-blur-sm bg-black/30 border-blue-500/30 
+                    className="overflow-hidden bg-black/30 border-blue-500/30 
                     shadow-2xl shadow-blue-500/20 rounded-3xl p-6 transform transition-all duration-300 
                     hover:scale-105 hover:shadow-3xl hover:shadow-blue-500/30 group">
                     <div className="cyber-gradient-line" />
-                    <h3 className="text-xl font-semibold mb-4 text-blue-400 transform transition-all duration-300 group-hover:translate-x-2">
+                    <h3 className="text-xl font-semibold mb-4 text-blue-400">
                       {category.replace('_', ' ')}
                     </h3>
                     <ul className="space-y-2">
                       {skillList.map((item, skillIndex) => (
-                        <li key={skillIndex} 
-                          className="flex items-center transform transition-all duration-300 hover:translate-x-2">
-                          <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 transition-all duration-300 group-hover:scale-150"></span>
+                        <li key={skillIndex} className="flex items-center">
+                          <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
                           {item.children[0].children[0].text}
                         </li>
                       ))}
@@ -238,12 +237,12 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {certifications.map((cert, index) => (
               <div key={index} 
-                className="overflow-hidden backdrop-blur-sm bg-black/30 border-blue-500/30 
+                className="overflow-hidden bg-black/30 border-blue-500/30 
                 shadow-2xl shadow-blue-500/20 rounded-3xl p-6 transform transition-all duration-300 
                 hover:scale-105 hover:shadow-3xl hover:shadow-blue-500/30 group">
                 <div className="cyber-gradient-line" />
                 <div className="flex items-center mb-4">
-                  <div className="bg-white p-3 rounded-2xl mr-4 flex-shrink-0 transform transition-all duration-300 group-hover:scale-110">
+                  <div className="bg-white p-3 rounded-2xl mr-4 flex-shrink-0">
                     <Image
                       src={prependApiUrl(cert.attributes.logo.data.attributes.url)}
                       alt={`${cert.attributes.Name} logo`}
@@ -252,7 +251,6 @@ export default function AboutPage() {
                       style={{ width: "80px", height: "80px", objectFit: "contain" }}
                       priority
                       quality={100}
-                      className="transition-transform duration-300 group-hover:rotate-3"
                     />
                   </div>
                   <div>
@@ -269,12 +267,10 @@ export default function AboutPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-6 py-3 mt-4 border-2 border-blue-500 text-blue-500 
                   rounded-full hover:bg-blue-500 hover:text-white transition-all duration-300 
-                  transform hover:scale-105 hover:-translate-y-1 group"
+                  hover:scale-105 hover:-translate-y-1 group"
                 >
-                  <span className="mr-2 transition-transform duration-300 group-hover:translate-x-[-4px]">
-                    View Credential
-                  </span>
-                  <ExternalLink className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-2" />
+                  <span className="mr-2">View Credential</span>
+                  <ExternalLink className="h-4 w-4" />
                 </a>
               </div>
             ))}
