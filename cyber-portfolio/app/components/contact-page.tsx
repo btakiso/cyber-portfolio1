@@ -27,18 +27,34 @@ export function ContactPage() {
   const email = "takiso2b@gmail.com"
   const linkedinUrl = "https://www.linkedin.com/in/bereket-takiso"
   const githubUrl = "https://github.com/btakiso"
-  const calendlyUrl = "https://calendly.com/btakiso2/30min"
+  const calendlyUrl = "https://calendly.com/btakiso2"
 
   useEffect(() => {
+    const link = document.createElement('link')
+    link.href = 'https://assets.calendly.com/assets/external/widget.css'
+    link.rel = 'stylesheet'
+    document.head.appendChild(link)
+
     const script = document.createElement('script')
     script.src = 'https://assets.calendly.com/assets/external/widget.js'
     script.async = true
     document.body.appendChild(script)
 
-    return () => {
-      if (script) {
-        document.body.removeChild(script)
+    script.onload = () => {
+      if ((window as any).Calendly) {
+        ;(window as any).Calendly.initBadgeWidget({
+          url: calendlyUrl,
+          text: 'Schedule a Meeting',
+          color: '#06b6d4',
+          textColor: '#ffffff',
+          branding: false
+        })
       }
+    }
+
+    return () => {
+      document.head.removeChild(link)
+      document.body.removeChild(script)
     }
   }, [])
 
@@ -74,7 +90,7 @@ export function ContactPage() {
       <Header />
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900">
         <div className="container px-4 md:px-6 pt-20 max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-3 gap-6">
+          <div className="grid lg:grid-cols-2 gap-6">
             {/* Left Column - Contact Methods and Message Form */}
             <div className="lg:col-span-2 space-y-6">
               {/* Contact Methods Card */}
@@ -213,31 +229,6 @@ export function ContactPage() {
                       Send Message
                     </Button>
                   </form>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Right Column - Calendar */}
-            <div className="lg:col-span-1 space-y-6">
-              <Card className="overflow-hidden backdrop-blur-sm bg-black/30 border-cyan-500/30 shadow-2xl shadow-cyan-500/20 rounded-3xl sticky top-24">
-                <CardHeader className="space-y-2 relative">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500" />
-                  <CardTitle className="text-2xl font-bold tracking-tighter text-white text-center">
-                    Schedule a Meeting
-                  </CardTitle>
-                  <CardDescription className="text-sm text-gray-400 text-center">
-                    Want to discuss something in detail? Schedule a meeting using my calendar.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="relative p-0">
-                  <div 
-                    className="calendly-inline-widget rounded-md border border-cyan-500/30 bg-black/30 w-full"
-                    data-url="https://calendly.com/btakiso2"
-                    style={{
-                      minWidth: '320px',
-                      height: '600px',
-                    }}
-                  />
                 </CardContent>
               </Card>
             </div>
