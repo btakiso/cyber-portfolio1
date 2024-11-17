@@ -9,29 +9,53 @@ interface CalendlyWidgetProps {
 }
 
 function Calendar({ className, url }: CalendlyWidgetProps) {
-  React.useEffect(() => {
-    // Load Calendly widget script
-    const script = document.createElement('script')
-    script.src = "https://assets.calendly.com/assets/external/widget.js"
-    script.async = true
-    document.body.appendChild(script)
+  const [isClient, setIsClient] = React.useState(false)
 
-    return () => {
-      // Cleanup script on component unmount
-      document.body.removeChild(script)
+  React.useEffect(() => {
+    setIsClient(true)
+
+    // Load Calendly widget script
+    const head = document.querySelector('head')
+    if (!document.querySelector('#calendly-script')) {
+      const script = document.createElement('script')
+      script.id = 'calendly-script'
+      script.src = "https://assets.calendly.com/assets/external/widget.js"
+      script.async = true
+      head?.appendChild(script)
     }
-  }, [])
+
+    // Initialize Calendly widget
+    if ((window as any).Calendly) {
+      ;(window as any).Calendly.initInlineWidget({
+        url: url,
+        parentElement: document.querySelector('.calendly-inline-widget'),
+        prefill: {},
+        utm: {}
+      })
+    }
+
+    // Cleanup
+    return () => {
+      const script = document.querySelector('#calendly-script')
+      if (script) {
+        script.remove()
+      }
+    }
+  }, [url])
+
+  if (!isClient) {
+    return null
+  }
 
   return (
     <div 
       className={cn(
-        "rounded-lg bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60",
+        "rounded-lg bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
         className
       )}
     >
       <div 
         className="calendly-inline-widget"
-        data-url={url}
         style={{
           minWidth: '320px',
           height: '700px',

@@ -217,10 +217,10 @@ export function ContactPage() {
                     Want to discuss something in detail? Schedule a meeting using my calendar.
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="relative p-6 space-y-6">
+                <CardContent className="relative p-0">
                   <CalendarComponent 
                     url={calendlyUrl}
-                    className="rounded-md border border-cyan-500/30 bg-black/30"
+                    className="rounded-md border border-cyan-500/30 bg-black/30 w-full"
                   />
                 </CardContent>
               </Card>
