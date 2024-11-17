@@ -1,7 +1,7 @@
 "use client"
 
 import { Copy, Github, Linkedin, Mail, ExternalLink, Send, Calendar } from 'lucide-react'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Header } from './header'
 import { Button } from "@/components/ui/button"
 import {
@@ -21,7 +21,6 @@ import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { Calendar as CalendarComponent } from "@/app/components/ui/calendar"
 
 export function ContactPage() {
   const [copied, setCopied] = useState(false)
@@ -29,6 +28,19 @@ export function ContactPage() {
   const linkedinUrl = "https://www.linkedin.com/in/bereket-takiso"
   const githubUrl = "https://github.com/btakiso"
   const calendlyUrl = "https://calendly.com/btakiso2/30min"
+
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = 'https://assets.calendly.com/assets/external/widget.js'
+    script.async = true
+    document.body.appendChild(script)
+
+    return () => {
+      if (script) {
+        document.body.removeChild(script)
+      }
+    }
+  }, [])
 
   const handleCopyEmail = async () => {
     try {
@@ -218,9 +230,13 @@ export function ContactPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="relative p-0">
-                  <CalendarComponent 
-                    url={calendlyUrl}
-                    className="rounded-md border border-cyan-500/30 bg-black/30 w-full"
+                  <div 
+                    className="calendly-inline-widget rounded-md border border-cyan-500/30 bg-black/30 w-full"
+                    data-url="https://calendly.com/btakiso2"
+                    style={{
+                      minWidth: '320px',
+                      height: '600px',
+                    }}
                   />
                 </CardContent>
               </Card>
