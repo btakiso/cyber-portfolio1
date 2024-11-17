@@ -82,34 +82,34 @@ export function ContactPage() {
       <Header />
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900">
         <div className="container px-4 md:px-6 pt-20 max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-6">
-            {/* Left Column - Contact Methods and Message Form */}
-            <div className="lg:col-span-2 space-y-6">
+          <div className="space-y-6">
+            {/* Contact Methods and Message Form - Side by Side */}
+            <div className="grid md:grid-cols-2 gap-6">
               {/* Contact Methods Card */}
-              <Card className="overflow-hidden backdrop-blur-sm bg-black/30 border-cyan-500/30 shadow-2xl shadow-cyan-500/20 rounded-3xl">
+              <Card className="overflow-hidden backdrop-blur-sm bg-black/30 border-cyan-500/30 shadow-2xl shadow-cyan-500/20 rounded-3xl h-full">
                 <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:30px_30px]" />
                 <CardHeader className="space-y-2 relative">
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500" />
-                  <CardTitle className="text-3xl font-bold tracking-tighter text-white text-center">
+                  <CardTitle className="text-2xl font-bold tracking-tighter text-white text-center">
                     Contact Me
                   </CardTitle>
-                  <CardDescription className="text-base text-gray-400 text-center">
+                  <CardDescription className="text-sm text-gray-400 text-center">
                     Open to discussing new opportunities in cybersecurity. Reach out via:
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="grid gap-6 relative p-6">
+                <CardContent className="grid gap-4 relative p-6">
                   <TooltipProvider>
-                    <div className="flex flex-col gap-4 items-stretch">
+                    <div className="flex flex-col gap-3">
                       {/* Email Button */}
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Button
                             variant="outline"
-                            className="w-full group relative flex items-center gap-2 transition-all duration-300 ease-in-out hover:bg-cyan-500 hover:text-black border-cyan-500/50 text-cyan-400 rounded-2xl py-6"
+                            className="w-full group relative flex items-center gap-2 transition-all duration-300 ease-in-out hover:bg-cyan-500 hover:text-black border-cyan-500/50 text-cyan-400 rounded-xl py-4"
                             onClick={handleCopyEmail}
                           >
-                            <Mail className="h-6 w-6 transition-transform group-hover:scale-110 duration-300" />
-                            <span className="text-lg">Email</span>
+                            <Mail className="h-5 w-5 transition-transform group-hover:scale-110 duration-300" />
+                            <span>Email</span>
                             <Copy className="absolute right-4 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100 duration-300" />
                           </Button>
                         </TooltipTrigger>
@@ -174,7 +174,9 @@ export function ContactPage() {
                           <Button
                             variant="outline"
                             className="w-full group relative flex items-center gap-2 transition-all duration-300 ease-in-out hover:bg-[#06b6d4] hover:text-white border-[#06b6d4]/50 text-[#06b6d4] rounded-2xl py-6"
-                            onClick={() => (window as any).Calendly.initPopupWidget({url: calendlyUrl})}
+                            onClick={() => (window as any).Calendly.initPopupWidget({
+                              url: 'https://calendly.com/btakiso2/30min?hide_gdpr_banner=1&background_color=1f2937&text_color=ffffff&primary_color=06b6d4&hide_event_type_details=1'
+                            })}
                           >
                             <Calendar className="h-6 w-6 transition-transform group-hover:scale-110 duration-300" />
                             <span className="text-lg">Schedule a Meeting</span>
@@ -191,41 +193,41 @@ export function ContactPage() {
               </Card>
 
               {/* Message Form Card */}
-              <Card className="overflow-hidden backdrop-blur-sm bg-black/30 border-cyan-500/30 shadow-2xl shadow-cyan-500/20 rounded-3xl">
+              <Card className="overflow-hidden backdrop-blur-sm bg-black/30 border-cyan-500/30 shadow-2xl shadow-cyan-500/20 rounded-3xl h-full">
                 <CardHeader className="space-y-2 relative">
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500" />
-                  <CardTitle className="text-3xl font-bold tracking-tighter text-white text-center">
+                  <CardTitle className="text-2xl font-bold tracking-tighter text-white text-center">
                     Send a Message
                   </CardTitle>
-                  <CardDescription className="text-base text-gray-400 text-center">
-                    Have a question or want to discuss something? Send me a message.
+                  <CardDescription className="text-sm text-gray-400 text-center">
+                    Have a question or want to discuss something?
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="relative p-6">
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid gap-4">
-                      <Label htmlFor="name" className="text-white text-lg">Name</Label>
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div className="grid gap-3">
+                      <Label htmlFor="name" className="text-white">Name</Label>
                       <Input 
                         id="name" 
                         name="name" 
                         placeholder="Your name" 
                         required 
-                        className="bg-white/10 border-cyan-500/30 text-white placeholder-gray-400 rounded-xl py-6" 
+                        className="bg-white/10 border-cyan-500/30 text-white placeholder-gray-400 rounded-xl py-5" 
                       />
                     </div>
-                    <div className="grid gap-4">
-                      <Label htmlFor="email" className="text-white text-lg">Email</Label>
+                    <div className="grid gap-3">
+                      <Label htmlFor="email" className="text-white">Email</Label>
                       <Input 
                         id="email" 
                         name="email" 
                         type="email" 
                         placeholder="Your email" 
                         required 
-                        className="bg-white/10 border-cyan-500/30 text-white placeholder-gray-400 rounded-xl py-6" 
+                        className="bg-white/10 border-cyan-500/30 text-white placeholder-gray-400 rounded-xl py-5" 
                       />
                     </div>
-                    <div className="grid gap-4">
-                      <Label htmlFor="message" className="text-white text-lg">Message</Label>
+                    <div className="grid gap-3">
+                      <Label htmlFor="message" className="text-white">Message</Label>
                       <Textarea 
                         id="message" 
                         name="message" 
@@ -234,34 +236,34 @@ export function ContactPage() {
                         className="bg-white/10 border-cyan-500/30 text-white placeholder-gray-400 min-h-[150px] rounded-xl" 
                       />
                     </div>
-                    <Button type="submit" className="w-full bg-cyan-500 text-black hover:bg-cyan-600 transition-colors rounded-xl py-6 text-lg">
-                      <Send className="w-5 h-5 mr-2" />
+                    <Button type="submit" className="w-full bg-cyan-500 text-black hover:bg-cyan-600 transition-colors rounded-xl py-5 text-base">
+                      <Send className="w-4 h-4 mr-2" />
                       Send Message
                     </Button>
                   </form>
                 </CardContent>
               </Card>
-
-              {/* Add this after your Message Form Card */}
-              <Card className="overflow-hidden backdrop-blur-sm bg-black/30 border-cyan-500/30 shadow-2xl shadow-cyan-500/20 rounded-3xl">
-                <CardHeader className="space-y-2 relative">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500" />
-                  <CardTitle className="text-3xl font-bold tracking-tighter text-white text-center">
-                    Schedule a Meeting
-                  </CardTitle>
-                  <CardDescription className="text-base text-gray-400 text-center">
-                    Book a time that works best for you.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="relative p-6">
-                  <div 
-                    className="calendly-inline-widget" 
-                    data-url="https://calendly.com/btakiso2?hide_gdpr_banner=1&background_color=1f2937&text_color=ffffff&primary_color=06b6d4"
-                    style={{ minWidth: '320px', height: '700px' }}
-                  />
-                </CardContent>
-              </Card>
             </div>
+
+            {/* Calendly Section - Full Width Below */}
+            <Card className="overflow-hidden backdrop-blur-sm bg-black/30 border-cyan-500/30 shadow-2xl shadow-cyan-500/20 rounded-3xl">
+              <CardHeader className="space-y-2 relative">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500" />
+                <CardTitle className="text-2xl font-bold tracking-tighter text-white text-center">
+                  Schedule a Meeting
+                </CardTitle>
+                <CardDescription className="text-sm text-gray-400 text-center">
+                  Book a time that works best for you.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="relative p-6">
+                <div 
+                  className="calendly-inline-widget" 
+                  data-url="https://calendly.com/btakiso2/30min?hide_gdpr_banner=1&background_color=1f2937&text_color=ffffff&primary_color=06b6d4&hide_event_type_details=1"
+                  style={{ minWidth: '320px', height: '700px' }}
+                />
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
