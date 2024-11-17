@@ -128,7 +128,7 @@ export default function AboutPage() {
             </div>
             <div className="mt-8 text-center">
               <Link
-                href="#contact"
+                href="/contact"
                 className="inline-flex items-center px-6 py-3 border-2 border-blue-500 text-blue-500 rounded-full hover:bg-blue-500 hover:text-white transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
               >
                 <span className="mr-2">Contact Me</span>
@@ -251,30 +251,6 @@ export default function AboutPage() {
                 </a>
               </div>
             ))}
-          </div>
-        </section>
-
-        {/* Contact Me Section */}
-        <section id="contact" className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6">Contact Me</h2>
-          <div className="bg-gray-900 p-6 rounded-2xl shadow-inner">
-            <p className="mb-6 text-gray-300">
-              Open to discussing new opportunities in cybersecurity. Reach out via:
-            </p>
-            <div className="space-y-4">
-              <a href="mailto:takiso2b@gmail.com" className="flex items-center group">
-                <Mail className="w-5 h-5 mr-3 text-blue-400 group-hover:text-blue-300 transition-colors" />
-                <span className="text-gray-300 group-hover:text-blue-300 transition-colors">Email</span>
-              </a>
-              <a href="https://www.linkedin.com/in/bereket-takiso" target="_blank" rel="noopener noreferrer" className="flex items-center group">
-                <Linkedin className="w-5 h-5 mr-3 text-blue-400 group-hover:text-blue-300 transition-colors" />
-                <span className="text-gray-300 group-hover:text-blue-300 transition-colors">LinkedIn</span>
-              </a>
-              <a href="https://github.com/btakiso" target="_blank" rel="noopener noreferrer" className="flex items-center group">
-                <Github className="w-5 h-5 mr-3 text-blue-400 group-hover:text-blue-300 transition-colors" />
-                <span className="text-gray-300 group-hover:text-blue-300 transition-colors">GitHub</span>
-              </a>
-            </div>
           </div>
         </section>
       </main>
