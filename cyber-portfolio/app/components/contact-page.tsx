@@ -27,34 +27,26 @@ export function ContactPage() {
   const email = "takiso2b@gmail.com"
   const linkedinUrl = "https://www.linkedin.com/in/bereket-takiso"
   const githubUrl = "https://github.com/btakiso"
-  const calendlyUrl = "https://calendly.com/btakiso2"
+  const calendlyUrl = "https://calendly.com/btakiso2/30min"
 
   useEffect(() => {
-    const link = document.createElement('link')
-    link.href = 'https://assets.calendly.com/assets/external/widget.css'
-    link.rel = 'stylesheet'
-    document.head.appendChild(link)
-
     const script = document.createElement('script')
     script.src = 'https://assets.calendly.com/assets/external/widget.js'
     script.async = true
     document.body.appendChild(script)
 
-    script.onload = () => {
-      if ((window as any).Calendly) {
-        ;(window as any).Calendly.initBadgeWidget({
-          url: calendlyUrl,
-          text: 'Schedule a Meeting',
-          color: '#06b6d4',
-          textColor: '#ffffff',
-          branding: false
-        })
-      }
-    }
+    const link = document.createElement('link')
+    link.href = 'https://assets.calendly.com/assets/external/widget.css'
+    link.rel = 'stylesheet'
+    document.head.appendChild(link)
 
     return () => {
-      document.head.removeChild(link)
-      document.body.removeChild(script)
+      if (script.parentNode) {
+        script.parentNode.removeChild(script)
+      }
+      if (link.parentNode) {
+        link.parentNode.removeChild(link)
+      }
     }
   }, [])
 
@@ -264,7 +256,7 @@ export function ContactPage() {
                 <CardContent className="relative p-6">
                   <div 
                     className="calendly-inline-widget" 
-                    data-url={`${calendlyUrl}/30min`}
+                    data-url="https://calendly.com/btakiso2/30min"
                     style={{ minWidth: '320px', height: '700px' }}
                   />
                 </CardContent>
