@@ -127,12 +127,14 @@ export default function ProjectPage() {
       <Header />
       <section className="py-16 bg-gray-800">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold text-white mb-8 text-center">Featured Projects</h1>
+          <h1 className="text-4xl font-bold text-blue-500 mb-8 text-center">Featured Projects</h1>
           
-          {/* Add sorting dropdown */}
+          {/* Updated sorting dropdown styling */}
           <div className="mb-8 flex justify-end">
             <select
-              className="bg-gray-900 text-white border border-gray-700 rounded-full py-2 px-4 focus:outline-none focus:border-blue-500"
+              className="bg-black/30 border-blue-500/30 text-white rounded-full py-2 px-4 
+                focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 
+                transition-all duration-300"
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value)}
             >
@@ -147,36 +149,62 @@ export default function ProjectPage() {
               const formattedContent = formatContent(project.attributes.description);
               
               return (
-                <Link href={`/projects/${project.id}`} className="block bg-gray-900 rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
-                  <Image
-                    src={project.attributes.image?.data && project.attributes.image.data.length > 0
-                      ? prependApiUrl(project.attributes.image.data[0].attributes.url)
-                      : `/placeholder.svg?height=200&width=400&text=Project+${project.id}`}
-                    alt={project.attributes.title || `Project ${project.id} thumbnail`}
-                    width={400}
-                    height={200}
-                    style={{ objectFit: 'cover', objectPosition: 'center' }}
-                    className="w-full h-48 object-cover rounded-t-xl"
-                    priority
-                    quality={100}
-                  />
-                  <div className="p-6 bg-gray-900">
+                <Link 
+                  href={`/projects/${project.id}`} 
+                  className="group block bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 
+                    rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 
+                    hover:shadow-3xl hover:shadow-blue-500/30 relative"
+                >
+                  <div className="cyber-gradient-line" />
+                  <div className="relative">
+                    <Image
+                      src={project.attributes.image?.data && project.attributes.image.data.length > 0
+                        ? prependApiUrl(project.attributes.image.data[0].attributes.url)
+                        : `/placeholder.svg?height=200&width=400&text=Project+${project.id}`}
+                      alt={project.attributes.title || `Project ${project.id} thumbnail`}
+                      width={400}
+                      height={200}
+                      style={{ objectFit: 'cover', objectPosition: 'center' }}
+                      className="w-full h-48 object-cover rounded-t-xl transition-transform duration-300 
+                        group-hover:scale-105"
+                      priority
+                      quality={100}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50 
+                      opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                  <div className="p-6 bg-black/30">
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-xl font-semibold text-white">{project.attributes.title}</h3>
-                      {IconComponent && <IconComponent className="w-8 h-8 text-blue-400" />}
+                      <h3 className="text-xl font-semibold text-white group-hover:text-blue-400 
+                        transition-colors duration-300">
+                        {project.attributes.title}
+                      </h3>
+                      {IconComponent && (
+                        <IconComponent className="w-8 h-8 text-blue-400 transform transition-all 
+                          duration-300 group-hover:scale-110 group-hover:rotate-3" />
+                      )}
                     </div>
                     {formattedContent && (
                       <div 
-                        className="text-gray-300 mb-4 line-clamp-3 prose prose-sm prose-invert"
+                        className="text-gray-300 mb-4 line-clamp-3 prose prose-sm prose-invert 
+                          transition-all duration-300 group-hover:text-gray-100"
                         dangerouslySetInnerHTML={{ __html: formattedContent }}
                       />
                     )}
                     <div className="flex flex-wrap gap-2">
-                      {project.attributes.tags && typeof project.attributes.tags === 'object' && 'tag' in project.attributes.tags && (
-                        <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
+                      {project.attributes.tags && typeof project.attributes.tags === 'object' && 
+                        'tag' in project.attributes.tags && (
+                        <span className="bg-blue-600/80 text-white text-xs px-2 py-1 rounded-full 
+                          transition-all duration-300 group-hover:bg-blue-500">
                           {project.attributes.tags.tag}
                         </span>
                       )}
+                    </div>
+                    <div className="mt-4 flex items-center text-blue-400 opacity-0 transform 
+                      translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all 
+                      duration-300">
+                      <span className="mr-2">View Project</span>
+                      <ArrowRight className="w-4 h-4" />
                     </div>
                   </div>
                 </Link>

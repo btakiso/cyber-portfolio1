@@ -94,14 +94,16 @@ export function BlogPage() {
             <input
               type="text"
               placeholder="Search cybersecurity topics..."
-              className="w-full bg-gray-900 text-white border border-gray-700 rounded-full py-2 px-4 pl-10 focus:outline-none focus:border-blue-500"
+              className="w-full bg-black/30 border-blue-500/30 text-white rounded-full py-2 px-4 pl-10 
+                focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all duration-300"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
             <Search className="absolute left-3 top-2.5 text-gray-400" size={20} />
           </div>
           <select
-            className="bg-gray-900 text-white border border-gray-700 rounded-full py-2 px-4 focus:outline-none focus:border-blue-500"
+            className="bg-black/30 border-blue-500/30 text-white rounded-full py-2 px-4 
+              focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all duration-300"
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value)}
           >
@@ -122,9 +124,10 @@ export function BlogPage() {
           </div>
         ) : (
           <>
-            {/* Featured Blog Post */}
+            {/* Featured Blog Post - Added gradient line */}
             {currentPage === 1 && filteredPosts.length > 0 && (
-              <div className="mb-12 bg-gray-900 rounded-xl overflow-hidden shadow-lg">
+              <div className="mb-12 bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 rounded-xl overflow-hidden">
+                <div className="cyber-gradient-line" />
                 <div className="flex flex-col md:flex-row h-auto md:h-[240px]">
                   <div className="w-full md:w-[400px] relative h-[220px] md:h-[240px]">
                     {filteredPosts[0].attributes.image && filteredPosts[0].attributes.image.data ? (
@@ -177,10 +180,15 @@ export function BlogPage() {
               </div>
             )}
 
-            {/* Blog Post Grid */}
+            {/* Blog Post Grid - Added gradient line to each card */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentPosts.map((post) => (
-                <Link href={`/blog/${post.id}`} className="block bg-gray-900 rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1">
+                <Link 
+                  href={`/blog/${post.id}`} 
+                  className="block bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 rounded-xl overflow-hidden 
+                    transition-all duration-300 hover:-translate-y-1 hover:shadow-3xl hover:shadow-blue-500/30 relative"
+                >
+                  <div className="cyber-gradient-line" />
                   <div className="relative h-[240px]">
                     {post.attributes.image && post.attributes.image.data ? (
                       <Image
@@ -191,7 +199,7 @@ export function BlogPage() {
                           objectFit: 'cover',
                           objectPosition: 'center'
                         }}
-                        className="rounded-t-xl"
+                        className="rounded-t-xl transition-transform duration-300 group-hover:scale-105"
                         quality={100}
                       />
                     ) : (
@@ -204,7 +212,7 @@ export function BlogPage() {
                       />
                     )}
                   </div>
-                  <div className="p-6 bg-gray-900">
+                  <div className="p-6 bg-black/30">
                     <div className="uppercase tracking-wide text-sm text-blue-500 font-semibold mb-1">
                       {post.attributes.Category}
                     </div>
@@ -230,14 +238,15 @@ export function BlogPage() {
               ))}
             </div>
 
-            {/* Pagination */}
+            {/* Pagination - Updated styling */}
             {totalPages > 1 && (
               <div className="mt-12 flex justify-center">
                 <nav className="inline-flex rounded-md shadow">
                   <button
                     onClick={() => setCurrentPage(currentPage - 1)}
                     disabled={currentPage === 1}
-                    className="px-3 py-2 rounded-l-md border border-gray-700 bg-gray-800 text-gray-400 hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-3 py-2 rounded-l-md border border-blue-500/30 bg-black/30 text-gray-400 
+                      hover:bg-blue-500/10 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
                   >
                     <span className="sr-only">Previous</span>
                     <ChevronLeft className="w-5 h-5" />
@@ -246,10 +255,10 @@ export function BlogPage() {
                     <button
                       key={index}
                       onClick={() => setCurrentPage(index + 1)}
-                      className={`px-4 py-2 border border-gray-700 ${
+                      className={`px-4 py-2 border border-blue-500/30 transition-all duration-300 ${
                         currentPage === index + 1
                           ? 'bg-blue-600 text-white'
-                          : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                          : 'bg-black/30 text-gray-400 hover:bg-blue-500/10'
                       }`}
                     >
                       {index + 1}
@@ -258,7 +267,8 @@ export function BlogPage() {
                   <button
                     onClick={() => setCurrentPage(currentPage + 1)}
                     disabled={currentPage === totalPages}
-                    className="px-3 py-2 rounded-r-md border border-gray-700 bg-gray-800 text-gray-400 hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-3 py-2 rounded-r-md border border-blue-500/30 bg-black/30 text-gray-400 
+                      hover:bg-blue-500/10 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
                   >
                     <span className="sr-only">Next</span>
                     <ChevronRight className="w-5 h-5" />

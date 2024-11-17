@@ -84,7 +84,7 @@ export default function AboutPage() {
       <main className="container mx-auto px-4 py-8 pt-20">
         <h1 className="text-4xl font-bold mb-8 text-center text-blue-500">About Me</h1>
 
-        <section className="mb-16 overflow-hidden backdrop-blur-sm bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 rounded-3xl transform transition-all duration-300 hover:shadow-3xl hover:shadow-blue-500/30 hover:scale-[1.02]">
+        <section className="mb-16 bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 rounded-3xl">
           <div className="cyber-gradient-line" />
           <div className="relative h-64 md:h-80">
             <Image
@@ -129,16 +129,13 @@ export default function AboutPage() {
             <div className="mt-8 text-center">
               <Link
                 href="/contact"
-                className="inline-flex items-center px-6 py-3 border-2 border-blue-500 text-blue-500 rounded-full 
-                hover:bg-blue-500 hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl 
-                transform hover:-translate-y-1 hover:scale-105 group"
+                className="inline-flex items-center px-6 py-3 border-2 border-blue-500 text-blue-500 
+                rounded-full hover:bg-blue-500 hover:text-white transition-colors duration-300"
               >
-                <span className="mr-2 transition-transform duration-300 group-hover:translate-x-[-4px]">
-                  Contact Me
-                </span>
+                <span className="mr-2">Contact Me</span>
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-2" 
+                  className="h-5 w-5" 
                   viewBox="0 0 20 20" 
                   fill="currentColor"
                 >

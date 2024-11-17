@@ -129,11 +129,8 @@ export function Homepage() {
 
       {/* Project Section */}
       <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-700 to-gray-800" aria-hidden="true" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-700/20 via-gray-800/40 to-gray-900/80" />
-        
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-3xl font-bold mb-12 text-center text-white">Featured Projects</h2>
+          <h2 className="text-3xl font-bold mb-12 text-center text-blue-500">Featured Projects</h2>
           {loading ? (
             <LoadingSpinner size="large" color="text-blue-400" />
           ) : error ? (
@@ -145,33 +142,51 @@ export function Homepage() {
                 const formattedContent = formatContent(project.attributes.description);
               
                 return (
-                  <Link href={`/projects/${project.id}`} className="block bg-gray-900/80 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:scale-105">
-                    {project.attributes.image?.data && project.attributes.image.data.length > 0 && (
-                      <Image
-                        src={prependApiUrl(project.attributes.image.data[0].attributes.url)}
-                        alt={project.attributes.title}
-                        width={400}
-                        height={200}
-                        style={{ objectFit: 'cover', objectPosition: 'center' }}
-                        className="w-full h-48 object-cover rounded-t-xl"
-                        priority={true}
-                        quality={100}
-                      />
-                    )}
-                    <div className="p-6">
+                  <Link 
+                    href={`/projects/${project.id}`} 
+                    className="group block bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 
+                      rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 
+                      hover:shadow-3xl hover:shadow-blue-500/30 relative"
+                  >
+                    <div className="cyber-gradient-line" />
+                    <div className="relative">
+                      {project.attributes.image?.data && project.attributes.image.data.length > 0 && (
+                        <Image
+                          src={prependApiUrl(project.attributes.image.data[0].attributes.url)}
+                          alt={project.attributes.title}
+                          width={400}
+                          height={200}
+                          style={{ objectFit: 'cover', objectPosition: 'center' }}
+                          className="w-full h-48 object-cover rounded-t-xl transition-transform 
+                            duration-300 group-hover:scale-105"
+                          priority={true}
+                          quality={100}
+                        />
+                      )}
+                    </div>
+                    <div className="p-6 bg-black/30">
                       <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-xl font-semibold text-white">{project.attributes.title}</h3>
-                        {IconComponent && <IconComponent className="w-8 h-8 text-blue-400" />}
+                        <h3 className="text-xl font-semibold text-white group-hover:text-blue-400 
+                          transition-colors duration-300">
+                          {project.attributes.title}
+                        </h3>
+                        {IconComponent && (
+                          <IconComponent className="w-8 h-8 text-blue-400 transform transition-all 
+                            duration-300 group-hover:scale-110 group-hover:rotate-3" />
+                        )}
                       </div>
                       {formattedContent && (
                         <div 
-                          className="text-gray-300 mb-4 line-clamp-3 prose prose-sm prose-invert"
+                          className="text-gray-300 mb-4 line-clamp-3 prose prose-sm prose-invert 
+                            transition-all duration-300 group-hover:text-gray-100"
                           dangerouslySetInnerHTML={{ __html: formattedContent }}
                         />
                       )}
                       <div className="flex flex-wrap gap-2">
-                        {project.attributes.tags && typeof project.attributes.tags === 'object' && 'tag' in project.attributes.tags && (
-                          <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
+                        {project.attributes.tags && typeof project.attributes.tags === 'object' && 
+                          'tag' in project.attributes.tags && (
+                          <span className="bg-blue-600/80 text-white text-xs px-2 py-1 rounded-full 
+                            transition-all duration-300 group-hover:bg-blue-500">
                             {project.attributes.tags.tag}
                           </span>
                         )}
@@ -188,7 +203,7 @@ export function Homepage() {
       {/* Blog Section */}
       <section className="py-20 bg-gray-800">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center text-white">Latest Insights</h2>
+          <h2 className="text-3xl font-bold mb-12 text-center text-blue-500">Latest Insights</h2>
           {loading ? (
             <LoadingSpinner size="large" color="text-blue-400" />
           ) : error ? (
@@ -196,7 +211,13 @@ export function Homepage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {recentBlogPosts.map((post) => (
-                <Link href={`/blog/${post.id}`} className="block bg-gray-900 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <Link 
+                  href={`/blog/${post.id}`} 
+                  className="group block bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 
+                    rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 
+                    hover:shadow-3xl hover:shadow-blue-500/30 relative"
+                >
+                  <div className="cyber-gradient-line" />
                   <div className="relative h-[240px]">
                     <Image
                       src={post.attributes.image?.data 
@@ -208,23 +229,27 @@ export function Homepage() {
                         objectFit: 'cover',
                         objectPosition: 'center'
                       }}
-                      className="rounded-t-xl"
+                      className="rounded-t-xl transition-transform duration-300 group-hover:scale-105"
                       priority={true}
                       quality={100}
                     />
                   </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold text-white mb-2">{post.attributes.title}</h3>
-                    <p className="text-gray-300 mb-4 line-clamp-3">
+                  <div className="p-6 bg-black/30">
+                    <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-blue-400 
+                      transition-colors duration-300">
+                      {post.attributes.title}
+                    </h3>
+                    <p className="text-gray-300 mb-4 line-clamp-3 group-hover:text-gray-100 
+                      transition-colors duration-300">
                       {sanitizeAndTruncate(post.attributes.summary, 150)}
                     </p>
                     <div className="flex justify-between items-center">
-                      <div className="flex flex-wrap gap-2">
-                        <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
-                          {post.attributes.Category}
-                        </span>
-                      </div>
-                      <span className="text-sm text-gray-400 flex items-center">
+                      <span className="bg-blue-600/80 text-white text-xs px-2 py-1 rounded-full 
+                        transition-all duration-300 group-hover:bg-blue-500">
+                        {post.attributes.Category}
+                      </span>
+                      <span className="text-sm text-gray-400 flex items-center group-hover:text-gray-300 
+                        transition-colors duration-300">
                         <Clock className="w-4 h-4 mr-1" />
                         {post.attributes.readTime} min read
                       </span>
@@ -241,31 +266,32 @@ export function Homepage() {
       <section className="py-24 bg-gradient-to-br from-gray-800 to-gray-900 relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl font-extrabold mb-8 text-white text-center">
-              <span className="text-white">
-                About Me
-              </span>
-            </h2>
-            <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl p-8 shadow-xl">
+            <h2 className="text-4xl font-bold mb-8 text-blue-500 text-center">About Me</h2>
+            <div className="bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 rounded-xl 
+              overflow-hidden relative">
+              <div className="cyber-gradient-line" />
               {loading ? (
                 <LoadingSpinner size="medium" color="text-blue-400" />
               ) : error ? (
                 <ErrorMessage message={error} onRetry={loadData} />
               ) : (
-                <>
+                <div className="p-8">
                   <p className="text-xl mb-8 text-gray-300 leading-relaxed">
                     {aboutData?.attributes.Bio[0].children[0].text}
                   </p>
                   <div className="flex justify-center">
                     <Link
                       href="/about"
-                      className="group bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 inline-flex items-center"
+                      className="group inline-flex items-center px-6 py-3 border-2 border-blue-500 
+                        text-blue-500 rounded-full hover:bg-blue-500 hover:text-white transition-all 
+                        duration-300 transform hover:scale-105"
                     >
                       Learn More About Me
-                      <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
+                      <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 
+                        group-hover:translate-x-2" />
                     </Link>
                   </div>
-                </>
+                </div>
               )}
             </div>
           </div>
