@@ -84,7 +84,7 @@ export default function AboutPage() {
       <main className="container mx-auto px-4 py-8 pt-20">
         <h1 className="text-4xl font-bold mb-8 text-center text-blue-500">About Me</h1>
 
-        <section className="mb-16 overflow-hidden backdrop-blur-sm bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 rounded-3xl">
+        <section className="mb-16 overflow-hidden backdrop-blur-sm bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 rounded-3xl transform transition-all duration-300 hover:shadow-3xl hover:shadow-blue-500/30 hover:scale-[1.02]">
           <div className="cyber-gradient-line" />
           <div className="relative h-64 md:h-80">
             <Image
@@ -129,10 +129,19 @@ export default function AboutPage() {
             <div className="mt-8 text-center">
               <Link
                 href="/contact"
-                className="inline-flex items-center px-6 py-3 border-2 border-blue-500 text-blue-500 rounded-full hover:bg-blue-500 hover:text-white transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                className="inline-flex items-center px-6 py-3 border-2 border-blue-500 text-blue-500 rounded-full 
+                hover:bg-blue-500 hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl 
+                transform hover:-translate-y-1 hover:scale-105 group"
               >
-                <span className="mr-2">Contact Me</span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <span className="mr-2 transition-transform duration-300 group-hover:translate-x-[-4px]">
+                  Contact Me
+                </span>
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-2" 
+                  viewBox="0 0 20 20" 
+                  fill="currentColor"
+                >
                   <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                 </svg>
               </Link>
@@ -141,7 +150,9 @@ export default function AboutPage() {
         </section>
 
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6">Professional Experience</h2>
+          <h2 className="text-2xl font-semibold mb-6 hover:text-blue-400 transition-colors duration-300">
+            Professional Experience
+          </h2>
           <div className="space-y-8">
             {Array.isArray(experience) && experience.length > 0 ? (
               experience
@@ -154,11 +165,17 @@ export default function AboutPage() {
                   return dateB.getTime() - dateA.getTime();
                 })
                 .map((job: Experience) => (
-                  <div key={job.id} className="relative pl-8 pb-8 border-l-2 border-blue-500/30">
-                    <div className="absolute left-0 top-0 w-4 h-4 bg-blue-500 rounded-full -translate-x-1/2"></div>
-                    <div className="overflow-hidden backdrop-blur-sm bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 rounded-3xl p-6">
+                  <div key={job.id} className="relative pl-8 pb-8 border-l-2 border-blue-500/30 group">
+                    <div className="absolute left-0 top-0 w-4 h-4 bg-blue-500 rounded-full -translate-x-1/2 
+                      transition-all duration-300 group-hover:scale-150 group-hover:shadow-lg group-hover:shadow-blue-500/50">
+                    </div>
+                    <div className="overflow-hidden backdrop-blur-sm bg-black/30 border-blue-500/30 
+                      shadow-2xl shadow-blue-500/20 rounded-3xl p-6 transform transition-all duration-300 
+                      hover:scale-[1.02] hover:shadow-3xl hover:shadow-blue-500/30 hover:-translate-y-1">
                       <div className="cyber-gradient-line" />
-                      <h3 className="text-xl font-semibold text-blue-400">{job.attributes.title}</h3>
+                      <h3 className="text-xl font-semibold text-blue-400 transform transition-all duration-300 group-hover:translate-x-2">
+                        {job.attributes.title}
+                      </h3>
                       <p className="text-gray-400 mb-2">{job.attributes.company} | {job.attributes.duration}</p>
                       <ul className="list-disc list-inside text-gray-300">
                         {Array.isArray(job.attributes.description) ? (
@@ -185,18 +202,26 @@ export default function AboutPage() {
         </section>
 
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6">Skills</h2>
+          <h2 className="text-2xl font-semibold mb-6 hover:text-blue-400 transition-colors duration-300">
+            Skills
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {skills.length > 0 && Object.entries(skills[0].attributes).map(([category, skillList]) => {
               if (['Technical_Skills', 'Analytical_Skills', 'Communication_Skills'].includes(category) && Array.isArray(skillList)) {
                 return (
-                  <div key={category} className="overflow-hidden backdrop-blur-sm bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 rounded-3xl p-6">
+                  <div key={category} 
+                    className="overflow-hidden backdrop-blur-sm bg-black/30 border-blue-500/30 
+                    shadow-2xl shadow-blue-500/20 rounded-3xl p-6 transform transition-all duration-300 
+                    hover:scale-105 hover:shadow-3xl hover:shadow-blue-500/30 group">
                     <div className="cyber-gradient-line" />
-                    <h3 className="text-xl font-semibold mb-4 text-blue-400">{category.replace('_', ' ')}</h3>
+                    <h3 className="text-xl font-semibold mb-4 text-blue-400 transform transition-all duration-300 group-hover:translate-x-2">
+                      {category.replace('_', ' ')}
+                    </h3>
                     <ul className="space-y-2">
                       {skillList.map((item, skillIndex) => (
-                        <li key={skillIndex} className="flex items-center">
-                          <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                        <li key={skillIndex} 
+                          className="flex items-center transform transition-all duration-300 hover:translate-x-2">
+                          <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 transition-all duration-300 group-hover:scale-150"></span>
                           {item.children[0].children[0].text}
                         </li>
                       ))}
@@ -210,13 +235,18 @@ export default function AboutPage() {
         </section>
 
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6">Certifications</h2>
+          <h2 className="text-2xl font-semibold mb-6 hover:text-blue-400 transition-colors duration-300">
+            Certifications
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {certifications.map((cert, index) => (
-              <div key={index} className="overflow-hidden backdrop-blur-sm bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 rounded-3xl p-6">
+              <div key={index} 
+                className="overflow-hidden backdrop-blur-sm bg-black/30 border-blue-500/30 
+                shadow-2xl shadow-blue-500/20 rounded-3xl p-6 transform transition-all duration-300 
+                hover:scale-105 hover:shadow-3xl hover:shadow-blue-500/30 group">
                 <div className="cyber-gradient-line" />
                 <div className="flex items-center mb-4">
-                  <div className="bg-white p-3 rounded-2xl mr-4 flex-shrink-0">
+                  <div className="bg-white p-3 rounded-2xl mr-4 flex-shrink-0 transform transition-all duration-300 group-hover:scale-110">
                     <Image
                       src={prependApiUrl(cert.attributes.logo.data.attributes.url)}
                       alt={`${cert.attributes.Name} logo`}
@@ -225,6 +255,7 @@ export default function AboutPage() {
                       style={{ width: "80px", height: "80px", objectFit: "contain" }}
                       priority
                       quality={100}
+                      className="transition-transform duration-300 group-hover:rotate-3"
                     />
                   </div>
                   <div>
@@ -239,10 +270,14 @@ export default function AboutPage() {
                   href={cert.attributes.Show_Credential}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-6 py-3 mt-4 border-2 border-blue-500 text-blue-500 rounded-full hover:bg-blue-500 hover:text-white transition-colors duration-300"
+                  className="inline-flex items-center px-6 py-3 mt-4 border-2 border-blue-500 text-blue-500 
+                  rounded-full hover:bg-blue-500 hover:text-white transition-all duration-300 
+                  transform hover:scale-105 hover:-translate-y-1 group"
                 >
-                  <span className="mr-2">View Credential</span>
-                  <ExternalLink className="h-4 w-4" />
+                  <span className="mr-2 transition-transform duration-300 group-hover:translate-x-[-4px]">
+                    View Credential
+                  </span>
+                  <ExternalLink className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-2" />
                 </a>
               </div>
             ))}
