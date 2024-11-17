@@ -38,11 +38,30 @@ export function HeroSection() {
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      {/* Background gradients */}
       <div 
-        className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-700 to-gray-800"
+        className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
         aria-hidden="true"
       />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-700/20 via-gray-800/40 to-gray-900/80" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-500/10 via-gray-900/40 to-gray-900/80" />
+      
+      {/* Dot pattern */}
+      <svg
+        className="absolute inset-0 h-full w-full stroke-blue-500/20 [mask-image:radial-gradient(100%_100%_at_top_center,white,transparent)]"
+      >
+        <defs>
+          <pattern
+            id="dot-pattern"
+            width="32"
+            height="32"
+            patternUnits="userSpaceOnUse"
+            patternContentUnits="userSpaceOnUse"
+          >
+            <circle cx="1" cy="1" r="1" className="fill-blue-500/20" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" strokeWidth="0" fill="url(#dot-pattern)" />
+      </svg>
       
       {/* Floating cybersecurity icons */}
       <div className="absolute inset-0">
@@ -53,8 +72,9 @@ export function HeroSection() {
         ))}
       </div>
       
+      {/* Content */}
       <div className="relative z-10 text-center px-4">
-        <h1 className="text-5xl md:text-7xl font-bold mb-4 text-blue-300 min-h-[1.2em]">
+        <h1 className="text-5xl md:text-7xl font-bold mb-4 text-blue-400 min-h-[1.2em]">
           {text}
           {showCursor && <span className="animate-blink">|</span>}
         </h1>
@@ -63,10 +83,10 @@ export function HeroSection() {
         </p>
         <Link
           href="/projects"
-          className="bg-blue-700 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full transition-colors duration-300 inline-flex items-center group"
+          className="group inline-flex items-center px-6 py-3 border-2 border-blue-500 text-blue-500 rounded-full hover:bg-blue-500 hover:text-white transition-all duration-300 transform hover:scale-105"
         >
           View Projects
-          <ArrowRight className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-200" />
+          <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-2" />
         </Link>
       </div>
 
