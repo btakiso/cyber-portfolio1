@@ -23,11 +23,11 @@
 
 @layer components {
   .cyber-card {
-    @apply overflow-hidden backdrop-blur-sm bg-black/30 border-cyan-500/30 shadow-2xl shadow-cyan-500/20 rounded-3xl;
+    @apply overflow-hidden backdrop-blur-sm bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 rounded-3xl;
   }
 
   .cyber-gradient-line {
-    @apply absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500;
+    @apply absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500;
   }
 
   .cyber-button {
