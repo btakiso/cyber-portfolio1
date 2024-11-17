@@ -22,32 +22,27 @@ function Calendar({
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={cn("p-3 text-white", className)}
+      className={cn("p-2 text-white w-[300px]", className)}
       classNames={{
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
-        month: "space-y-4",
+        month: "space-y-4 w-full",
         caption: "flex justify-center pt-1 relative items-center text-white",
         caption_label: "text-sm font-medium text-white",
-        nav: "space-x-1 flex items-center absolute top-1/2 -translate-y-1/2 w-full",
+        nav: "flex items-center justify-center space-x-1",
         nav_button: cn(
-          buttonVariants({ variant: "outline" }),
-          "h-7 w-7 bg-transparent p-0 text-white hover:bg-cyan-500/20"
+          buttonVariants({ variant: "ghost" }),
+          "h-7 w-7 p-0 text-white hover:bg-cyan-500/20"
         ),
-        nav_button_previous: "absolute left-1",
-        nav_button_next: "absolute right-1",
+        nav_button_previous: "static",
+        nav_button_next: "static",
         table: "w-full border-collapse space-y-1",
         head_row: "flex justify-center",
-        head_cell: "text-cyan-500 rounded-md w-9 font-normal text-[0.8rem]",
+        head_cell: "text-cyan-500 rounded-md w-8 font-normal text-[0.8rem]",
         row: "flex justify-center mt-2",
-        cell: cn(
-          "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-cyan-500/20 rounded-md",
-          props.mode === "single"
-            ? "[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md"
-            : ""
-        ),
+        cell: "relative p-0 text-center text-sm focus-within:relative focus-within:z-20",
         day: cn(
           buttonVariants({ variant: "ghost" }),
-          "h-9 w-9 p-0 font-normal text-white hover:bg-cyan-500/20 rounded-md"
+          "h-8 w-8 p-0 font-normal text-white hover:bg-cyan-500/20"
         ),
         day_selected: "bg-cyan-500 text-black hover:bg-cyan-400 hover:text-black focus:bg-cyan-500 focus:text-black",
         day_today: "bg-cyan-500/20 text-cyan-500",
@@ -61,7 +56,7 @@ function Calendar({
         IconLeft: () => <ChevronLeft className="h-4 w-4" />,
         IconRight: () => <ChevronRight className="h-4 w-4" />,
         Caption: ({ displayMonth }: { displayMonth: Date }) => (
-          <div className="flex justify-center pt-1">
+          <div className="flex items-center gap-1">
             <h2 className="text-sm font-medium text-white">
               {displayMonth.toLocaleString('default', { month: 'long', year: 'numeric' })}
             </h2>
