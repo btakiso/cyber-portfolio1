@@ -22,15 +22,13 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Calendar as CalendarComponent } from "@/app/components/ui/calendar"
-import { format } from "date-fns"
 
 export function ContactPage() {
   const [copied, setCopied] = useState(false)
-  const [date, setDate] = useState<Date | undefined>(new Date())
   const email = "takiso2b@gmail.com"
   const linkedinUrl = "https://www.linkedin.com/in/bereket-takiso"
   const githubUrl = "https://github.com/btakiso"
-  const calendlyUrl = "https://calendly.com/btakiso"
+  const calendlyUrl = "https://calendly.com/btakiso2"
 
   const handleCopyEmail = async () => {
     try {
@@ -216,38 +214,14 @@ export function ContactPage() {
                     Schedule a Meeting
                   </CardTitle>
                   <CardDescription className="text-base text-gray-400 text-center">
-                    Want to discuss something in detail? Pick a date and schedule a meeting.
+                    Want to discuss something in detail? Schedule a meeting using my calendar.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="relative p-6 space-y-6">
-                  <div className="flex justify-center">
-                    <CalendarComponent
-                      mode="single"
-                      selected={date}
-                      onSelect={setDate}
-                      className="rounded-md border border-cyan-500/30 bg-black/30"
-                      classNames={{
-                        day_selected: "bg-cyan-500 text-black hover:bg-cyan-400",
-                        day_today: "bg-cyan-500/20 text-cyan-500",
-                        day: "hover:bg-cyan-500/20",
-                        head_cell: "text-cyan-500",
-                      }}
-                    />
-                  </div>
-                  {date && (
-                    <p className="text-center text-gray-400">
-                      Selected date: {format(date, 'PPP')}
-                    </p>
-                  )}
-                  <Button 
-                    className="w-full bg-purple-600 text-white hover:bg-purple-700 transition-colors rounded-xl py-6 text-lg" 
-                    asChild
-                  >
-                    <a href={calendlyUrl} target="_blank" rel="noopener noreferrer">
-                      <Calendar className="w-5 h-5 mr-2" />
-                      Schedule on Calendly
-                    </a>
-                  </Button>
+                  <CalendarComponent 
+                    url={calendlyUrl}
+                    className="rounded-md border border-cyan-500/30 bg-black/30"
+                  />
                 </CardContent>
               </Card>
             </div>
