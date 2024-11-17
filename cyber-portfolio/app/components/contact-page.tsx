@@ -256,7 +256,7 @@ export function ContactPage() {
                 <CardContent className="relative p-6">
                   <div 
                     className="calendly-inline-widget" 
-                    data-url="https://calendly.com/btakiso2/30min"
+                    data-url="https://calendly.com/btakiso2?hide_gdpr_banner=1&background_color=1f2937&text_color=ffffff&primary_color=06b6d4"
                     style={{ minWidth: '320px', height: '700px' }}
                   />
                 </CardContent>
