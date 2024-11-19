@@ -192,13 +192,15 @@ export default function ProjectPage() {
                       />
                     )}
                     <div className="flex flex-wrap gap-2">
-                      {project.attributes.tags && typeof project.attributes.tags === 'object' && 
-                        'tag' in project.attributes.tags && (
-                        <span className="bg-blue-600/80 text-white text-xs px-2 py-1 rounded-full 
-                          transition-all duration-300 group-hover:bg-blue-500">
-                          {String(project.attributes.tags.tag)}
+                      {project.attributes.tags?.tags?.map((tag: string, index: number) => (
+                        <span 
+                          key={`${tag}-${index}`}
+                          className="bg-blue-600/80 text-white text-xs px-2 py-1 rounded-full 
+                            transition-all duration-300 group-hover:bg-blue-500"
+                        >
+                          {tag}
                         </span>
-                      )}
+                      ))}
                     </div>
                     <div className="mt-4 flex items-center text-blue-400 opacity-0 transform 
                       translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all 
