@@ -185,7 +185,7 @@ export function Homepage() {
                       )}
                       <div className="flex flex-wrap gap-2">
                         {project.attributes.tags && typeof project.attributes.tags === 'object' && 
-                          'tag' in project.attributes.tags && (
+                          'tag' in project.attributes.tags && typeof project.attributes.tags.tag === 'string' && (
                           <span className="bg-blue-600/80 text-white text-xs px-2 py-1 rounded-full 
                             transition-all duration-300 group-hover:bg-blue-500">
                             {project.attributes.tags.tag}
