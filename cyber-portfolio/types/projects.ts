@@ -15,7 +15,7 @@ export interface ProjectData {
     date: string;
     icon: string;
     tags: {
-      tag: string;
+      tags: string[];
     };
     projectId: string;
     markdown: string;

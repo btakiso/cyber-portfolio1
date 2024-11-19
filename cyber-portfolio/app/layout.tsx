@@ -1,7 +1,7 @@
 import React from 'react'
 import { Header } from './components/header'
 import { Footer } from './components/footer'
-import './globals.css'  // Updated import path
+import './globals.css'  
 import { Inter } from 'next/font/google'
 import { Toaster } from "@/components/ui/toaster"
 

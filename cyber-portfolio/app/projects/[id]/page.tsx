@@ -306,12 +306,17 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
                   <span>{new Date(date).toLocaleDateString()}</span>
                 </div>
               </div>
-              {tags && tags.tag && (
-                <div className="flex items-center space-x-4">
-                  <span className="text-gray-400">Tags:</span>
-                  <span className="bg-gray-700 text-blue-300 px-3 py-1 rounded-full text-sm">
-                    {tags.tag}
-                  </span>
+              {tags?.tags && (
+                <div className="flex flex-wrap gap-2">
+                  {project.attributes.tags?.tags?.map((tag, index) => (
+                    <span 
+                      key={`${tag}-${index}`}
+                      className="bg-blue-600/80 text-white text-xs px-2 py-1 rounded-full 
+                        transition-all duration-300 group-hover:bg-blue-500"
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
               )}
             </header>

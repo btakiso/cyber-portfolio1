@@ -11,7 +11,7 @@ export interface ProjectData {
     };
     date: string;
     tags: {
-      tag: string;
+      tags: string[];
     };
     description: string | Array<{
       type: string;

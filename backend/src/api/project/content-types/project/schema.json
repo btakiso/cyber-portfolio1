@@ -47,7 +47,11 @@
       ]
     },
     "tags": {
-      "type": "json"
+      "type": "json",
+      "required": false,
+      "default": {
+        "tags": []
+      }
     },
     "projectId": {
       "type": "uid",

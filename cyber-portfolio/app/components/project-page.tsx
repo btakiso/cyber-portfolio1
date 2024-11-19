@@ -196,7 +196,7 @@ export default function ProjectPage() {
                         'tag' in project.attributes.tags && (
                         <span className="bg-blue-600/80 text-white text-xs px-2 py-1 rounded-full 
                           transition-all duration-300 group-hover:bg-blue-500">
-                          {project.attributes.tags.tag}
+                          {String(project.attributes.tags.tag)}
                         </span>
                       )}
                     </div>
