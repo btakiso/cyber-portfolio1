@@ -9,16 +9,16 @@ const nextConfig = {
                         key: 'Content-Security-Policy',
                         value: `
                             default-src 'self';
-                            script-src 'self' 'unsafe-eval' 'unsafe-inline' https://assets.calendly.com;
+                            script-src 'self' 'unsafe-eval' 'unsafe-inline' https://assets.calendly.com https://www.googletagmanager.com;
                             style-src 'self' 'unsafe-inline' https://assets.calendly.com;
-                            img-src 'self' data: blob: https://strapi-s3-bucket1.s3.us-east-1.amazonaws.com;
+                            img-src 'self' data: blob: https://strapi-s3-bucket1.s3.us-east-1.amazonaws.com https://www.google-analytics.com;
                             font-src 'self';
                             object-src 'none';
                             base-uri 'self';
                             form-action 'self';
                             frame-ancestors 'none';
                             frame-src 'self' https://www.youtube.com https://calendly.com;
-                            connect-src 'self' https://api.bereketakiso.com https://bereketakiso.com https://www.bereketakiso.com https://cyber-portfolio-72310aa69f55.herokuapp.com;
+                            connect-src 'self' https://api.bereketakiso.com https://bereketakiso.com https://www.bereketakiso.com https://cyber-portfolio-72310aa69f55.herokuapp.com https://www.google-analytics.com;
                             upgrade-insecure-requests;
                         `.replace(/\s{2,}/g, ' ').trim()
                     },

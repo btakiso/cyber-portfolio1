@@ -4,6 +4,7 @@ import { Footer } from './components/footer'
 import './globals.css'  
 import { Inter } from 'next/font/google'
 import { Toaster } from "@/components/ui/toaster"
+import { AnalyticsProvider } from './components/analytics-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,6 +34,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <Toaster />
+        <AnalyticsProvider />
       </body>
     </html>
   )
