@@ -10,31 +10,45 @@ export function Footer() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (footerRef.current) {
-        const footerTop = footerRef.current.getBoundingClientRect().top
-        const windowHeight = window.innerHeight
-        setShowScrollTop(footerTop <= windowHeight)
-      }
+      // Use a more stable scroll position check instead of getBoundingClientRect
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+      const windowHeight = window.innerHeight
+      const documentHeight = document.documentElement.scrollHeight
+      
+      // Show button when user has scrolled down at least 300px from top
+      // This prevents the button from appearing/disappearing at the very bottom
+      const shouldShow = scrollTop > 300
+      setShowScrollTop(shouldShow)
     }
 
-    // Throttle the scroll event
-    let ticking = false
-    const throttledHandleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          handleScroll()
-          ticking = false
-        })
-        ticking = true
+    // Debounce the scroll event for better performance
+    let timeoutId: NodeJS.Timeout | null = null
+    const debouncedHandleScroll = () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
       }
+      timeoutId = setTimeout(() => {
+        handleScroll()
+      }, 10) // 10ms debounce
     }
 
-    window.addEventListener('scroll', throttledHandleScroll)
-    return () => window.removeEventListener('scroll', throttledHandleScroll)
+    window.addEventListener('scroll', debouncedHandleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', debouncedHandleScroll)
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+    }
   }, [])
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    // Use a more reliable scroll method that works across browsers
+    if ('scrollBehavior' in document.documentElement.style) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      // Fallback for older browsers
+      window.scrollTo(0, 0)
+    }
   }
 
   return (
