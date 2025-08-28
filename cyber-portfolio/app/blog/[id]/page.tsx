@@ -9,12 +9,9 @@ import { fetchBlogPostById, fetchRelatedPosts } from '../../../utils/blog'
 import prependApiUrl from '../../../utils/imageHelper'
 import { BlogPostData } from '../../../types/blog'
 import { Clock, Calendar, Facebook, Linkedin, ChevronLeft } from 'lucide-react'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import { createRoot } from 'react-dom/client'
-import DOMPurify from 'dompurify'
 import { calculateReadTime } from '@/utils/readTime'
 import AuthorBadge from '../../components/AuthorBadge'
+import { ContentRenderer } from '../../components/ContentRenderer'
 
 const placeholderImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23cccccc'/%3E%3Ctext x='50%25' y='50%25' font-size='5' text-anchor='middle' alignment-baseline='middle' font-family='monospace' fill='%23333333'%3ENo Image%3C/text%3E%3C/svg%3E"
 
@@ -74,137 +71,7 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
 
   const { title, image, date, readTime, Category, summary, content } = blogPost.attributes;
 
-  const formatContent = (content: string | undefined) => {
-    if (!content) return null;
-
-    const youtubeRegex = /https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)(?:&\S*)?/g;
-    const youtubeAnchorRegex = /<a[^>]*href="(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=[a-zA-Z0-9_-]+(?:&\S*)?)"[^>]*>.*?<\/a>/g;
-    
-    // Replace YouTube links with placeholders
-    const contentWithPlaceholders = content
-      .replace(youtubeAnchorRegex, (match, url) => {
-        const videoId = url.match(/v=([a-zA-Z0-9_-]+)/)?.[1];
-        return videoId ? `__YOUTUBE_${videoId}__` : '';
-      })
-      .replace(youtubeRegex, (match, videoId) => `__YOUTUBE_${videoId}__`);
-
-    // Sanitize the HTML content
-    const sanitizedContent = DOMPurify.sanitize(contentWithPlaceholders, {
-      ADD_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'strong', 'em', 'pre', 'code', 'a', 'ul', 'ol', 'li'],
-      ADD_ATTR: ['class', 'language', 'href', 'target', 'rel'],
-    });
-
-    // Parse the sanitized content
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(sanitizedContent, 'text/html');
-
-    // Process code blocks
-    const codeBlocks = doc.querySelectorAll('pre code');
-    codeBlocks.forEach((block) => {
-      const code = block.textContent || '';
-      const languageClasses = block.className.split(' ').filter(cls => cls.startsWith('language-'));
-      const languages = languageClasses.map(cls => cls.replace('language-', '')).join(', ') || 'plaintext';
-      
-      // Replace the original pre element with a div that we'll use as a mounting point
-      const mountPoint = document.createElement('div');
-      mountPoint.className = 'code-block-mount-point';
-      mountPoint.dataset.code = code;
-      mountPoint.dataset.languages = languages;
-      block.parentNode?.parentNode?.replaceChild(mountPoint, block.parentNode);
-    });
-
-    // Replace YouTube placeholders
-    const youtubeEmbeds = doc.querySelectorAll('p');
-    youtubeEmbeds.forEach((p) => {
-      const match = p.textContent?.match(/__YOUTUBE_([a-zA-Z0-9_-]+)__/);
-      if (match) {
-        const videoId = match[1];
-        const embed = document.createElement('div');
-        embed.className = 'youtube-embed my-8'; // Increased vertical margin
-        embed.innerHTML = `<iframe width="100%" height="400" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`; // Increased height to 400px
-        p.parentNode?.replaceChild(embed, p);
-      }
-    });
-
-    // Process hyperlinks
-    const links = doc.querySelectorAll('a');
-    links.forEach((link) => {
-      link.setAttribute('target', '_blank');
-      link.setAttribute('rel', 'noopener noreferrer');
-      link.classList.add('text-blue-400', 'hover:text-blue-300', 'underline');
-    });
-
-    // Process lists
-    const lists = doc.querySelectorAll('ul, ol');
-    lists.forEach((list) => {
-      list.classList.add('my-4', 'pl-5', 'space-y-2');
-      if (list.tagName === 'OL') {
-        list.classList.add('list-decimal');
-      } else {
-        list.classList.add('list-disc');
-      }
-    });
-
-    const listItems = doc.querySelectorAll('li');
-    listItems.forEach((item) => {
-      item.classList.add('pl-2');
-    });
-
-    // Process headings
-    const headings = doc.querySelectorAll('h1, h2, h3, h4, h5, h6');
-    headings.forEach((heading) => {
-      heading.classList.add('font-bold', 'mt-6', 'mb-4');
-      switch (heading.tagName) {
-        case 'H1':
-          heading.classList.add('text-3xl');
-          break;
-        case 'H2':
-          heading.classList.add('text-2xl');
-          break;
-        case 'H3':
-          heading.classList.add('text-xl');
-          break;
-        default:
-          heading.classList.add('text-lg');
-      }
-    });
-
-    // Return the modified content
-    return (
-      <div
-        className="prose prose-invert prose-blue max-w-none"
-        dangerouslySetInnerHTML={{ __html: doc.body.innerHTML }}
-        ref={(el) => {
-          if (el) {
-            el.querySelectorAll('.code-block-mount-point').forEach((mountPoint) => {
-              const code = mountPoint.getAttribute('data-code') || '';
-              const languages = mountPoint.getAttribute('data-languages') || 'plaintext';
-              const root = createRoot(mountPoint);
-              root.render(
-                <div className="code-block-wrapper my-4">
-                  <div className="code-block-header bg-gray-700 text-gray-300 px-4 py-2 rounded-t-lg flex justify-between items-center">
-                    <span className="font-mono text-sm">{languages}</span>
-                    <button className="copy-button text-sm bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded">Copy</button>
-                  </div>
-                  <SyntaxHighlighter
-                    language={languages.split(', ')[0]} // Use the first language for highlighting
-                    style={vscDarkPlus}
-                    customStyle={{
-                      margin: 0,
-                      borderRadius: '0 0 0.5rem 0.5rem',
-                      padding: '1rem',
-                    }}
-                  >
-                    {code}
-                  </SyntaxHighlighter>
-                </div>
-              );
-            });
-          }
-        }}
-      />
-    );
-  };
+  // No longer need the complex formatContent function - ContentRenderer handles this properly
 
   const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
   const encodedShareUrl = encodeURIComponent(shareUrl);
@@ -294,13 +161,13 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
             {/* Summary Section */}
             {summary && (
               <div className="mb-8 bg-gray-800 p-4 sm:p-6 rounded-xl">
-                {formatContent(summary)}
+                <ContentRenderer content={summary} />
               </div>
             )}
 
             {/* Content Section */}
-            <article className="prose prose-invert prose-blue max-w-none mb-12 text-base sm:text-lg">
-              {formatContent(content)}
+            <article className="mb-12 text-base sm:text-lg">
+              <ContentRenderer content={content} />
             </article>
 
             {/* Related Posts */}

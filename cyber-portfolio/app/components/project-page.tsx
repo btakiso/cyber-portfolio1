@@ -9,10 +9,10 @@ import { fetchProjects } from '../../utils/projects'
 import { ProjectData } from '../../types/projects'
 import { Header } from './header'
 import prependApiUrl from '../../utils/imageHelper'
-import DOMPurify from 'dompurify'
 import LoadingSpinner from './LoadingSpinner'
 import ErrorMessage from './ErrorMessage'
 import { notFound } from 'next/navigation'
+import { ContentRenderer } from './ContentRenderer'
 
 const iconMap: { [key: string]: React.ComponentType<any> } = {
   Network, Code, Lock, Key,
@@ -65,40 +65,7 @@ export default function ProjectPage() {
       : new Date(a.attributes.createdAt).getTime() - new Date(b.attributes.createdAt).getTime()
   );
 
-  const formatContent = (content: ProjectData['attributes']['description']) => {
-    if (!content) return null;
-    let htmlContent = '';
-
-    if (Array.isArray(content)) {
-      htmlContent = content.map((block: ContentBlock) => {
-        switch (block.type) {
-          case 'paragraph':
-            return `<p>${block.children.map(child => {
-              let text = child.text;
-              if (child.bold) text = `<strong>${text}</strong>`;
-              if (child.italic) text = `<em>${text}</em>`;
-              return text;
-            }).join('')}</p>`;
-          case 'heading':
-            return block.level ? `<h${block.level}>${block.children.map(child => child.text).join('')}</h${block.level}>` : '';
-          case 'code':
-            return `<pre><code class="language-${block.language || 'plaintext'}">${block.children.map(child => child.text).join('')}</code></pre>`;
-          default:
-            return '';
-        }
-      }).join('');
-    } else if (typeof content === 'string') {
-      htmlContent = content;
-    } else {
-      console.error('Unexpected content format:', content);
-      return null;
-    }
-
-    return DOMPurify.sanitize(htmlContent, {
-      ADD_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'strong', 'em', 'pre', 'code'],
-      ADD_ATTR: ['class', 'language'],
-    });
-  };
+  // No longer need formatContent - ContentRenderer handles this properly
 
   if (loading) {
     return (
@@ -146,10 +113,10 @@ export default function ProjectPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {sortedProjects.map((project) => {
               const IconComponent = project.attributes.icon && iconMap[project.attributes.icon as keyof typeof iconMap];
-              const formattedContent = formatContent(project.attributes.description);
               
               return (
                 <Link 
+                  key={project.id}
                   href={`/projects/${project.id}`} 
                   className="group block bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 
                     rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 
@@ -184,12 +151,11 @@ export default function ProjectPage() {
                           duration-300 group-hover:scale-110 group-hover:rotate-3" />
                       )}
                     </div>
-                    {formattedContent && (
-                      <div 
-                        className="text-gray-300 mb-4 line-clamp-3 prose prose-sm prose-invert 
-                          transition-all duration-300 group-hover:text-gray-100"
-                        dangerouslySetInnerHTML={{ __html: formattedContent }}
-                      />
+                    {project.attributes.description && (
+                      <div className="text-gray-300 mb-4 line-clamp-3 prose prose-sm prose-invert 
+                        transition-all duration-300 group-hover:text-gray-100">
+                        <ContentRenderer content={project.attributes.description} />
+                      </div>
                     )}
                     <div className="flex flex-wrap gap-2">
                       {project.attributes.tags?.tags?.map((tag: string, index: number) => (

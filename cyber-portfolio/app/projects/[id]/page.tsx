@@ -9,12 +9,9 @@ import { fetchProjectById } from '../../../utils/projects'
 import prependApiUrl from '../../../utils/imageHelper'
 import { ProjectData } from '../../../types/project'
 import { Calendar, ChevronLeft, Network, Code, Lock, Key } from 'lucide-react'
-import DOMPurify from 'dompurify'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import { createRoot } from 'react-dom/client'
 import LoadingSpinner from '../../components/LoadingSpinner'
 import ErrorMessage from '../../components/ErrorMessage'
+import { ContentRenderer } from '../../components/ContentRenderer'
 
 const placeholderImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23cccccc'/%3E%3Ctext x='50%25' y='50%25' font-size='5' text-anchor='middle' alignment-baseline='middle' font-family='monospace' fill='%23333333'%3ENo Image%3C/text%3E%3C/svg%3E"
 
@@ -91,188 +88,7 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
   const { title, image, date, tags, description, icon } = project.attributes;
   const IconComponent = icon && iconMap[icon as keyof typeof iconMap];
 
-  const formatContent = (content: ProjectData['attributes']['description']) => {
-    if (!content) return null;
-    let htmlContent = '';
-
-    if (Array.isArray(content)) {
-      htmlContent = content.map((block: ContentBlock) => {
-        switch (block.type) {
-          case 'paragraph':
-            return `<p>${block.children.map(child => {
-              let text = child.text;
-              if (child.bold) text = `<strong>${text}</strong>`;
-              if (child.italic) text = `<em>${text}</em>`;
-              return text;
-            }).join('')}</p>`;
-          case 'heading':
-            return block.level ? `<h${block.level}>${block.children.map(child => child.text).join('')}</h${block.level}>` : '';
-          case 'code':
-            return `<pre><code class="language-${block.language || 'plaintext'}">${block.children.map(child => child.text).join('')}</code></pre>`;
-          case 'bulleted-list':
-            return `<ul>${block.children.map(item => `<li>${item.children ? item.children.map(child => child.text).join('') : item.text}</li>`).join('')}</ul>`;
-          case 'numbered-list':
-            return `<ol>${block.children.map(item => `<li>${item.children ? item.children.map(child => child.text).join('') : item.text}</li>`).join('')}</ol>`;
-          default:
-            return '';
-        }
-      }).join('');
-    } else if (typeof content === 'string') {
-      htmlContent = content;
-    } else {
-      console.error('Unexpected content format:', content);
-      return null;
-    }
-
-    const sanitizedContent = DOMPurify.sanitize(htmlContent, {
-      ADD_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'strong', 'em', 'pre', 'code', 'a', 'ul', 'ol', 'li'],
-      ADD_ATTR: ['class', 'language', 'href', 'target', 'rel'],
-    });
-
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(sanitizedContent, 'text/html');
-
-    const codeBlocks = doc.querySelectorAll('pre code');
-    codeBlocks.forEach((block) => {
-      const code = block.textContent || '';
-      const language = block.className.replace('language-', '') || 'text';
-      
-      const mountPoint = document.createElement('div');
-      mountPoint.className = 'code-block-mount-point';
-      mountPoint.dataset.code = code;
-      mountPoint.dataset.language = language;
-      block.parentNode?.parentNode?.replaceChild(mountPoint, block.parentNode);
-    });
-
-    // Process hyperlinks
-    const links = doc.querySelectorAll('a');
-    links.forEach((link) => {
-      link.setAttribute('target', '_blank');
-      link.setAttribute('rel', 'noopener noreferrer');
-      link.classList.add('text-blue-400', 'hover:text-blue-300', 'underline');
-    });
-
-    // Process lists
-    const lists = doc.querySelectorAll('ul, ol');
-    lists.forEach((list) => {
-      list.classList.add('my-4', 'pl-5', 'space-y-2');
-      if (list.tagName === 'OL') {
-        list.classList.add('list-decimal');
-      } else {
-        list.classList.add('list-disc');
-      }
-    });
-
-    const listItems = doc.querySelectorAll('li');
-    listItems.forEach((item) => {
-      item.classList.add('pl-2');
-    });
-
-    // Process headings
-    const headings = doc.querySelectorAll('h1, h2, h3, h4, h5, h6');
-    headings.forEach((heading) => {
-      heading.classList.add('font-bold', 'mt-6', 'mb-4');
-      switch (heading.tagName) {
-        case 'H1':
-          heading.classList.add('text-3xl');
-          break;
-        case 'H2':
-          heading.classList.add('text-2xl');
-          break;
-        case 'H3':
-          heading.classList.add('text-xl');
-          break;
-        default:
-          heading.classList.add('text-lg');
-      }
-    });
-
-    // Process tables
-    const tables = doc.querySelectorAll('table');
-    tables.forEach((table) => {
-      const wrapper = document.createElement('div');
-      wrapper.classList.add('overflow-x-auto', 'my-4', 'bg-gray-800', 'rounded-lg', 'shadow-md');
-      table.parentNode?.insertBefore(wrapper, table);
-      
-      const mobileTable = document.createElement('div');
-      mobileTable.classList.add('md:hidden'); // Only show on mobile
-      
-      const desktopTable = table.cloneNode(true) as HTMLTableElement;
-      desktopTable.classList.add('hidden', 'md:table', 'w-full', 'text-sm');
-      
-      // Process desktop table
-      desktopTable.querySelectorAll('th, td').forEach(cell => {
-        cell.classList.add('px-4', 'py-2', 'border', 'border-gray-700', 'text-left');
-      });
-      
-      // Create mobile-friendly version
-      const headers = Array.from(table.querySelectorAll('th')).map(th => th.textContent);
-      const rows = Array.from(table.querySelectorAll('tr'));
-      
-      rows.forEach((row, rowIndex) => {
-        if (rowIndex === 0) return; // Skip header row
-        const rowDiv = document.createElement('div');
-        rowDiv.classList.add('mb-4', 'bg-gray-700', 'rounded', 'p-2');
-        
-        const cells = Array.from(row.querySelectorAll('td'));
-        cells.forEach((cell, cellIndex) => {
-          const cellDiv = document.createElement('div');
-          cellDiv.classList.add('mb-2');
-          cellDiv.innerHTML = `<span class="font-bold text-blue-300">${headers[cellIndex]}:</span> ${cell.innerHTML}`;
-          rowDiv.appendChild(cellDiv);
-        });
-        
-        mobileTable.appendChild(rowDiv);
-      });
-      
-      wrapper.appendChild(mobileTable);
-      wrapper.appendChild(desktopTable);
-    });
-
-    const tableHeaders = doc.querySelectorAll('th');
-    tableHeaders.forEach((header) => {
-      header.classList.add('bg-gray-800', 'text-left', 'text-xs', 'font-medium', 'text-gray-300', 'uppercase', 'tracking-wider', 'sticky', 'top-0');
-    });
-
-    const tableCells = doc.querySelectorAll('td');
-    tableCells.forEach((cell) => {
-      cell.classList.add('text-sm', 'text-gray-200');
-    });
-
-    return (
-      <div
-        className="prose prose-invert prose-blue max-w-none"
-        dangerouslySetInnerHTML={{ __html: doc.body.innerHTML }}
-        ref={(el) => {
-          if (el) {
-            el.querySelectorAll('.code-block-mount-point').forEach((mountPoint) => {
-              const code = mountPoint.getAttribute('data-code') || '';
-              const language = mountPoint.getAttribute('data-language') || 'text';
-              const root = createRoot(mountPoint);
-              root.render(
-                <div className="code-block-wrapper my-4">
-                  <div className="code-block-header bg-gray-700 text-gray-300 px-4 py-2 rounded-t-lg">
-                    <span className="font-mono text-sm">{language}</span>
-                  </div>
-                  <SyntaxHighlighter
-                    language={language}
-                    style={vscDarkPlus}
-                    customStyle={{
-                      margin: 0,
-                      borderRadius: '0 0 0.5rem 0.5rem',
-                      padding: '1rem',
-                    }}
-                  >
-                    {code}
-                  </SyntaxHighlighter>
-                </div>
-              );
-            });
-          }
-        }}
-      />
-    );
-  };
+  // No longer need the complex formatContent function - ContentRenderer handles this properly
 
   return (
     <div className="min-h-screen bg-gray-800 text-gray-100">
@@ -323,7 +139,7 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
 
             <article className="mb-12 text-lg">
               <div className="min-w-full overflow-hidden">
-                {formatContent(description)}
+                <ContentRenderer content={description} />
               </div>
             </article>
 
