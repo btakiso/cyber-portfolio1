@@ -5,6 +5,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { Toaster } from "@/components/ui/toaster"
 import { AnalyticsProvider } from './components/analytics-provider'
+import { ScrollRestoration } from './components/ScrollRestoration'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -28,6 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen bg-gray-900 text-gray-100">
+        <ScrollRestoration />
         <Header />
         <main className="flex-grow">
           {children}

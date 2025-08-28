@@ -1,9 +1,10 @@
 'use client'
 
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Shield, Network, Book, User, Menu, X } from 'lucide-react'
+import { useScrollManager } from '../hooks/useScrollManager'
 
 const navItems = [
   { href: '/', icon: Shield, label: 'Home' },
@@ -14,19 +15,10 @@ const navItems = [
 ]
 
 export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
   const menuRef = useRef<HTMLDivElement>(null)
-
-  const handleScroll = useCallback(() => {
-    setIsScrolled(window.scrollY > 50)
-  }, [])
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [handleScroll])
+  const { isScrolled } = useScrollManager()
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

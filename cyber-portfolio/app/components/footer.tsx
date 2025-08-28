@@ -1,55 +1,13 @@
 'use client'
 
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import Link from 'next/link'
 import { Github, Linkedin, Mail, ArrowUp } from 'lucide-react'
+import { useScrollManager } from '../hooks/useScrollManager'
 
 export function Footer() {
-  const [showScrollTop, setShowScrollTop] = useState(false)
   const footerRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Use a more stable scroll position check instead of getBoundingClientRect
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-      const windowHeight = window.innerHeight
-      const documentHeight = document.documentElement.scrollHeight
-      
-      // Show button when user has scrolled down at least 300px from top
-      // This prevents the button from appearing/disappearing at the very bottom
-      const shouldShow = scrollTop > 300
-      setShowScrollTop(shouldShow)
-    }
-
-    // Debounce the scroll event for better performance
-    let timeoutId: NodeJS.Timeout | null = null
-    const debouncedHandleScroll = () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId)
-      }
-      timeoutId = setTimeout(() => {
-        handleScroll()
-      }, 10) // 10ms debounce
-    }
-
-    window.addEventListener('scroll', debouncedHandleScroll, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', debouncedHandleScroll)
-      if (timeoutId) {
-        clearTimeout(timeoutId)
-      }
-    }
-  }, [])
-
-  const scrollToTop = () => {
-    // Use a more reliable scroll method that works across browsers
-    if ('scrollBehavior' in document.documentElement.style) {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    } else {
-      // Fallback for older browsers
-      window.scrollTo(0, 0)
-    }
-  }
+  const { showScrollTop, scrollToTop } = useScrollManager()
 
   return (
     <footer ref={footerRef} className="bg-gray-900 text-gray-300 py-12 relative">
