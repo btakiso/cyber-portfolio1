@@ -27,12 +27,11 @@ const XLogo: React.FC<{ className?: string }> = ({ className }) => (
 export default function BlogPostPage({ params }: { params: { id: string } }) {
   const [blogPost, setBlogPost] = useState<BlogPostData | null>(null);
   const [relatedPosts, setRelatedPosts] = useState<BlogPostData[]>([]);
+  const [relatedPostsLoading, setRelatedPostsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isClient, setIsClient] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    setIsClient(true);
     const loadBlogPost = async () => {
       try {
         const data = await fetchBlogPostById(params.id);
@@ -50,8 +49,16 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
         };
         setBlogPost(postWithReadTime);
 
-        const related = await fetchRelatedPosts(data.attributes.Category || '', params.id);
-        setRelatedPosts(related);
+        // Load related posts in parallel to prevent layout shifts
+        try {
+          const related = await fetchRelatedPosts(data.attributes.Category || '', params.id);
+          setRelatedPosts(related);
+        } catch (relatedError) {
+          console.error('Failed to load related posts:', relatedError);
+          // Don't fail the whole page if related posts fail
+        } finally {
+          setRelatedPostsLoading(false);
+        }
       } catch (error) {
         console.error('Failed to load blog post:', error);
         if (error instanceof Error && error.message === 'Blog post not found') {
@@ -65,7 +72,6 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
     loadBlogPost();
   }, [params.id, router]);
 
-  if (!isClient) return null;
   if (error) return <div className="text-red-500">{error}</div>;
   if (!blogPost) return <div>Loading...</div>;
 
@@ -170,12 +176,23 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
               <ContentRenderer content={content} />
             </article>
 
-            {/* Related Posts */}
-            {relatedPosts.length > 0 && (
-              <section className="mb-12">
-                <h3 className="text-xl sm:text-2xl font-semibold mb-6">Related Posts</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {relatedPosts.map((post) => (
+            {/* Related Posts - Always reserve space to prevent layout shifts */}
+            <section className="mb-12">
+              <h3 className="text-xl sm:text-2xl font-semibold mb-6">Related Posts</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {relatedPostsLoading ? (
+                  // Skeleton placeholders to prevent layout shifts
+                  Array.from({ length: 3 }).map((_, index) => (
+                    <div key={`skeleton-${index}`} className="bg-gray-700 rounded-2xl overflow-hidden shadow-lg animate-pulse">
+                      <div className="h-[240px] bg-gray-600"></div>
+                      <div className="p-4">
+                        <div className="h-4 bg-gray-600 rounded mb-2"></div>
+                        <div className="h-4 bg-gray-600 rounded w-3/4"></div>
+                      </div>
+                    </div>
+                  ))
+                ) : relatedPosts.length > 0 ? (
+                  relatedPosts.map((post) => (
                     <Link key={post.id} href={`/blog/${post.id}`} className="block group">
                       <div className="bg-gray-700 rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:-translate-y-1">
                         <div className="relative h-[240px]">
@@ -200,10 +217,14 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
                         </div>
                       </div>
                     </Link>
-                  ))}
-                </div>
-              </section>
-            )}
+                  ))
+                ) : (
+                  <div className="col-span-full text-center text-gray-400 py-8">
+                    No related posts found.
+                  </div>
+                )}
+              </div>
+            </section>
 
             {/* Navigation */}
             <nav className="flex justify-between items-center">
