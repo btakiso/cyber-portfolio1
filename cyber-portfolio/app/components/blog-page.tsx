@@ -187,7 +187,7 @@ export function BlogPage() {
               <div className="mb-12 bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 rounded-xl overflow-hidden">
                 <div className="cyber-gradient-line" />
                 <div className="flex flex-col md:flex-row h-auto">
-                  <div className="w-full md:w-[400px] aspect-video overflow-hidden rounded-t-xl md:rounded-l-xl md:rounded-tr-none">
+                  <div className="w-full h-[200px] md:w-[400px] md:h-[225px] overflow-hidden rounded-t-xl md:rounded-l-xl md:rounded-tr-none">
                     {filteredPosts[0].attributes.image && filteredPosts[0].attributes.image.data ? (
                       <Image
                         src={prependApiUrl(filteredPosts[0].attributes.image.data.attributes.url)}
