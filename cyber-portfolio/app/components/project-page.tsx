@@ -131,8 +131,8 @@ export default function ProjectPage() {
                       alt={project.attributes.title || `Project ${project.id} thumbnail`}
                       width={400}
                       height={200}
-                      style={{ objectFit: 'cover', objectPosition: 'center' }}
-                      className="w-full h-48 object-cover rounded-t-xl transition-transform duration-300 
+                      style={{ objectFit: 'contain', objectPosition: 'center' }}
+                      className="w-full h-48 object-contain bg-gray-800 rounded-t-xl transition-transform duration-300 
                         group-hover:scale-105"
                       priority
                       quality={100}

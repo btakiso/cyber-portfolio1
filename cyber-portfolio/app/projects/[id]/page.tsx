@@ -107,8 +107,8 @@ const ProjectPage = ({ params }: { params: { id: string } }) => {
                     fill
                     priority
                     quality={100}
-                    style={{ objectFit: 'cover' }}
-                    className="rounded-3xl"
+                    style={{ objectFit: 'contain' }}
+                    className="rounded-3xl bg-gray-800"
                   />
                 </div>
               </div>

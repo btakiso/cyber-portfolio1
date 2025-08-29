@@ -194,10 +194,10 @@ export function BlogPage() {
                         alt={filteredPosts[0].attributes.title}
                         fill
                         style={{ 
-                          objectFit: 'cover',
+                          objectFit: 'contain',
                           objectPosition: 'center',
                         }}
-                        className="rounded-t-xl md:rounded-l-xl md:rounded-tr-none"
+                        className="rounded-t-xl md:rounded-l-xl md:rounded-tr-none bg-gray-800"
                         priority
                         quality={100}
                       />
@@ -206,8 +206,8 @@ export function BlogPage() {
                         src={placeholderImage}
                         alt="Placeholder"
                         fill
-                        style={{ objectFit: 'cover' }}
-                        className="rounded-t-xl md:rounded-l-xl md:rounded-tr-none"
+                        style={{ objectFit: 'contain' }}
+                        className="rounded-t-xl md:rounded-l-xl md:rounded-tr-none bg-gray-800"
                       />
                     )}
                   </div>
@@ -255,10 +255,10 @@ export function BlogPage() {
                         alt={post.attributes.title}
                         fill
                         style={{ 
-                          objectFit: 'cover',
+                          objectFit: 'contain',
                           objectPosition: 'center'
                         }}
-                        className="rounded-t-xl transition-transform duration-300 group-hover:scale-105"
+                        className="rounded-t-xl transition-transform duration-300 group-hover:scale-105 bg-gray-800"
                         quality={100}
                       />
                     ) : (
@@ -266,8 +266,8 @@ export function BlogPage() {
                         src={placeholderImage}
                         alt="Placeholder"
                         fill
-                        style={{ objectFit: 'cover' }}
-                        className="rounded-t-xl"
+                        style={{ objectFit: 'contain' }}
+                        className="rounded-t-xl bg-gray-800"
                       />
                     )}
                   </div>

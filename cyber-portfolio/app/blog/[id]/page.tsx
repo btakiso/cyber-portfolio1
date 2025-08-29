@@ -113,8 +113,8 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
                     fill
                     priority
                     quality={100}
-                    style={{ objectFit: 'cover' }}
-                    className="rounded-xl"
+                    style={{ objectFit: 'contain' }}
+                    className="rounded-xl bg-gray-800"
                   />
                 </div>
               </div>
@@ -203,10 +203,10 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
                             alt={post.attributes.title}
                             fill
                             style={{ 
-                              objectFit: 'cover',
+                              objectFit: 'contain',
                               objectPosition: 'center'
                             }}
-                            className="rounded-t-xl"
+                            className="rounded-t-xl bg-gray-800"
                             quality={100}
                           />
                         </div>
