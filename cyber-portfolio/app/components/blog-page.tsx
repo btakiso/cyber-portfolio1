@@ -186,18 +186,21 @@ export function BlogPage() {
             {currentPage === 1 && filteredPosts.length > 0 && (
               <div className="mb-12 bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 rounded-xl overflow-hidden">
                 <div className="cyber-gradient-line" />
-                <div className="flex flex-col md:flex-row h-auto md:h-[240px]">
-                  <div className="w-full md:w-[400px] relative h-[220px] md:h-[240px]">
+                <div className="flex flex-col md:flex-row h-auto">
+                  <div className="w-full md:w-[400px] min-h-[220px] max-h-[300px] flex items-center justify-center overflow-hidden rounded-t-xl md:rounded-l-xl md:rounded-tr-none bg-gray-900">
                     {filteredPosts[0].attributes.image && filteredPosts[0].attributes.image.data ? (
                       <Image
                         src={prependApiUrl(filteredPosts[0].attributes.image.data.attributes.url)}
                         alt={filteredPosts[0].attributes.title}
-                        fill
+                        width={400}
+                        height={240}
                         style={{ 
                           objectFit: 'contain',
-                          objectPosition: 'center',
+                          width: '100%',
+                          height: 'auto',
+                          maxHeight: '300px'
                         }}
-                        className="rounded-t-xl md:rounded-l-xl md:rounded-tr-none bg-gray-800"
+                        className=""
                         priority
                         quality={100}
                       />
@@ -205,9 +208,14 @@ export function BlogPage() {
                       <Image
                         src={placeholderImage}
                         alt="Placeholder"
-                        fill
-                        style={{ objectFit: 'contain' }}
-                        className="rounded-t-xl md:rounded-l-xl md:rounded-tr-none bg-gray-800"
+                        width={400}
+                        height={240}
+                        style={{ 
+                          objectFit: 'contain',
+                          width: '100%',
+                          height: 'auto'
+                        }}
+                        className=""
                       />
                     )}
                   </div>
@@ -248,26 +256,34 @@ export function BlogPage() {
                     transition-all duration-300 hover:-translate-y-1 hover:shadow-3xl hover:shadow-blue-500/30 relative"
                 >
                   <div className="cyber-gradient-line" />
-                  <div className="relative h-[240px]">
+                  <div className="relative w-full min-h-[200px] max-h-[300px] flex items-center justify-center overflow-hidden rounded-t-xl bg-gray-900">
                     {post.attributes.image && post.attributes.image.data ? (
                       <Image
                         src={prependApiUrl(post.attributes.image.data.attributes.url)}
                         alt={post.attributes.title}
-                        fill
+                        width={400}
+                        height={240}
                         style={{ 
                           objectFit: 'contain',
-                          objectPosition: 'center'
+                          width: '100%',
+                          height: 'auto',
+                          maxHeight: '300px'
                         }}
-                        className="rounded-t-xl transition-transform duration-300 group-hover:scale-105 bg-gray-800"
+                        className="transition-transform duration-300 group-hover:scale-105"
                         quality={100}
                       />
                     ) : (
                       <Image
                         src={placeholderImage}
                         alt="Placeholder"
-                        fill
-                        style={{ objectFit: 'contain' }}
-                        className="rounded-t-xl bg-gray-800"
+                        width={400}
+                        height={240}
+                        style={{ 
+                          objectFit: 'contain',
+                          width: '100%',
+                          height: 'auto'
+                        }}
+                        className=""
                       />
                     )}
                   </div>
