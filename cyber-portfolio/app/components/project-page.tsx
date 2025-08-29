@@ -123,19 +123,16 @@ export default function ProjectPage() {
                     hover:shadow-3xl hover:shadow-blue-500/30 relative"
                 >
                   <div className="cyber-gradient-line" />
-                  <div className="relative w-full min-h-[200px] max-h-[300px] flex items-center justify-center overflow-hidden rounded-t-xl bg-gray-900">
+                  <div className="relative w-full aspect-video overflow-hidden rounded-t-xl">
                     <Image
                       src={project.attributes.image?.data && project.attributes.image.data.length > 0
                         ? prependApiUrl(project.attributes.image.data[0].attributes.url)
                         : `/placeholder.svg?height=200&width=400&text=Project+${project.id}`}
                       alt={project.attributes.title || `Project ${project.id} thumbnail`}
-                      width={400}
-                      height={240}
+                      fill
                       style={{ 
-                        objectFit: 'contain',
-                        width: '100%',
-                        height: 'auto',
-                        maxHeight: '300px'
+                        objectFit: 'cover',
+                        objectPosition: 'center'
                       }}
                       className="transition-transform duration-300 group-hover:scale-105"
                       priority

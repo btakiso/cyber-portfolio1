@@ -195,7 +195,7 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
                   relatedPosts.map((post) => (
                     <Link key={post.id} href={`/blog/${post.id}`} className="block group">
                       <div className="bg-gray-700 rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:-translate-y-1">
-                        <div className="relative h-[240px]">
+                        <div className="relative aspect-video">
                           <Image
                             src={post.attributes.image?.data 
                               ? prependApiUrl(post.attributes.image.data.attributes.url)
@@ -203,10 +203,10 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
                             alt={post.attributes.title}
                             fill
                             style={{ 
-                              objectFit: 'contain',
+                              objectFit: 'cover',
                               objectPosition: 'center'
                             }}
-                            className="rounded-t-xl bg-gray-800"
+                            className="rounded-t-xl"
                             quality={100}
                           />
                         </div>
