@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -27,6 +27,7 @@ const truncateText = (text: string | undefined, maxLength: number) => {
 
 export function BlogPage() {
   const [searchTerm, setSearchTerm] = useState("")
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("")
   const [sortOrder, setSortOrder] = useState("newest")
   const [currentPage, setCurrentPage] = useState(1)
   const postsPerPage = 9
@@ -34,6 +35,20 @@ export function BlogPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+
+  // Debounce search term to prevent excessive filtering
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  // Reset to first page when search term changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debouncedSearchTerm]);
 
   const loadBlogPosts = async () => {
     try {
@@ -65,22 +80,65 @@ export function BlogPage() {
     loadBlogPosts();
   }, [router]);
 
-  const filteredPosts = blogPosts
-    .filter(post => 
-      post.attributes.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.attributes.summary?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.attributes.Category.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    .sort((a, b) => 
-      sortOrder === "newest" 
-        ? new Date(b.attributes.date).getTime() - new Date(a.attributes.date).getTime()
-        : new Date(a.attributes.date).getTime() - new Date(b.attributes.date).getTime()
-    );
+  // Memoize expensive calculations to prevent unnecessary re-renders
+  const filteredPosts = useMemo(() => {
+    return blogPosts
+      .filter(post => 
+        post.attributes.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+        post.attributes.summary?.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+        post.attributes.Category.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+      )
+      .sort((a, b) => 
+        sortOrder === "newest" 
+          ? new Date(b.attributes.date).getTime() - new Date(a.attributes.date).getTime()
+          : new Date(a.attributes.date).getTime() - new Date(b.attributes.date).getTime()
+      );
+  }, [blogPosts, debouncedSearchTerm, sortOrder]);
 
-  const indexOfLastPost = currentPage * postsPerPage
-  const indexOfFirstPost = indexOfLastPost - postsPerPage
-  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost)
-  const totalPages = Math.ceil(filteredPosts.length / postsPerPage)
+  const paginationData = useMemo(() => {
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+    const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+    
+    return {
+      currentPosts,
+      totalPages,
+      indexOfFirstPost,
+      indexOfLastPost
+    };
+  }, [filteredPosts, currentPage, postsPerPage]);
+
+  const { currentPosts, totalPages } = paginationData;
+
+  // Scroll to top when page changes (with smooth animation to prevent jarring)
+  useEffect(() => {
+    if (currentPage > 1) {
+      const mainContent = document.querySelector('main');
+      if (mainContent) {
+        const targetPosition = mainContent.offsetTop - 100; // Account for header
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, [currentPage]);
+
+  // Memoized handlers to prevent unnecessary re-renders
+  const handlePageChange = useCallback((newPage: number) => {
+    setCurrentPage(newPage);
+  }, []);
+
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    // Page reset is handled by useEffect when debouncedSearchTerm changes
+  }, []);
+
+  const handleSortChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortOrder(e.target.value);
+    setCurrentPage(1); // Reset to first page when sorting
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-800 text-gray-100">
@@ -97,7 +155,7 @@ export function BlogPage() {
               className="w-full bg-black/30 border-blue-500/30 text-white rounded-full py-2 px-4 pl-10 
                 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all duration-300"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={handleSearchChange}
             />
             <Search className="absolute left-3 top-2.5 text-gray-400" size={20} />
           </div>
@@ -105,7 +163,7 @@ export function BlogPage() {
             className="bg-black/30 border-blue-500/30 text-white rounded-full py-2 px-4 
               focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all duration-300"
             value={sortOrder}
-            onChange={(e) => setSortOrder(e.target.value)}
+            onChange={handleSortChange}
           >
             <option value="newest">Newest First</option>
             <option value="oldest">Oldest First</option>
@@ -184,6 +242,7 @@ export function BlogPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentPosts.map((post) => (
                 <Link 
+                  key={post.id}
                   href={`/blog/${post.id}`} 
                   className="block bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 rounded-xl overflow-hidden 
                     transition-all duration-300 hover:-translate-y-1 hover:shadow-3xl hover:shadow-blue-500/30 relative"
@@ -243,7 +302,7 @@ export function BlogPage() {
               <div className="mt-12 flex justify-center">
                 <nav className="inline-flex rounded-md shadow">
                   <button
-                    onClick={() => setCurrentPage(currentPage - 1)}
+                    onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                     className="px-3 py-2 rounded-l-md border border-blue-500/30 bg-black/30 text-gray-400 
                       hover:bg-blue-500/10 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
@@ -254,7 +313,7 @@ export function BlogPage() {
                   {[...Array(totalPages)].map((_, index) => (
                     <button
                       key={index}
-                      onClick={() => setCurrentPage(index + 1)}
+                      onClick={() => handlePageChange(index + 1)}
                       className={`px-4 py-2 border border-blue-500/30 transition-all duration-300 ${
                         currentPage === index + 1
                           ? 'bg-blue-600 text-white'
@@ -265,7 +324,7 @@ export function BlogPage() {
                     </button>
                   ))}
                   <button
-                    onClick={() => setCurrentPage(currentPage + 1)}
+                    onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
                     className="px-3 py-2 rounded-r-md border border-blue-500/30 bg-black/30 text-gray-400 
                       hover:bg-blue-500/10 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
