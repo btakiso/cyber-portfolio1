@@ -187,15 +187,18 @@ export function BlogPage() {
               <div className="mb-12 bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 rounded-xl overflow-hidden">
                 <div className="cyber-gradient-line" />
                 <div className="flex flex-col md:flex-row h-auto">
-                  <div className="w-full h-[200px] md:w-[400px] md:h-[225px] overflow-hidden rounded-t-xl md:rounded-l-xl md:rounded-tr-none">
+                  <div className="w-full h-[200px] md:w-[400px] md:h-[225px] overflow-hidden rounded-t-xl md:rounded-l-xl md:rounded-tr-none relative">
                     {filteredPosts[0].attributes.image && filteredPosts[0].attributes.image.data ? (
                       <Image
                         src={prependApiUrl(filteredPosts[0].attributes.image.data.attributes.url)}
                         alt={filteredPosts[0].attributes.title}
-                        fill
+                        width={400}
+                        height={225}
                         style={{ 
                           objectFit: 'cover',
-                          objectPosition: 'center'
+                          objectPosition: 'center',
+                          width: '100%',
+                          height: '100%'
                         }}
                         className=""
                         priority
@@ -205,10 +208,13 @@ export function BlogPage() {
                       <Image
                         src={placeholderImage}
                         alt="Placeholder"
-                        fill
+                        width={400}
+                        height={225}
                         style={{ 
                           objectFit: 'cover',
-                          objectPosition: 'center'
+                          objectPosition: 'center',
+                          width: '100%',
+                          height: '100%'
                         }}
                         className=""
                       />
@@ -243,15 +249,7 @@ export function BlogPage() {
 
             {/* Blog Post Grid - Added gradient line to each card */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {currentPosts
-                .filter((post, index) => {
-                  // On page 1, exclude the first post (featured post) from the grid
-                  if (currentPage === 1 && filteredPosts.length > 0) {
-                    return post.id !== filteredPosts[0].id;
-                  }
-                  return true;
-                })
-                .map((post) => (
+              {currentPosts.map((post) => (
                 <Link 
                   key={post.id}
                   href={`/blog/${post.id}`} 
