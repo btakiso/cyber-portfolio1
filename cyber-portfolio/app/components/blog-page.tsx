@@ -182,8 +182,8 @@ export function BlogPage() {
           </div>
         ) : (
           <>
-            {/* Featured Blog Post - Added gradient line */}
-            {currentPage === 1 && filteredPosts.length > 0 && (
+            {/* Featured Blog Post - TEMPORARILY DISABLED FOR DEBUGGING */}
+            {false && currentPage === 1 && filteredPosts.length > 0 && (
               <div className="mb-12 bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 rounded-xl overflow-hidden">
                 <div className="cyber-gradient-line" />
                 <div className="flex flex-col md:flex-row h-auto">
@@ -248,6 +248,12 @@ export function BlogPage() {
             )}
 
             {/* Blog Post Grid - Added gradient line to each card */}
+            {/* DEBUG INFO */}
+            <div className="mb-4 p-4 bg-yellow-500 text-black rounded">
+              <strong>DEBUG:</strong> Total blogs: {filteredPosts.length} | Current page: {currentPage} | Posts on this page: {currentPosts.length}
+              <br />
+              Blog titles: {filteredPosts.map(p => p.attributes.title).join(', ')}
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentPosts.map((post) => (
                 <Link 
