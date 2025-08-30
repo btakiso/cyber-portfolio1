@@ -183,15 +183,20 @@ export function BlogPage() {
         ) : (
           <>
             {/* Featured Blog Post - TEMPORARILY DISABLED FOR DEBUGGING */}
-            {false && currentPage === 1 && filteredPosts.length > 0 && (
+            {false && currentPage === 1 && filteredPosts.length > 0 && (() => {
+              const featuredPost = filteredPosts[0];
+              if (!featuredPost) return null;
+              
+              const featuredImage = featuredPost.attributes.image;
+              return (
               <div className="mb-12 bg-black/30 border-blue-500/30 shadow-2xl shadow-blue-500/20 rounded-xl overflow-hidden">
                 <div className="cyber-gradient-line" />
                 <div className="flex flex-col md:flex-row h-auto">
                   <div className="w-full h-[200px] md:w-[400px] md:h-[225px] overflow-hidden rounded-t-xl md:rounded-l-xl md:rounded-tr-none relative">
-                    {filteredPosts[0].attributes.image && filteredPosts[0].attributes.image.data ? (
+                    {featuredImage && featuredImage!.data ? (
                       <Image
-                        src={prependApiUrl(filteredPosts[0].attributes.image.data.attributes.url)}
-                        alt={filteredPosts[0].attributes.title}
+                        src={prependApiUrl(featuredImage!.data.attributes.url)}
+                        alt={featuredPost.attributes.title}
                         width={400}
                         height={225}
                         style={{ 
@@ -222,30 +227,31 @@ export function BlogPage() {
                   </div>
                   <div className="flex-1 p-4 bg-gray-900 flex flex-col justify-center">
                     <div className="uppercase tracking-wide text-sm text-blue-500 font-semibold">
-                      {filteredPosts[0].attributes.Category}
+                      {featuredPost.attributes.Category}
                     </div>
-                    <Link href={`/blog/${filteredPosts[0].id}`} className="block mt-1 text-lg leading-tight font-medium text-white hover:underline">
-                      {filteredPosts[0].attributes.title}
+                    <Link href={`/blog/${featuredPost.id}`} className="block mt-1 text-lg leading-tight font-medium text-white hover:underline">
+                      {featuredPost.attributes.title}
                     </Link>
                     <p className="mt-2 text-gray-300 line-clamp-2">
-                      {truncateText(filteredPosts[0].attributes.summary, 120)}
+                      {truncateText(featuredPost.attributes.summary, 120)}
                     </p>
                     <div className="mt-4 flex items-center justify-between">
                       <Link
-                        href={`/blog/${filteredPosts[0].id}`}
+                        href={`/blog/${featuredPost.id}`}
                         className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors duration-200"
                       >
                         Read More <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                       <span className="text-sm text-gray-400 flex items-center">
                         <Clock className="w-4 h-4 mr-1" />
-                        {filteredPosts[0].attributes.readTime} min read
+                        {featuredPost.attributes.readTime} min read
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
-            )}
+              );
+            })()}
 
             {/* Blog Post Grid - Added gradient line to each card */}
             {/* DEBUG INFO */}
