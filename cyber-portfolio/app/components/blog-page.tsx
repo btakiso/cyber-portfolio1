@@ -98,7 +98,17 @@ export function BlogPage() {
   const paginationData = useMemo(() => {
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+    
+    // On page 1, exclude the first post from the grid since it's shown as featured
+    let currentPosts;
+    if (currentPage === 1 && filteredPosts.length > 0) {
+      currentPosts = filteredPosts.slice(1, postsPerPage); // Start from index 1 (skip featured post)
+    } else {
+      // For other pages, adjust the slice to account for the skipped featured post
+      const adjustedFirstIndex = indexOfFirstPost === 0 ? 1 : indexOfFirstPost;
+      currentPosts = filteredPosts.slice(adjustedFirstIndex, indexOfLastPost);
+    }
+    
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
     
     return {
@@ -251,7 +261,7 @@ export function BlogPage() {
                     transition-all duration-300 hover:-translate-y-1 hover:shadow-3xl hover:shadow-blue-500/30 relative"
                 >
                   <div className="cyber-gradient-line" />
-                  <div className="relative w-full aspect-video overflow-hidden rounded-t-xl">
+                  <div className="relative w-full h-[200px] overflow-hidden rounded-t-xl">
                     {post.attributes.image && post.attributes.image.data ? (
                       <Image
                         src={prependApiUrl(post.attributes.image.data.attributes.url)}
