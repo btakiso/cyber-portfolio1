@@ -182,8 +182,8 @@ export function BlogPage() {
           </div>
         ) : (
           <>
-            {/* Featured Blog Post - TEMPORARILY DISABLED FOR DEBUGGING */}
-            {false && currentPage === 1 && filteredPosts.length > 0 && (() => {
+            {/* Featured Blog Post - RE-ENABLED */}
+            {currentPage === 1 && filteredPosts.length > 0 && (() => {
               const featuredPost = filteredPosts[0];
               if (!featuredPost) return null;
               
@@ -254,14 +254,16 @@ export function BlogPage() {
             })()}
 
             {/* Blog Post Grid - Added gradient line to each card */}
-            {/* DEBUG INFO */}
-            <div className="mb-4 p-4 bg-yellow-500 text-black rounded">
-              <strong>DEBUG:</strong> Total blogs: {filteredPosts.length} | Current page: {currentPage} | Posts on this page: {currentPosts.length}
-              <br />
-              Blog titles: {filteredPosts.map(p => p.attributes.title).join(', ')}
-            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {currentPosts.map((post) => (
+              {currentPosts
+                .filter((post) => {
+                  // On page 1, exclude the featured blog from the grid to prevent duplication
+                  if (currentPage === 1 && filteredPosts.length > 0) {
+                    return post.id !== filteredPosts[0]?.id;
+                  }
+                  return true;
+                })
+                .map((post) => (
                 <Link 
                   key={post.id}
                   href={`/blog/${post.id}`} 
