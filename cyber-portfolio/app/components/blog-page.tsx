@@ -98,17 +98,7 @@ export function BlogPage() {
   const paginationData = useMemo(() => {
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    
-    // On page 1, exclude the first post from the grid since it's shown as featured
-    let currentPosts;
-    if (currentPage === 1 && filteredPosts.length > 0) {
-      currentPosts = filteredPosts.slice(1, postsPerPage); // Start from index 1 (skip featured post)
-    } else {
-      // For other pages, adjust the slice to account for the skipped featured post
-      const adjustedFirstIndex = indexOfFirstPost === 0 ? 1 : indexOfFirstPost;
-      currentPosts = filteredPosts.slice(adjustedFirstIndex, indexOfLastPost);
-    }
-    
+    const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
     
     return {
@@ -253,7 +243,15 @@ export function BlogPage() {
 
             {/* Blog Post Grid - Added gradient line to each card */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {currentPosts.map((post) => (
+              {currentPosts
+                .filter((post, index) => {
+                  // On page 1, exclude the first post (featured post) from the grid
+                  if (currentPage === 1 && filteredPosts.length > 0) {
+                    return post.id !== filteredPosts[0].id;
+                  }
+                  return true;
+                })
+                .map((post) => (
                 <Link 
                   key={post.id}
                   href={`/blog/${post.id}`} 
